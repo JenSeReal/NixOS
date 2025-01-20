@@ -43,7 +43,7 @@
     };
     ragenix.url = "github:yaxitech/ragenix";
 
-    darwin.url = "github:LnL7/nix-darwin";
+    darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     mac-app-util = {
       url = "github:hraban/mac-app-util";
