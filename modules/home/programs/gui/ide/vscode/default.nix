@@ -128,12 +128,14 @@ in
           "**/Thumbs.db" = true;
           "**/.direnv/" = true;
           "**/.devenv/" = true;
+          "**/.devenv*" = true;
           "**/flake.lock" = true;
           "**/.envrc" = true;
           "**/LICENSE" = true;
           # "**/README.md" = true;
           "**/.terraform*" = true;
           "**/*.tfstate*" = true;
+          "**/node_modules/" = true;
         };
 
         "html.autoClosingTags" = true;

@@ -81,6 +81,7 @@ in
       casks = [
         "steam"
         "headlamp"
+        "mattermost"
       ] ++ cfg.additional_casks;
     };
   };
