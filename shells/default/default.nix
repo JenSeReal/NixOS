@@ -57,7 +57,6 @@ inputs.devenv.lib.mkShell {
 
       enterShell = ''
         [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
-        # nohup ${lib.getExe pkgs.biome} start </dev/null >/dev/null 2>&1 &
       '';
     }
   ];

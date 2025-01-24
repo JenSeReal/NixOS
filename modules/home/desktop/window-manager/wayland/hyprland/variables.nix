@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.JenSeReal.desktop.window-managers.hyprland;
@@ -12,10 +17,10 @@ in
         "$mainModShift" = "SUPER_SHIFT";
 
         # default applications
-        "$term" = "${getExe pkgs.kitty}";
+        "$term" = "${getExe config.programs.wezterm.package}";
         "$browser" = "${getExe pkgs.firefox}";
-        "$launcher" = "${getExe' pkgs.kickoff "kickoff"}";
-        "$explorer" = "${getExe pkgs.cinnamon.nemo-with-extensions}";
+        "$launcher" = "${getExe pkgs.yofi} binapps";
+        "$explorer" = "${getExe pkgs.nemo-with-extensions}";
         "$logout" = "${getExe pkgs.wlogout}";
         # "$mail" = "${getExe pkgs.thunderbird}";
         # "$editor" = "${getExe pkgs.neovim}";

@@ -30,7 +30,6 @@ in
         launchers.kickoff.enable = true;
         notifications.mako.enable = true;
         portals.xdg.enable = true;
-        idle-managers.swayidle.enable = true;
         logout-menu.wlogout.enable = true;
         screen-locker.swaylock-effects.enable = true;
         libraries.qt.enable = true;

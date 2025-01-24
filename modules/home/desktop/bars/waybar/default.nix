@@ -27,7 +27,7 @@ in
           position = "bottom";
           spacing = 0;
           modules-left = [
-            "sway/workspaces"
+            "${if config.wayland.windowManager.sway.enable then "sway/workspaces" else "hyprland/workspaces"}"
             "custom/arGap"
             "idle_inhibitor"
             "custom/wsGap"
@@ -60,6 +60,11 @@ in
             "all-outputs" = true;
             "offscreen-css" = true;
             "offscreen-css-text" = "(inactive)";
+          };
+          "hyprland/workspaces" = {
+            "format" = "{icon}";
+            "on-scroll-up" = "hyprctl dispatch workspace e+1";
+            "on-scroll-down" = "hyprctl dispatch workspace e-1";
           };
           "custom/arGap" = {
             format = "";

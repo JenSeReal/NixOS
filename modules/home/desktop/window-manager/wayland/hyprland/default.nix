@@ -31,12 +31,11 @@ in
     ./output.nix
     ./bindings.nix
     ./window-rules.nix
+    ./workspace.nix
   ];
 
   config = mkIf cfg.enable {
     programs.waybar.systemd.target = "hyprland-session.target";
-
-    systemd.user.services.swayidle.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
 
     wayland.windowManager.hyprland = {
       enable = true;

@@ -68,6 +68,7 @@ in
 
   environment.systemPackages = with pkgs; [
     bat
+    bottles-unwrapped
     btop
     capitaine-cursors
     codeium

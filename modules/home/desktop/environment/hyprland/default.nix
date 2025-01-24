@@ -29,7 +29,7 @@ in
       launchers.kickoff.enable = true;
       launchers.anyrun.enable = true;
       notifications.mako.enable = true;
-      idle-manager.swayidle.enable = true;
+      idle-manager.hypridle.enable = true;
       screen-locker.swaylock-effects.enable = true;
       layout-manager.kanshi.enable = true;
       layout-manager.way-displays.enable = true;

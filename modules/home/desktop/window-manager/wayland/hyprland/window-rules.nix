@@ -1,7 +1,9 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.JenSeReal.desktop.window-managers.hyprland;
-in {
+let
+  cfg = config.JenSeReal.desktop.window-managers.hyprland;
+in
+{
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
@@ -43,7 +45,8 @@ in {
           "idleinhibit focus, title:^(.*(Twitch|TNTdrama|YouTube|Bally Sports|Video Entertainment|Plex)).*(Firefox).*$"
           "idleinhibit focus, class:^(mpv|.+exe)$"
 
-          # "immediate, class:^(gamescope|steam).*"
+          "stayfocused, title:^()$,class:^(steam)$"
+          "minsize 1 1, title:^()$,class:^(steam)$"
 
           "workspace 9 silent, class:^(discord|WebCord)$"
           "workspace 10 silent, class:^(steam)$"

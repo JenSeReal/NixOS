@@ -14,7 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ cinnamon.nemo-with-extensions ];
+    environment.systemPackages = with pkgs; [ nemo-with-extensions ];
     services.gvfs.enable = true;
   };
 }
