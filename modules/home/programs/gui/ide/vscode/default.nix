@@ -80,6 +80,14 @@ in
           "editor.formatOnPaste" = true;
         };
 
+        "[github-actions-workflow]" = {
+          "editor.tabSize" = 2;
+          "editor.insertSpaces" = true;
+          "editor.formatOnSave" = true;
+          "editor.formatOnPaste" = true;
+          "editor.defaultFormatter" = "redhat.vscode-xml";
+        };
+
         "[typst]" = {
           "editor.formatOnPaste" = true;
           "editor.formatOnSave" = true;
