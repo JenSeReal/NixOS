@@ -7,8 +7,6 @@ let
     killall .waybar-wrapped
     ${getExe config.programs.waybar.package} &
 
-    timeout 2 ${getExe' pkgs.way-displays "way-displays"}
-
     hyprctl reload
 
     systemctl --user restart kanshi.service

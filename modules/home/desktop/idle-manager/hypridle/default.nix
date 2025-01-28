@@ -10,7 +10,6 @@ let
 
   hyprctl = getExe' config.wayland.windowManager.hyprland.package "hyprctl";
   swaylock = getExe config.programs.swaylock.package;
-
 in
 {
   options.JenSeReal.desktop.idle-manager.hypridle = with types; {
