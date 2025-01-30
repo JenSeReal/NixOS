@@ -8,12 +8,12 @@ in
     wayland.windowManager.hyprland = {
       settings = {
         workspace = [
-          "1, monitor:DP-11, default:true"
-          "2, monitor:DP-11"
-          "3, monitor:DP-11"
-          "8, monitor:DP-9, default:true"
-          "9, monitor:DP-9"
-          "0, monitor:DP-9"
+          "1, monitor:desc:LG Electronics LG ULTRAWIDE 0x00017279, default:true"
+          "2, monitor:desc:LG Electronics LG ULTRAWIDE 0x00017279"
+          "3, monitor:desc:LG Electronics LG ULTRAWIDE 0x00017279"
+          "8, monitor:desc:Microstep MSI MAG271C 0x0000011E, default:true"
+          "9, monitor:desc:Microstep MSI MAG271C 0x0000011E"
+          "10, monitor:desc:Microstep MSI MAG271C 0x0000011E"
         ];
       };
     };

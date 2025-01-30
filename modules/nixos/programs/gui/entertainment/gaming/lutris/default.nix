@@ -22,6 +22,9 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
+      pkgs.wineWowPackages.waylandFull
+      pkgs.winetricks
+      pkgs.protontricks
       pkgs.protonup-qt
       pkgs.vulkan-tools
       (pkgs.lutris.override {
@@ -29,7 +32,6 @@ in
           pkgs:
           cfg.extraPackages
           ++ [
-            pkgs.wineWowPackages.stagingFull
             pkgs.wineWowPackages.waylandFull
             pkgs.winetricks
             pkgs.protontricks
