@@ -101,6 +101,7 @@ in
     rm-improved
     spotify
     thunderbird
+    ventoy-bin-full
     vlc
     webcord
     yazi
