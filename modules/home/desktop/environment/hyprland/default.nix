@@ -1,4 +1,10 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 with lib;
 with lib.JenSeReal;
 let
@@ -21,6 +27,15 @@ in
     #     wlroots = enabled;
     #   };
     # };
+
+    home.packages = with pkgs; [
+      grim
+      hyprsunset
+      pkgs.${namespace}.screen-recorder
+      slurp
+      xwaylandvideobridge
+      wl-screenrec
+    ];
 
     services.kanshi.enable = true;
     JenSeReal.desktop = {

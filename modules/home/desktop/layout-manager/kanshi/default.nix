@@ -14,14 +14,14 @@ let
   msi = {
     status = "enable";
     criteria = "Microstep MSI MAG271C 0x0000011E";
-    mode = "1920x1080@144.00Hz";
+    mode = "1920x1080@60.00Hz";
     scale = 1.0;
   };
 
   lg = {
     status = "enable";
     criteria = "LG Electronics LG ULTRAWIDE 0x00017279";
-    mode = "2560x1080@144.00Hz";
+    mode = "2560x1080@59.94Hz";
     scale = 1.0;
   };
 
