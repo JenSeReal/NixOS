@@ -72,8 +72,8 @@
     devenv.inputs.nixpkgs.follows = "nixpkgs-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    wezterm.url = "github:wez/wezterm/main?dir=nix";
-    wezterm.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # wezterm.url = "github:wez/wezterm/main?dir=nix";
+    # wezterm.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs-unstable";

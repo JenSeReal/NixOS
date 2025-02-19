@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -19,7 +18,7 @@ in
   config = mkIf cfg.enable {
     programs.wezterm = {
       enable = true;
-      package = inputs.wezterm.packages.${pkgs.system}.default;
+      # package = inputs.wezterm.packages.${pkgs.system}.default;
       colorSchemes = {
         Synthwave84 = {
           foreground = "#ffffff";
@@ -90,7 +89,6 @@ in
           else
             ""
         }
-
         config.color_scheme = 'Synthwave84'
 
         -- URL highlight color
@@ -117,9 +115,9 @@ in
           brightness = 0.7,
         }
         config.default_cursor_style = 'SteadyBar'
+        config.check_for_updates = false
 
         return config
-
       '';
     };
   };

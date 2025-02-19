@@ -201,6 +201,7 @@ in
         extensions.redhat.vscode-yaml
         extensions.ms-azuretools.vscode-docker
         extensions.usernamehw.errorlens
+        extensions.cordx56.rustowl-vscode
         extensions.shardulm94.trailing-spaces
         extensions.christian-kohler.path-intellisense
         extensions.vscode-icons-team.vscode-icons
