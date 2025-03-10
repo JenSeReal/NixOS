@@ -18,8 +18,6 @@ let
 
   is-darwin = pkgs.stdenv.isDarwin;
 
-  # extensions = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
-
   vscodePname = config.programs.vscode.package.pname;
 
   configDir =
