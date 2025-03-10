@@ -209,7 +209,7 @@ in
           extensions.redhat.vscode-xml
           extensions.oderwat.indent-rainbow
           extensions.rust-lang.rust-analyzer
-          extensions.fill-labs.dependi
+          # extensions.fill-labs.dependi
           extensions.vadimcn.vscode-lldb
           extensions.pflannery.vscode-versionlens
           extensions.lorenzopirro.rust-flash-snippets
