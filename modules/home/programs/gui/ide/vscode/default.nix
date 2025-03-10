@@ -3,16 +3,22 @@
   lib,
   inputs,
   pkgs,
-  system,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption mkDefault;
   cfg = config.JenSeReal.programs.gui.ide.vscode;
 
+  pkgs-ext = import inputs.nixpkgs {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+    overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+  };
+  marketplace = pkgs-ext.vscode-marketplace;
+
   is-darwin = pkgs.stdenv.isDarwin;
 
-  extensions = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
+  # extensions = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
 
   vscodePname = config.programs.vscode.package.pname;
 
@@ -196,51 +202,51 @@ in
         };
 
         extensions = [
-          extensions.yzhang.markdown-all-in-one
-          # extensions.asciidoctor.asciidoctor-vscode
-          extensions.tamasfe.even-better-toml
-          extensions.redhat.vscode-yaml
-          extensions.ms-azuretools.vscode-docker
-          extensions.usernamehw.errorlens
-          extensions.cordx56.rustowl-vscode
-          extensions.shardulm94.trailing-spaces
-          extensions.christian-kohler.path-intellisense
-          extensions.vscode-icons-team.vscode-icons
-          extensions.redhat.vscode-xml
-          extensions.oderwat.indent-rainbow
-          extensions.rust-lang.rust-analyzer
-          # extensions.fill-labs.dependi
-          extensions.vadimcn.vscode-lldb
-          extensions.pflannery.vscode-versionlens
-          extensions.lorenzopirro.rust-flash-snippets
-          extensions.zhangyue.rust-mod-generator
-          extensions.jedeop.crates-completer
-          extensions.jscearcy.rust-doc-viewer
-          extensions.biomejs.biome
-          extensions.rangav.vscode-thunder-client
-          extensions.dotjoshjohnson.xml
-          extensions.jgclark.vscode-todo-highlight
-          extensions.gruntfuggly.todo-tree
-          extensions.chrmarti.regex
-          extensions.aaron-bond.better-comments
-          extensions.ms-vsliveshare.vsliveshare
-          extensions.pinage404.nix-extension-pack
-          extensions.robbowen.synthwave-vscode
-          # extensions.ms-vscode-remote.vscode-remote-extensionpack
-          extensions.formulahendry.docker-explorer
-          extensions.redhat.java
-          extensions.vscjava.vscode-java-test
-          extensions.vscjava.vscode-java-debug
-          extensions.vscjava.vscode-maven
-          extensions.vscjava.vscode-java-dependency
-          extensions.vscjava.vscode-spring-initializr
-          extensions.vscjava.vscode-gradle
-          extensions.codeium.codeium
-          extensions.richardwillis.vscode-spotless-gradle
-          extensions.mathiasfrohlich.kotlin
-          extensions.myriad-dreamin.tinymist
-          # extensions.hashicorp.terraform
-          # extensions.mgtrrz.terraform-completer
+          marketplace.yzhang.markdown-all-in-one
+          marketplace.asciidoctor.asciidoctor-vscode
+          marketplace.tamasfe.even-better-toml
+          marketplace.redhat.vscode-yaml
+          marketplace.ms-azuretools.vscode-docker
+          marketplace.usernamehw.errorlens
+          marketplace.cordx56.rustowl-vscode
+          marketplace.shardulm94.trailing-spaces
+          marketplace.christian-kohler.path-intellisense
+          marketplace.vscode-icons-team.vscode-icons
+          marketplace.redhat.vscode-xml
+          marketplace.oderwat.indent-rainbow
+          marketplace.rust-lang.rust-analyzer
+          marketplace.fill-labs.dependi
+          marketplace.vadimcn.vscode-lldb
+          marketplace.pflannery.vscode-versionlens
+          marketplace.lorenzopirro.rust-flash-snippets
+          marketplace.zhangyue.rust-mod-generator
+          marketplace.jedeop.crates-completer
+          marketplace.jscearcy.rust-doc-viewer
+          marketplace.biomejs.biome
+          marketplace.rangav.vscode-thunder-client
+          marketplace.dotjoshjohnson.xml
+          marketplace.jgclark.vscode-todo-highlight
+          marketplace.gruntfuggly.todo-tree
+          marketplace.chrmarti.regex
+          marketplace.aaron-bond.better-comments
+          marketplace.ms-vsliveshare.vsliveshare
+          marketplace.pinage404.nix-extension-pack
+          marketplace.robbowen.synthwave-vscode
+          marketplace.ms-vscode-remote.vscode-remote-extensionpack
+          marketplace.formulahendry.docker-explorer
+          marketplace.redhat.java
+          marketplace.vscjava.vscode-java-test
+          marketplace.vscjava.vscode-java-debug
+          marketplace.vscjava.vscode-maven
+          marketplace.vscjava.vscode-java-dependency
+          marketplace.vscjava.vscode-spring-initializr
+          marketplace.vscjava.vscode-gradle
+          marketplace.codeium.codeium
+          marketplace.richardwillis.vscode-spotless-gradle
+          marketplace.mathiasfrohlich.kotlin
+          marketplace.myriad-dreamin.tinymist
+          marketplace.hashicorp.terraform
+          marketplace.mgtrrz.terraform-completer
 
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
 

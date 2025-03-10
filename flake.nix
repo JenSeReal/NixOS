@@ -127,6 +127,7 @@
         nur.overlays.default
         snowfall-frost.overlays.default
         rust-overlay.overlays.default
+        nix-vscode-extensions.overlays.default
       ];
 
       systems = {
