@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption getExe;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.JenSeReal.virtualisation.docker;
 in
@@ -50,18 +50,21 @@ in
       members = config.${namespace}.user.name;
     };
 
-    launchd.daemons.colima.serviceConfig = {
-      Program = "${getExe pkgs.colima}";
-      ProgramArguments = [
-        "start"
-        "--cpu"
-        "8"
-        "--memory"
-        "16"
-        "--kubernetes"
-      ];
-      KeepAlive = true;
-      RunAtLoad = true;
+    launchd.agents."colima.default" = {
+      command = "${pkgs.colima}/bin/colima start --foreground --cpu 8 --memory 16 --kubernetes";
+      serviceConfig = {
+        Label = "com.colima.default";
+        RunAtLoad = true;
+        KeepAlive = true;
+
+        # StandardOutPath = "${config.${namespace}.home.configFile."colima/daemon/launchd.stdout.log".path}";
+        # StandardErrorPath = "${config.${namespace}.home.configFile."colima/daemon/launchd.stderr.log".path
+        # }";
+
+        EnvironmentVariables = {
+          PATH = "${pkgs.colima}/bin:${pkgs.docker}/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+        };
+      };
     };
   };
 }

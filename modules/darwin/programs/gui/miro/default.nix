@@ -22,7 +22,7 @@ in
     launchd.user.agents.miro = {
       command = "/Applications/Miro.app/Contents/MacOS/Miro";
       serviceConfig = {
-        KeepAlive = true;
+        KeepAlive = false;
         RunAtLoad = true;
       };
     };
