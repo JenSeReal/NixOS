@@ -10,7 +10,7 @@
     home-manager = {
       url = "github:nix-community/home-manager/master";
       # url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nur = {
       url = "github:nix-community/NUR";
@@ -91,6 +91,8 @@
     };
 
     stylix.url = "github:danth/stylix/master";
+    stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs =
