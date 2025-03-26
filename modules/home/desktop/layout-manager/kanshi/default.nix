@@ -8,7 +8,7 @@ let
     status = "enable";
     criteria = "Samsung Electric Company SAMSUNG 0x01000E00";
     mode = "2560x1440@59.951000Hz";
-    scale = 1.5;
+    scale = 1.6;
   };
 
   msi = {
