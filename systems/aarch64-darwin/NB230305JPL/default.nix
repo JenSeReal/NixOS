@@ -51,6 +51,7 @@ in
       logseq = enabled;
       miro = enabled;
       headlamp = enabled;
+      citrix = enabled;
       entertainment.music.spotify = enabled;
       entertainment.gaming.steam = enabled;
     };

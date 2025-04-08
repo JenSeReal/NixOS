@@ -184,6 +184,8 @@ in
           "telemetry.telemetryLevel" = "all";
           "terminal.integrated.fontFamily" = mkDefault "'FiraCode Nerd Font', 'monospace'";
           "terminal.integrated.cursorStyle" = mkDefault "line";
+          "terminal.integrated.defaultProfile.osx" =
+            mkIf config.JenSeReal.programs.shells.nushell.enable config.programs.nushell.package;
           "typst-lsp.experimentalFormatterMode" = "on";
 
           "vsicons.dontShowNewVersionMessage" = true;

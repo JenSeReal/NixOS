@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption getExe;
 
   cfg = config.JenSeReal.programs.gui.terminal-emulators.wezterm;
 in
@@ -85,6 +85,9 @@ in
             ''
               -- Fix option key being broken
               config.send_composed_key_when_left_alt_is_pressed = true
+
+              -- Use nu by default
+              config.default_prog = { 'zsh', '-c', '${getExe config.programs.nushell.package}' }
             ''
           else
             ""
@@ -116,6 +119,7 @@ in
         }
         config.default_cursor_style = 'SteadyBar'
         config.check_for_updates = false
+        config.window_close_confirmation = 'NeverPrompt'
 
         return config
       '';
