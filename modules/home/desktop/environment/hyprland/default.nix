@@ -5,9 +5,8 @@
   namespace,
   ...
 }:
-with lib;
-with lib.JenSeReal;
 let
+  inherit (lib) mkEnableOption mkIf;
 
   cfg = config.JenSeReal.desktop.environment.hyprland;
 in
@@ -33,8 +32,12 @@ in
       hyprsunset
       pkgs.${namespace}.screen-recorder
       slurp
+      xclip
+      clipse
       xwaylandvideobridge
       wl-screenrec
+      clipcat
+      clipmenu
     ];
 
     services.kanshi.enable = true;
@@ -52,6 +55,10 @@ in
     };
     # JenSeReal.programs.gui.browser.firefox.enable = true;
     JenSeReal.programs.gui.terminal-emulators.kitty.enable = true;
+    JenSeReal.services = {
+      clipmenu.enable = true;
+      clipcat.enable = true;
+    };
 
   };
 }
