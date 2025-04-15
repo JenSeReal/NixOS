@@ -32,12 +32,9 @@ in
       hyprsunset
       pkgs.${namespace}.screen-recorder
       slurp
-      xclip
-      clipse
       xwaylandvideobridge
       wl-screenrec
-      clipcat
-      clipmenu
+      skim
     ];
 
     services.kanshi.enable = true;
@@ -55,9 +52,16 @@ in
     };
     # JenSeReal.programs.gui.browser.firefox.enable = true;
     JenSeReal.programs.gui.terminal-emulators.kitty.enable = true;
+    JenSeReal.programs = {
+      clipcat-menu = {
+        enable = true;
+        settings.finder = "skim";
+      };
+      clipcatctl.enable = true;
+    };
     JenSeReal.services = {
-      clipmenu.enable = true;
-      clipcat.enable = true;
+      clipcatd.enable = true;
+      clipsync.enable = true;
     };
 
   };
