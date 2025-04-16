@@ -16,8 +16,6 @@ let
 
   inherit (lib.${namespace}) filterNulls;
 
-  runtimeDir = "/run/user/1000";
-
   logModule = types.submodule {
     options = {
       file_path = lib.mkOption {
@@ -355,7 +353,7 @@ in
         WantedBy = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStartPre = "${getExe' pkgs.coreutils "rm"} -f ${runtimeDir}/clipcat/grpc.sock";
+        ExecStartPre = "${getExe' pkgs.coreutils "rm"} -f ${cfg.settings.pid_file}";
         ExecStart = "${getExe' cfg.package "clipcatd"} --no-daemon --replace";
         Restart = "on-failure";
         Type = "simple";
