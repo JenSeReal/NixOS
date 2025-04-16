@@ -17,7 +17,7 @@
   gdk-pixbuf,
 }:
 let
-  version = "v1.25.2";
+  version = "v1.30.0";
   pythonEnv = python3.withPackages (
     ps: with ps; [
       pyyaml
@@ -36,7 +36,7 @@ stdenv.mkDerivation {
     owner = "lawstorant";
     repo = "boxflat";
     rev = version;
-    sha256 = "sha256-EB4Q8BeTZTmjfA+LRUUHdTBxoH+RpOroZZFmsbDk49U=";
+    sha256 = "6fzz3pq9fHoeGMT1Vz5Y8pKLdrprQEV5kLiZt7uJ1KI=";
   };
   nativeBuildInputs = [
     pkg-config
@@ -59,7 +59,14 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     mkdir -p $out/lib/python${pythonEnv.pythonVersion}/site-packages/boxflat
     mkdir -p $out/share/boxflat/data
+    mkdir -p $out/share/applications
+    mkdir -p $out/share/metainfo
+    mkdir -p $out/share/icons/hicolor/scalable/apps
     mkdir -p $out/lib/udev/rules.d
+
+    cp io.github.lawstorant.boxflat.desktop $out/share/applications/
+    cp io.github.lawstorant.boxflat.metainfo.xml $out/share/metainfo/
+    cp icons/scalable/apps/io.github.lawstorant.boxflat.svg $out/share/icons/hicolor/scalable/apps/io.github.lawstorant.boxflat.svg
 
     # Copy all project files to site-packages
     cp -r ./* $out/lib/python${pythonEnv.pythonVersion}/site-packages/boxflat/
