@@ -6,7 +6,10 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    ;
 
   cfg = config.JenSeReal.desktop.environment.hyprland;
 in
@@ -39,7 +42,12 @@ in
 
     services.kanshi.enable = true;
     JenSeReal.desktop = {
-      window-managers.hyprland.enable = true;
+      window-managers.hyprland = {
+        enable = true;
+        settings.defaultPrograms = {
+          terminal = config.programs.wezterm.package;
+        };
+      };
       bars.waybar.enable = true;
       launchers.kickoff.enable = true;
       launchers.anyrun.enable = true;

@@ -23,7 +23,6 @@ in
   };
 
   imports = [
-    ./variables.nix
     ./autostart.nix
     ./look.nix
     ./feel.nix

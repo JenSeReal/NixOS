@@ -1,6 +1,7 @@
 { config, lib, ... }:
-with lib;
 let
+  inherit (lib) mkIf;
+
   cfg = config.JenSeReal.desktop.window-managers.hyprland;
 in
 {

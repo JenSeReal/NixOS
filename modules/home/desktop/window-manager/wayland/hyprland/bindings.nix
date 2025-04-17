@@ -5,9 +5,15 @@
   namespace,
   ...
 }:
-with lib;
 let
-  cfg = config.JenSeReal.desktop.window-managers.hyprland;
+  inherit (lib)
+    getExe
+    getExe'
+    mkIf
+    types
+    mkOption
+    ;
+  inherit (lib.${namespace}) mkStrOpt mkPackageOpt;
 
   hyprctl = getExe' config.wayland.windowManager.hyprland.package "hyprctl";
   screen-recorder = "${getExe pkgs.${namespace}.screen-recorder}";
@@ -22,13 +28,54 @@ let
 
     ${hyprctl} dispatch dpms on
   '';
+
+  settingsModule = types.submodule {
+    options = {
+      modifyer = mkOption {
+        type = types.submodule {
+          options = {
+            mainMod = mkStrOpt "SUPER" "The main modifyer";
+            mainModCtrl = mkStrOpt "SUPER_CONTROL" "The main modifyer + Control";
+            mainModShift = mkStrOpt "SUPER_SHIFT" "The main modifyer + Shift";
+          };
+        };
+        default = { };
+      };
+      defaultPrograms = mkOption {
+        type = types.submodule {
+          options = {
+            terminal = mkPackageOpt pkgs.wezterm "The default terminal to use";
+            browser = mkPackageOpt pkgs.firefox "The browser to use";
+            launcher = mkPackageOpt pkgs.yofi "The default launcher to use";
+            secondaryLauncher = mkPackageOpt pkgs.anyrun "The secondary launcher to use";
+            explorer = mkPackageOpt pkgs.nemo "The default explorer to use";
+            screenLocker = mkPackageOpt pkgs.hyprlock "The default screen locker";
+            logoutMenu = mkPackageOpt pkgs.wlogout "The default logoutMenu to use";
+          };
+        };
+        default = { };
+      };
+    };
+  };
+
+  cfg = config.JenSeReal.desktop.window-managers.hyprland;
 in
 {
+  options.JenSeReal.desktop.window-managers.hyprland = {
+    settings = lib.mkOption {
+      type = settingsModule;
+      default = { };
+      description = "The settings for bindings";
+    };
+  };
+
   config = mkIf cfg.enable {
+    home.packages = [ pkgs.playerctl ];
+
     wayland.windowManager.hyprland = {
       extraConfig = ''
         # will switch to a submap called record
-        bind = $mainMod, R, submap, record
+        bind = ${cfg.settings.modifyer.mainMod}, R, submap, record
 
         # will start a submap called "record"
         submap = record
@@ -47,41 +94,41 @@ in
       settings = {
         bind =
           [
-            "$mainMod, RETURN, exec, $term"
-            "$mainMod, B, exec, $browser"
-            "$mainMod, D, exec, $launcher"
-            "$mainModShift, D, exec, anyrun"
-            "$mainMod, E, exec, $explorer"
-            "$mainModShift, E, exec, $logout"
+            "${cfg.settings.modifyer.mainMod}, RETURN, exec, ${getExe cfg.settings.defaultPrograms.terminal}"
+            "${cfg.settings.modifyer.mainMod}, B, exec, ${getExe cfg.settings.defaultPrograms.browser}"
+            "${cfg.settings.modifyer.mainMod}, D, exec, ${getExe cfg.settings.defaultPrograms.launcher}"
+            "${cfg.settings.modifyer.mainModShift}, D, exec, ${getExe cfg.settings.defaultPrograms.secondaryLauncher}"
+            "${cfg.settings.modifyer.mainMod}, E, exec, ${getExe cfg.settings.defaultPrograms.explorer}"
+            "${cfg.settings.modifyer.mainModShift}, E, exec, ${getExe cfg.settings.defaultPrograms.logoutMenu}"
 
-            "$mainModShift, Q, killactive,"
-            "$mainModShift, C, exec, ${reload_script.outPath}"
-            "$mainMod, M, exit,"
-            "$mainMod, V, togglefloating,"
-            "$mainMod, P, pseudo,"
-            "$mainMod, J, togglesplit,"
-            "$mainMod, F, fullscreen,"
-            "$mainMod, F1, exec, ${getExe config.programs.swaylock.package}"
+            "${cfg.settings.modifyer.mainModShift}, Q, killactive,"
+            "${cfg.settings.modifyer.mainModShift}, C, exec, ${reload_script.outPath}"
+            "${cfg.settings.modifyer.mainMod}, M, exit,"
+            "${cfg.settings.modifyer.mainMod}, V, togglefloating,"
+            "${cfg.settings.modifyer.mainMod}, P, pseudo,"
+            "${cfg.settings.modifyer.mainMod}, J, togglesplit,"
+            "${cfg.settings.modifyer.mainMod}, F, fullscreen,"
+            "${cfg.settings.modifyer.mainMod}, F1, exec, ${getExe cfg.settings.defaultPrograms.screenLocker}"
 
-            "$mainMod, left, movefocus, l"
-            "$mainMod, right, movefocus, r"
-            "$mainMod, up, movefocus, u"
-            "$mainMod, down, movefocus, d"
+            "${cfg.settings.modifyer.mainMod}, left, movefocus, l"
+            "${cfg.settings.modifyer.mainMod}, right, movefocus, r"
+            "${cfg.settings.modifyer.mainMod}, up, movefocus, u"
+            "${cfg.settings.modifyer.mainMod}, down, movefocus, d"
 
-            "$mainMod, mouse_up, workspace, e+1"
-            "$mainMod, mouse_down, workspace, e-1"
+            "${cfg.settings.modifyer.mainMod}, mouse_up, workspace, e+1"
+            "${cfg.settings.modifyer.mainMod}, mouse_down, workspace, e-1"
 
-            "$mainModShift,left,movewindow,l"
-            "$mainModShift,right,movewindow,r"
-            "$mainModShift,up,movewindow,u"
-            "$mainModShift,down,movewindow,d"
+            "${cfg.settings.modifyer.mainModShift},left,movewindow,l"
+            "${cfg.settings.modifyer.mainModShift},right,movewindow,r"
+            "${cfg.settings.modifyer.mainModShift},up,movewindow,u"
+            "${cfg.settings.modifyer.mainModShift},down,movewindow,d"
 
-            "$mainModControl, right, workspace, +1"
-            "$mainModControl, left, workspace, -1"
+            "${cfg.settings.modifyer.mainModCtrl}, right, workspace, +1"
+            "${cfg.settings.modifyer.mainModCtrl}, left, workspace, -1"
 
             # special workspaces
-            "$mainModShift,minus,movetoworkspace,special"
-            "$mainMod,minus,togglespecialworkspace,"
+            "${cfg.settings.modifyer.mainModShift},minus,movetoworkspace,special"
+            "${cfg.settings.modifyer.mainMod},minus,togglespecialworkspace,"
 
           ]
           ++ (builtins.concatLists (
@@ -95,16 +142,28 @@ in
                   builtins.toString (x + 1 - (c * 10));
               in
               [
-                "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
-                "$mainModControl, ${ws}, movetoworkspace, ${toString (x + 1)}"
-                "$mainModShift, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
+                "${cfg.settings.modifyer.mainMod}, ${ws}, workspace, ${toString (x + 1)}"
+                "${cfg.settings.modifyer.mainModCtrl}, ${ws}, movetoworkspace, ${toString (x + 1)}"
+                "${cfg.settings.modifyer.mainModShift}, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
               ]
             ) 10
           ));
         bindm = [
-          "$mainMod, mouse:272, movewindow"
-          "$mainMod, mouse:273, resizewindow"
+          "${cfg.settings.modifyer.mainMod}, mouse:272, movewindow"
+          "${cfg.settings.modifyer.mainMod}, mouse:273, resizewindow"
         ];
+        bindel = [
+          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ];
+
+        bindl = [
+          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ", XF86AudioPlay, exec, playerctl play-pause"
+          ", XF86AudioPrev, exec, playerctl previous"
+          ", XF86AudioNext, exec, playerctl next"
+        ];
+
       };
     };
   };

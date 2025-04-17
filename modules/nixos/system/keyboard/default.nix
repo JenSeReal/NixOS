@@ -6,18 +6,17 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption types;
-  inherit (lib.${namespace}) mkOpt;
-  inherit (types) str;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) mkStrOpt;
   cfg = config.${namespace}.system.keyboard;
 in
 {
 
   options.${namespace}.system.keyboard = {
     enable = mkEnableOption "Options for the keyboard.";
-    xkb_layout = mkOpt str "de" "The xkb layout for the keyboard";
-    xkb_variant = mkOpt str "nodeadkeys" "The xkb variant for the keyboard";
-    xkb_options = mkOpt str "caps:escape" "The xkb options for the keyboard";
+    xkb_layout = mkStrOpt "de" "The xkb layout for the keyboard";
+    xkb_variant = mkStrOpt "nodeadkeys" "The xkb variant for the keyboard";
+    xkb_options = mkStrOpt "caps:escape" "The xkb options for the keyboard";
   };
 
   config = mkIf cfg.enable {
