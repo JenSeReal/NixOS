@@ -51,5 +51,6 @@ python3Packages.buildPythonApplication {
     license = licenses.gpl3; # From the LICENSE file in the repo
     platforms = platforms.linux;
     maintainers = [ ];
+    mainProgram = "clipsync";
   };
 }
