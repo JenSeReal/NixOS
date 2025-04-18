@@ -13,10 +13,12 @@ let
     types
     mkOption
     ;
-  inherit (lib.${namespace}) mkStrOpt mkPackageOpt;
+  inherit (lib.${namespace}) mkStrOpt mkStrOpt' mkPackageOpt;
 
   hyprctl = getExe' config.wayland.windowManager.hyprland.package "hyprctl";
-  screen-recorder = "${getExe pkgs.${namespace}.screen-recorder}";
+  screen-recorder = getExe pkgs.${namespace}.screen-recorder;
+  toggle = getExe pkgs.${namespace}.toggle;
+  screenshotter = getExe pkgs.${namespace}.screenshotter;
 
   reload_script = pkgs.writeShellScript "reload.sh" ''
     killall .waybar-wrapped
@@ -55,6 +57,19 @@ let
         };
         default = { };
       };
+      submaps = mkOption {
+        type = types.listOf types.submodule {
+          options = {
+            name = mkOption { type = types.str; };
+            binding = mkOption { type = types.str; };
+            bind = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+            resetKey = mkStrOpt' "escape";
+          };
+        };
+      };
     };
   };
 
@@ -74,15 +89,38 @@ in
 
     wayland.windowManager.hyprland = {
       extraConfig = ''
-        # will switch to a submap called record
+        ### recorder submap
         bind = ${cfg.settings.modifyer.mainMod}, R, submap, record
 
         # will start a submap called "record"
         submap = record
 
         # sets repeatable binds for resizing the active window
-        bind = , s, exec, ${screen-recorder} screen
-        bind = , a, exec, ${screen-recorder} area
+        bind = , s, exec, ${toggle} ${screen-recorder} -s -d ${config.home.homeDirectory}/Pictures/Recordings && hyprctl dispatch submap reset
+        bind = , w, exec, ${toggle} ${screen-recorder} -w -d ${config.home.homeDirectory}/Pictures/Recordings && hyprctl dispatch submap reset
+        bind = , a, exec, ${toggle} ${screen-recorder} -a -d ${config.home.homeDirectory}/Pictures/Recordings && hyprctl dispatch submap reset
+
+        # use reset to go back to the global submap
+        bind = , escape, submap, reset
+
+        # will reset the submap, which will return to the global submap
+        submap = reset
+
+        ### screenshot submap
+        bind = ${cfg.settings.modifyer.mainMod}, S, submap, screenshot
+
+        # will start a submap called "screenshot"
+        submap = screenshot
+
+        # sets repeatable binds for resizing the active window
+        bind = , s, exec, ${screenshotter} copy screen && hyprctl dispatch submap reset
+        bind = , o, exec, ${screenshotter} copy output && hyprctl dispatch submap reset
+        bind = , w, exec, ${screenshotter} copy active && hyprctl dispatch submap reset
+        bind = , a, exec, ${screenshotter} copy area && hyprctl dispatch submap reset
+        bind = SHIFT, s, exec, ${screenshotter} save screen ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
+        bind = SHIFT, o, exec, ${screenshotter} save output ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
+        bind = SHIFT, w, exec, ${screenshotter} save active ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
+        bind = SHIFT, a, exec, ${screenshotter} save area ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
 
         # use reset to go back to the global submap
         bind = , escape, submap, reset

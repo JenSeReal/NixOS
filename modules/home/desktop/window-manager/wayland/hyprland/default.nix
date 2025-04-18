@@ -49,6 +49,8 @@ in
       settings = {
         exec = [ ''notify-send -i ~/.face -u normal -t 5000 "Hello $(whoami)"'' ];
       };
+
+      systemd.variables = [ "--all" ];
     };
   };
 }

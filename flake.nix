@@ -75,6 +75,11 @@
     # wezterm.url = "github:wez/wezterm/main?dir=nix";
     # wezterm.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs-unstable";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
