@@ -13,12 +13,9 @@ let
     types
     mkOption
     ;
-  inherit (lib.${namespace}) mkStrOpt mkStrOpt' mkPackageOpt;
+  inherit (lib.${namespace}) mkStrOpt mkPackageOpt;
 
   hyprctl = getExe' config.wayland.windowManager.hyprland.package "hyprctl";
-  screen-recorder = getExe pkgs.${namespace}.screen-recorder;
-  toggle = getExe pkgs.${namespace}.toggle;
-  screenshotter = getExe pkgs.${namespace}.screenshotter;
 
   reload_script = pkgs.writeShellScript "reload.sh" ''
     killall .waybar-wrapped
@@ -30,6 +27,105 @@ let
 
     ${hyprctl} dispatch dpms on
   '';
+
+  # Helper function to process an individual submap
+  processSubmap =
+    submap:
+    let
+      # Process action bindings with automatic submap reset
+      processBinds =
+        actionType: binds:
+        map (
+          bind:
+          let
+            parts = lib.splitString ", " bind;
+            modifiers = lib.head parts;
+            key = lib.elemAt parts 1;
+            action = lib.elemAt parts 2;
+            command = lib.concatStringsSep ", " (lib.drop 3 parts);
+          in
+          "${actionType} = ${modifiers}, ${key}, ${action}, hyprctl dispatch submap reset && ${command}"
+        ) binds;
+
+      # Process all action types dynamically
+      actionCommands = lib.flatten (
+        lib.mapAttrsToList (actionType: binds: processBinds actionType binds) submap.actions
+      );
+
+      # Process exit bindings
+      exitCommands = map (bind: "bind = ${bind}, submap, reset") submap.exit.bind;
+
+      # Build the full configuration
+      fullConfig =
+        [
+          "bind = ${submap.trigger}, submap, ${submap.name}"
+          "# will start a submap called \"${submap.name}\""
+          "submap = ${submap.name}"
+          "# sets repeatable binds for the submap"
+        ]
+        ++ actionCommands
+        ++ [
+          "# use reset to go back to the global submap"
+        ]
+        ++ exitCommands
+        ++ [
+          "# will reset the submap, which will return to the global submap"
+          "submap = reset"
+        ];
+    in
+    lib.concatStringsSep "\n" fullConfig;
+
+  submapModule = types.submodule {
+    options = {
+      name = mkOption {
+        type = types.str;
+        description = "Name of the submap";
+        example = "🎥 Recorder";
+      };
+
+      trigger = mkOption {
+        type = types.str;
+        description = "Keybinding that activates the submap";
+        example = "\${mainMod}, R";
+      };
+
+      actions = mkOption {
+        type = with types; attrsOf (listOf str);
+        description = "Set of action types and their bindings";
+        example = lib.literalExpression ''
+          {
+            bind = [
+              "s, exec, ''${toggle} ''${screen-recorder} -s"
+              "w, exec, ''${toggle} ''${screen-recorder} -w"
+            ];
+            bindm = [
+              "SUPER, mouse:272, movewindow"
+            ];
+          }
+        '';
+      };
+
+      exit = mkOption {
+        type = types.submodule {
+          options = {
+            bind = mkOption {
+              type = with types; listOf str;
+              description = "Exit bindings to reset the submap";
+              default = [ ", escape" ];
+              example = [
+                ", escape"
+                "q, exec, notify-send 'Exited submap'"
+              ];
+            };
+          };
+        };
+        description = "Exit bindings for the submap";
+        default = {
+          bind = [ ", escape" ];
+        };
+      };
+    };
+  };
 
   settingsModule = types.submodule {
     options = {
@@ -58,17 +154,29 @@ let
         default = { };
       };
       submaps = mkOption {
-        type = types.listOf types.submodule {
-          options = {
-            name = mkOption { type = types.str; };
-            binding = mkOption { type = types.str; };
-            bind = mkOption {
-              type = types.listOf types.str;
-              default = [ ];
-            };
-            resetKey = mkStrOpt' "escape";
-          };
-        };
+        type = types.listOf submapModule;
+        default = [ ];
+        description = "List of submap configurations";
+        example = lib.literalExpression ''
+          [
+            {
+              name = "🎥 Recorder";
+              trigger = "''${mainMod}, R";
+              actions = {
+                bind = [
+                  "s, exec, ''${toggle} ''${screen-recorder} -s -d ''${config.home.homeDirectory}/Pictures/Recordings"
+                  "w, exec, ''${toggle} ''${screen-recorder} -w -d ''${config.home.homeDirectory}/Pictures/Recordings"
+                ];
+                bindm = [
+                  "SUPER, mouse:272, movewindow"
+                ];
+              };
+              exit = {
+                bind = [ ", escape" ];
+              };
+            }
+          ]
+        '';
       };
     };
   };
@@ -89,44 +197,7 @@ in
 
     wayland.windowManager.hyprland = {
       extraConfig = ''
-        ### recorder submap
-        bind = ${cfg.settings.modifyer.mainMod}, R, submap, record
-
-        # will start a submap called "record"
-        submap = record
-
-        # sets repeatable binds for resizing the active window
-        bind = , s, exec, ${toggle} ${screen-recorder} -s -d ${config.home.homeDirectory}/Pictures/Recordings && hyprctl dispatch submap reset
-        bind = , w, exec, ${toggle} ${screen-recorder} -w -d ${config.home.homeDirectory}/Pictures/Recordings && hyprctl dispatch submap reset
-        bind = , a, exec, ${toggle} ${screen-recorder} -a -d ${config.home.homeDirectory}/Pictures/Recordings && hyprctl dispatch submap reset
-
-        # use reset to go back to the global submap
-        bind = , escape, submap, reset
-
-        # will reset the submap, which will return to the global submap
-        submap = reset
-
-        ### screenshot submap
-        bind = ${cfg.settings.modifyer.mainMod}, S, submap, screenshot
-
-        # will start a submap called "screenshot"
-        submap = screenshot
-
-        # sets repeatable binds for resizing the active window
-        bind = , s, exec, ${screenshotter} copy screen && hyprctl dispatch submap reset
-        bind = , o, exec, ${screenshotter} copy output && hyprctl dispatch submap reset
-        bind = , w, exec, ${screenshotter} copy active && hyprctl dispatch submap reset
-        bind = , a, exec, ${screenshotter} copy area && hyprctl dispatch submap reset
-        bind = SHIFT, s, exec, ${screenshotter} save screen ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
-        bind = SHIFT, o, exec, ${screenshotter} save output ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
-        bind = SHIFT, w, exec, ${screenshotter} save active ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
-        bind = SHIFT, a, exec, ${screenshotter} save area ${config.home.homeDirectory}/Pictures/Screenshots && hyprctl dispatch submap reset
-
-        # use reset to go back to the global submap
-        bind = , escape, submap, reset
-
-        # will reset the submap, which will return to the global submap
-        submap = reset
+        ${lib.concatMapStringsSep "\n\n" processSubmap cfg.settings.submaps}
       '';
 
       settings = {
