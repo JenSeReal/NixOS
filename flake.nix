@@ -8,9 +8,9 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
-      # url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      # url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nur = {
       url = "github:nix-community/NUR";
@@ -95,9 +95,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:danth/stylix/master";
-    stylix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # stylix.url = "github:danth/stylix/release-24.11";
+    # stylix.url = "github:danth/stylix/master";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs =
