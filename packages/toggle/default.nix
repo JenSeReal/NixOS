@@ -34,6 +34,8 @@ pkgs.stdenv.mkDerivation {
     BINARY_PATH="$1"
     BINARY_NAME=$(basename "$BINARY_PATH")
 
+    echo $BINARY_NAME
+
     # Check if process is running using the binary name
     if pgrep -x "$BINARY_NAME" > /dev/null 2>&1; then
       echo "Stopping $BINARY_NAME"

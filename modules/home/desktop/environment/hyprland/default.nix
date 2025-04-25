@@ -57,11 +57,11 @@ in
           };
           submaps = [
             {
-              name = "🎥 (s)🖥️ (w)🪟 (a)🧭";
+              name = "🎥 (o)🖥️ (w)🪟 (a)🧭";
               trigger = "${mainMod}, R";
               actions = {
                 bind = [
-                  ", s, exec, ${toggle} ${screen-recorder} -s -d ${config.home.homeDirectory}/Pictures/Recordings"
+                  ", o, exec, ${toggle} ${screen-recorder} -o -d ${config.home.homeDirectory}/Pictures/Recordings"
                   ", w, exec, ${toggle} ${screen-recorder} -w -d ${config.home.homeDirectory}/Pictures/Recordings"
                   ", a, exec, ${toggle} ${screen-recorder} -a -d ${config.home.homeDirectory}/Pictures/Recordings"
                 ];

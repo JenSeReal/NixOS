@@ -44,6 +44,9 @@ stdenv.mkDerivation {
       MONITOR=""
       EXTRA_ARGS=""
 
+      GEOMETRY_ARG=()
+      AUDIO_ARGS=()
+
       # Parse arguments
       while [[ $# -gt 0 ]]; do
         case $1 in
@@ -80,7 +83,7 @@ stdenv.mkDerivation {
       # Determine audio source
       DEFAULT_AUDIO=$(pactl get-default-source 2>/dev/null || true)
       if [ -n "$DEFAULT_AUDIO" ]; then
-        AUDIO_ARGS="--audio --audio-device=$DEFAULT_AUDIO"
+        AUDIO_ARGS=(--audio "--audio-device=$DEFAULT_AUDIO")
       else
         echo "Warning: Could not determine default audio source. Recording without audio."
         AUDIO_ARGS=""
@@ -91,7 +94,7 @@ stdenv.mkDerivation {
         echo "Select an area to record..."
         GEOMETRY=$(slurp)
         [ -z "$GEOMETRY" ] && echo "Selection cancelled" && exit 1
-        GEOMETRY_ARG="-g \"$GEOMETRY\""
+        GEOMETRY_ARG=(-g "$GEOMETRY")
 
       elif [[ "$CAPTURE_MODE" == "window" ]]; then
         if command -v hyprctl >/dev/null; then
@@ -108,7 +111,7 @@ stdenv.mkDerivation {
           GEOMETRY="$X,$Y $WIDTHx$HEIGHT"
 
           [ -z "$X" ] && echo "Could not get active window geometry" && exit 1
-          GEOMETRY_ARG="-g \"$GEOMETRY\""
+          GEOMETRY_ARG=(-g "$GEOMETRY")
         else
           echo "Hyprland (hyprctl) is required for --window mode."
           exit 1
@@ -119,7 +122,7 @@ stdenv.mkDerivation {
           echo "Using Hyprland to get active output..."
           MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
           if [ -n "$MONITOR" ]; then
-            GEOMETRY_ARG="-o $MONITOR"
+            GEOMETRY_ARG=(-o "$MONITOR")
           else
             echo "Could not determine active monitor. Falling back to full screen."
             GEOMETRY_ARG=""
@@ -130,12 +133,14 @@ stdenv.mkDerivation {
       fi
 
       # Ensure output directory exists
-      mkdir -p "$(dirname "$OUTPUT_FILE")"
+      mkdir -p "$(dirname $OUTPUT_FILE)"
 
       # Print debugging information
       echo "Starting recording..."
 
-      wl-screenrec --low-power=off --codec=hevc $GEOMETRY_ARG $AUDIO_ARGS -f $OUTPUT_FILE"
+      echo "Running command: wl-screenrec --low-power=off --codec=hevc ''${GEOMETRY_ARG[*]} ''${AUDIO_ARGS[*]} -f $OUTPUT_FILE"
+
+      exec -a "screen-recorder" wl-screenrec --low-power=off --codec=hevc "''${GEOMETRY_ARG[@]}" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
 
       echo "🎥 Recording saved to $OUTPUT_FILE"
       EOF
