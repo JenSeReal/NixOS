@@ -15,6 +15,6 @@ in
   options.${namespace}.desktop.wallpaper.swww = {
     enable = mkBoolOpt false "Whether to enable swww service.";
   };
-  # TODO: Enable swww when updating to 25.05
+  # FIXME: Enable swww when updating to 25.05
   # config = mkIf cfg.enable { services.swww.enable = true; };
 }

@@ -198,7 +198,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    # TODO: add when upgrading to nixos 25.05
+    # FIXME: add when upgrading to nixos 25.05
     # programs.aerospace = {
     #   enable = true;
     #   userSettings = {

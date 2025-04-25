@@ -22,7 +22,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    # TODO: enable clipse when updating to 25.05
+    # FIXME: enable clipse when updating to 25.05
     # services.clipse = enabled;
   };
 }
