@@ -19,22 +19,22 @@ in
     ${namespace}.programs.cli.homebrew = {
       enable = true;
       additional_casks = [
-        # {
-        #   name = "middleclick";
-        #   args = {
-        #     no_quarantine = true;
-        #   };
-        # }
+        {
+          name = "middleclick";
+          args = {
+            no_quarantine = true;
+          };
+        }
       ];
     };
 
-    # launchd.user.agents.middleclick = {
-    #   command = "/Applications/MiddleClick.app/Contents/MacOS/MiddleClick";
-    #   serviceConfig = {
-    #     KeepAlive = true;
-    #     RunAtLoad = true;
-    #   };
-    # };
+    launchd.user.agents.middleclick = {
+      command = "/Applications/MiddleClick.app/Contents/MacOS/MiddleClick";
+      serviceConfig = {
+        KeepAlive = true;
+        RunAtLoad = true;
+      };
+    };
 
     system.defaults = {
       trackpad = {

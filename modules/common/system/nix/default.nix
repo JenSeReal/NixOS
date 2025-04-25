@@ -78,6 +78,7 @@ in
           allowed-users = users;
           allow-import-from-derivation = true;
           builders-use-substitutes = true;
+          download-buffer-size = 524288000;
           experimental-features = [
             "nix-command"
             "flakes"

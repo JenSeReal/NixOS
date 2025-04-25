@@ -55,7 +55,7 @@ in
       entertainment.music.spotify = enabled;
       entertainment.gaming.steam = enabled;
     };
-    system.nix = enabled;
+    system = enabled;
     virtualisation.docker = enabled;
   };
 }

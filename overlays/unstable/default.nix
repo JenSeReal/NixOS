@@ -1,6 +1,7 @@
 { channels, ... }:
 final: prev: {
   inherit (channels.nixpkgs-unstable)
+    aerospace
     bottles-unwrapped
     btop
     clipcat

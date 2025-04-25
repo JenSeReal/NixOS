@@ -219,7 +219,7 @@ in
         marketplace.oderwat.indent-rainbow
         marketplace.rust-lang.rust-analyzer
         marketplace.fill-labs.dependi
-        marketplace.vadimcn.vscode-lldb
+        # marketplace.vadimcn.vscode-lldb
         marketplace.pflannery.vscode-versionlens
         marketplace.lorenzopirro.rust-flash-snippets
         marketplace.zhangyue.rust-mod-generator

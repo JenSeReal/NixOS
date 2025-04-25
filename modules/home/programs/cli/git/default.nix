@@ -95,6 +95,10 @@ in
         ".idea*"
 
         "target"
+
+        ".direnv"
+        ".devenv"
+        ".envrc"
       ];
     };
 
