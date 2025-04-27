@@ -15,7 +15,6 @@ let
   mainMod = "SUPER";
 
   screen-recorder = getExe pkgs.${namespace}.screen-recorder;
-  toggle = getExe pkgs.${namespace}.toggle;
   screenshotter = getExe pkgs.${namespace}.screenshotter;
 
   cfg = config.JenSeReal.desktop.environment.hyprland;
@@ -61,9 +60,9 @@ in
               trigger = "${mainMod}, R";
               actions = {
                 bind = [
-                  ", o, exec, ${toggle} ${screen-recorder} -o -d ${config.home.homeDirectory}/Pictures/Recordings"
-                  ", w, exec, ${toggle} ${screen-recorder} -w -d ${config.home.homeDirectory}/Pictures/Recordings"
-                  ", a, exec, ${toggle} ${screen-recorder} -a -d ${config.home.homeDirectory}/Pictures/Recordings"
+                  ", o, exec, pkill -x wl-screenrec || ${screen-recorder} -o -d ${config.home.homeDirectory}/Pictures/Recordings"
+                  ", w, exec, pkill -x wl-screenrec || ${screen-recorder} -w -d ${config.home.homeDirectory}/Pictures/Recordings"
+                  ", a, exec, pkill -x wl-screenrec || ${screen-recorder} -a -d ${config.home.homeDirectory}/Pictures/Recordings"
                 ];
               };
             }

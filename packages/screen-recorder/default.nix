@@ -25,7 +25,7 @@ stdenv.mkDerivation {
 
       print_usage() {
         echo "Usage: screen-recorder [OPTIONS]"
-        echo "Record your screen with wl-screenrec"
+        echo "Record your screen with wl-screenrec."
         echo ""
         echo "Options:"
         echo "  -a, --area       Select an area to record with slurp"
@@ -35,114 +35,146 @@ stdenv.mkDerivation {
         echo "  -h, --help       Show this help message"
       }
 
-      # Default values
+      # Defaults
       CAPTURE_MODE="output"
       OUTPUT_DIR="./recordings"
       TIMESTAMP=$(date +%Y-%m-%d/%H%M%S)
       OUTPUT_FILE="$OUTPUT_DIR/$TIMESTAMP.mp4"
-      GEOMETRY=""
-      MONITOR=""
-      EXTRA_ARGS=""
-
-      GEOMETRY_ARG=()
       AUDIO_ARGS=()
 
-      # Parse arguments
-      while [[ $# -gt 0 ]]; do
-        case $1 in
-          -a|--area)
-            CAPTURE_MODE="area"
-            shift
-            ;;
-          -w|--window)
-            CAPTURE_MODE="window"
-            shift
-            ;;
-          -o|--output)
-            CAPTURE_MODE="output"
-            shift
-            ;;
-          -d|--directory)
-            OUTPUT_DIR="$2"
-            TIMESTAMP=$(date +%Y-%m-%d/%H%M%S)
-            OUTPUT_FILE="$OUTPUT_DIR/$TIMESTAMP.mp4"
-            shift 2
-            ;;
-          -h|--help)
-            print_usage
-            exit 0
-            ;;
-          *)
-            echo "Unknown option: $1"
-            print_usage
-            exit 1
-            ;;
-        esac
-      done
+      check_running_recording() {
+        if pgrep -x wl-screenrec >/dev/null; then
+          echo "Recording already in progress. Stopping it..."
+          pkill -x wl-screenrec
+          echo "Recording stopped. Exiting."
+          exit 0
+        fi
+      }
 
-      # Determine audio source
-      DEFAULT_AUDIO=$(pactl get-default-source 2>/dev/null || true)
-      if [ -n "$DEFAULT_AUDIO" ]; then
-        AUDIO_ARGS=(--audio "--audio-device=$DEFAULT_AUDIO")
-      else
-        echo "Warning: Could not determine default audio source. Recording without audio."
-        AUDIO_ARGS=""
-      fi
+      parse_args() {
+        while [[ $# -gt 0 ]]; do
+          case $1 in
+            -a|--area)
+              CAPTURE_MODE="area"
+              shift
+              ;;
+            -w|--window)
+              CAPTURE_MODE="window"
+              shift
+              ;;
+            -o|--output)
+              CAPTURE_MODE="output"
+              shift
+              ;;
+            -d|--directory)
+              OUTPUT_DIR="$2"
+              TIMESTAMP=$(date +%Y-%m-%d/%H%M%S)
+              OUTPUT_FILE="$OUTPUT_DIR/$TIMESTAMP.mp4"
+              shift 2
+              ;;
+            -h|--help)
+              print_usage
+              exit 0
+              ;;
+            *)
+              echo "Unknown option: $1"
+              print_usage
+              exit 1
+              ;;
+          esac
+        done
+      }
 
-      # Determine capture region
-      if [[ "$CAPTURE_MODE" == "area" ]]; then
-        echo "Select an area to record..."
-        GEOMETRY=$(slurp)
-        [ -z "$GEOMETRY" ] && echo "Selection cancelled" && exit 1
-        GEOMETRY_ARG=(-g "$GEOMETRY")
-
-      elif [[ "$CAPTURE_MODE" == "window" ]]; then
-        if command -v hyprctl >/dev/null; then
-          echo "Using Hyprland to get active window geometry..."
-          WINDOW_JSON=$(hyprctl activewindow -j)
-
-          # Extract coordinates and dimensions from Hyprland's JSON output
-          X=$(echo "$WINDOW_JSON" | jq -r '.at[0]')
-          Y=$(echo "$WINDOW_JSON" | jq -r '.at[1]')
-          WIDTH=$(echo "$WINDOW_JSON" | jq -r '.size[0]')
-          HEIGHT=$(echo "$WINDOW_JSON" | jq -r '.size[1]')
-
-          # Format as: "x,y WIDTHxHEIGHT" (the format slurp uses, which wl-screenrec accepts)
-          GEOMETRY="$X,$Y $WIDTHx$HEIGHT"
-
-          [ -z "$X" ] && echo "Could not get active window geometry" && exit 1
-          GEOMETRY_ARG=(-g "$GEOMETRY")
+      prepare_audio() {
+        if command -v pactl >/dev/null; then
+          local default_audio
+          default_audio=$(pactl get-default-source 2>/dev/null || true)
+          if [ -n "$default_audio" ]; then
+            AUDIO_ARGS=(--audio "--audio-device=$default_audio")
+          else
+            echo "Warning: Could not determine default audio source. Recording without audio."
+          fi
         else
-          echo "Hyprland (hyprctl) is required for --window mode."
+          echo "Warning: pactl not found. Recording without audio."
+        fi
+      }
+
+      start_recording_area() {
+        echo "Select an area to record..."
+        local geometry
+        geometry=$(slurp)
+        [ -z "$geometry" ] && echo "Selection cancelled" && exit 1
+
+        echo "Starting recording (area)..."
+        exec -a screen-recorder wl-screenrec --low-power=off --codec=hevc -g "$geometry" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
+      }
+
+      start_recording_window() {
+        slurp -h >/dev/null 2>&1 || true
+
+        if ! command -v hyprctl >/dev/null; then
+          echo "Error: Hyprland (hyprctl) is required for --window mode."
           exit 1
         fi
 
-      elif [[ "$CAPTURE_MODE" == "output" ]]; then
+        echo "Using Hyprland to get active window geometry..."
+        local window_json x y width height geometry
+
+        window_json=$(hyprctl activewindow -j)
+        x=$(echo "$window_json" | jq -r '.at[0]')
+        y=$(echo "$window_json" | jq -r '.at[1]')
+        width=$(echo "$window_json" | jq -r '.size[0]')
+        height=$(echo "$window_json" | jq -r '.size[1]')
+
+        [ -z "$x" ] && echo "Could not get active window geometry" && exit 1
+
+        geometry="$x,$y ''${width}x''${height}"
+
+        echo "Starting recording (window)..."
+        exec wl-screenrec --low-power=off --codec=hevc -g "$geometry" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
+      }
+
+      start_recording_output() {
+        slurp -h >/dev/null 2>&1 || true
+
+        local monitor=""
         if command -v hyprctl >/dev/null; then
-          echo "Using Hyprland to get active output..."
-          MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
-          if [ -n "$MONITOR" ]; then
-            GEOMETRY_ARG=(-o "$MONITOR")
-          else
-            echo "Could not determine active monitor. Falling back to full screen."
-            GEOMETRY_ARG=""
-          fi
-        else
-          GEOMETRY_ARG=""
+          monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
         fi
-      fi
 
-      # Ensure output directory exists
-      mkdir -p "$(dirname $OUTPUT_FILE)"
+        if [ -n "$monitor" ]; then
+          echo "Starting recording (output: $monitor)..."
+          exec wl-screenrec --low-power=off --codec=hevc -o "$monitor" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
+        else
+          echo "Error: No focused monitor detected."
+          exit 1
+        fi
+      }
 
-      # Print debugging information
-      echo "Starting recording..."
+      main() {
+        check_running_recording
+        parse_args "$@"
+        prepare_audio
+        mkdir -p "$(dirname "$OUTPUT_FILE")"
 
-      echo "Running command: wl-screenrec --low-power=off --codec=hevc ''${GEOMETRY_ARG[*]} ''${AUDIO_ARGS[*]} -f $OUTPUT_FILE"
+        case "$CAPTURE_MODE" in
+          area)
+            start_recording_area
+            ;;
+          window)
+            start_recording_window
+            ;;
+          output)
+            start_recording_output
+            ;;
+          *)
+            echo "Unknown capture mode: $CAPTURE_MODE"
+            exit 1
+            ;;
+        esac
+      }
 
-      exec -a "screen-recorder" wl-screenrec --low-power=off --codec=hevc "''${GEOMETRY_ARG[@]}" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
-
-      echo "🎥 Recording saved to $OUTPUT_FILE"
+      main "$@"
       EOF
       chmod +x $out/bin/screen-recorder
     '';
