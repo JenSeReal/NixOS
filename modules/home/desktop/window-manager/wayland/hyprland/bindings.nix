@@ -148,7 +148,6 @@ let
             secondaryLauncher = mkPackageOpt pkgs.anyrun "The secondary launcher to use";
             explorer = mkPackageOpt pkgs.nemo "The default explorer to use";
             screenLocker = mkPackageOpt pkgs.hyprlock "The default screen locker";
-            logoutMenu = mkPackageOpt pkgs.wlogout "The default logoutMenu to use";
           };
         };
         default = { };
@@ -208,7 +207,9 @@ in
             "${cfg.settings.modifyer.mainMod}, D, exec, ${getExe cfg.settings.defaultPrograms.launcher}"
             "${cfg.settings.modifyer.mainModShift}, D, exec, ${getExe cfg.settings.defaultPrograms.secondaryLauncher}"
             "${cfg.settings.modifyer.mainMod}, E, exec, ${getExe cfg.settings.defaultPrograms.explorer}"
-            "${cfg.settings.modifyer.mainModShift}, E, exec, ${getExe cfg.settings.defaultPrograms.logoutMenu}"
+            "${cfg.settings.modifyer.mainMod}, Y, exec, [float; center; focus] ${getExe cfg.settings.defaultPrograms.terminal} start ${
+              getExe' config.${namespace}.programs.clipcat-menu.package "clipcat-menu"
+            }"
 
             "${cfg.settings.modifyer.mainModShift}, Q, killactive,"
             "${cfg.settings.modifyer.mainModShift}, C, exec, ${reload_script.outPath}"
