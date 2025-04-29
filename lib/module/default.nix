@@ -64,7 +64,7 @@ rec {
   ## Create a package NixOS module option.
   ##
   ## ```nix
-  ## lib.mkStrOpt true "Description of my option."
+  ## lib.mkPackageOpt true "Description of my option."
   ## ```
   ##
   #@ Type -> Any -> package

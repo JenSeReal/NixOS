@@ -47,6 +47,7 @@ in
   };
 
   JenSeReal = {
+    services.desktop.window-managers.aerospace = enabled;
     programs = {
       cli = {
         bat = enabled;

@@ -119,10 +119,9 @@ in
       };
       clipcatctl.enable = true;
     };
-    JenSeReal.services = {
+    JenSeReal.services.desktop.clipboard-managers = {
       clipcatd.enable = true;
       clipsync.enable = true;
     };
-
   };
 }

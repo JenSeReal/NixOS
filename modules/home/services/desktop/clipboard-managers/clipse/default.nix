@@ -11,12 +11,11 @@ let
     mkEnableOption
     mkPackageOption
     ;
-  inherit (lib.${namespace}) enabled;
 
-  cfg = config.${namespace}.services.clipse;
+  cfg = config.${namespace}.services.desktop.clipboard-managers.clipse;
 in
 {
-  options.${namespace}.services.clipse = {
+  options.${namespace}.services.desktop.clipboard-managers.clipse = {
     enable = mkEnableOption "clipse";
     package = mkPackageOption pkgs "clipse" { };
   };

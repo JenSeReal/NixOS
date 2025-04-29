@@ -14,10 +14,10 @@ let
     getExe
     ;
 
-  cfg = config.${namespace}.services.clipsync;
+  cfg = config.${namespace}.services.desktop.clipboard-managers.clipsync;
 in
 {
-  options.${namespace}.services.clipsync = {
+  options.${namespace}.services.desktop.clipboard-managers.clipsync = {
     enable = mkEnableOption "Enable clipsync systemd service";
     package = mkPackageOption pkgs.${namespace} "clipsync" { };
   };

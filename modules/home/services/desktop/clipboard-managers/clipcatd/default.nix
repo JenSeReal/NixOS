@@ -324,10 +324,10 @@ let
     };
   };
 
-  cfg = config.${namespace}.services.clipcatd;
+  cfg = config.${namespace}.services.desktop.clipboard-managers.clipcatd;
 in
 {
-  options.${namespace}.services.clipcatd = {
+  options.${namespace}.services.desktop.clipboard-managers.clipcatd = {
     enable = mkEnableOption "clipcatd";
     package = mkPackageOption pkgs "clipcat" { };
     settings = lib.mkOption {
