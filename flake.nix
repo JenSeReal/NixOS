@@ -25,6 +25,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     fw-ectool = {
       url = "github:tlvince/ectool.nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
