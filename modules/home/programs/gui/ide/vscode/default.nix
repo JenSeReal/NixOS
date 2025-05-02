@@ -219,6 +219,8 @@ in
         marketplace.oderwat.indent-rainbow
         marketplace.rust-lang.rust-analyzer
         marketplace.fill-labs.dependi
+        marketplace.tauri-apps.tauri-vscode
+        marketplace.editorconfig.editorconfig
         # marketplace.vadimcn.vscode-lldb
         marketplace.pflannery.vscode-versionlens
         marketplace.lorenzopirro.rust-flash-snippets

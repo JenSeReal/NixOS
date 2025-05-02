@@ -73,6 +73,7 @@ in
     capitaine-cursors
     codeium
     curl
+    devenv
     davinci-resolve
     delta
     direnv
