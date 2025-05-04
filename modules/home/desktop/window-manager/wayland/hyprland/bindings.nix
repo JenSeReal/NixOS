@@ -3,6 +3,7 @@
   lib,
   pkgs,
   namespace,
+  inputs,
   ...
 }:
 let
@@ -16,6 +17,9 @@ let
   inherit (lib.${namespace}) mkStrOpt mkPackageOpt;
 
   hyprctl = getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+  scratchpad = getExe inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad;
+  playerctl = getExe pkgs.playerctl;
+  wpctl = getExe' pkgs.wireplumber "wpctl";
 
   reload_script = pkgs.writeShellScript "reload.sh" ''
     killall .waybar-wrapped
@@ -192,8 +196,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.playerctl ];
-
     wayland.windowManager.hyprland = {
       extraConfig = ''
         ${lib.concatMapStringsSep "\n\n" processSubmap cfg.settings.submaps}
@@ -237,8 +239,9 @@ in
             "${cfg.settings.modifyer.mainModCtrl}, left, workspace, -1"
 
             # special workspaces
-            "${cfg.settings.modifyer.mainModShift},minus,movetoworkspace,special"
-            "${cfg.settings.modifyer.mainMod},minus,togglespecialworkspace,"
+            "${cfg.settings.modifyer.mainMod}, minus, exec, ${scratchpad}"
+            "${cfg.settings.modifyer.mainModShift}, minus, exec, [float; center; focus] ${getExe cfg.settings.defaultPrograms.terminal} start ${scratchpad} -g -m ${getExe pkgs.unstable.skim}"
+            "${cfg.settings.modifyer.mainModCtrl}, minus, exec, ${scratchpad} -t"
 
           ]
           ++ (builtins.concatLists (
@@ -263,15 +266,15 @@ in
           "${cfg.settings.modifyer.mainMod}, mouse:273, resizewindow"
         ];
         bindel = [
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+          ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ];
 
         bindl = [
-          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ", XF86AudioPlay, exec, playerctl play-pause"
-          ", XF86AudioPrev, exec, playerctl previous"
-          ", XF86AudioNext, exec, playerctl next"
+          ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ", XF86AudioPlay, exec, ${playerctl} play-pause"
+          ", XF86AudioPrev, exec, ${playerctl} previous"
+          ", XF86AudioNext, exec, ${playerctl} next"
         ];
 
       };

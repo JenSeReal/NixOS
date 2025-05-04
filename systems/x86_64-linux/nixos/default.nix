@@ -207,7 +207,7 @@ in
       audio.pipewire = enabled;
       bluetooth = enabled;
       opengl = enabled;
-      peripherals.wheelsmoza.r12 = enabled;
+      peripherals.wheels.moza.r12 = enabled;
     };
     nix = enabled;
     security = {
