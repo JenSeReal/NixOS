@@ -8,8 +8,11 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.${namespace}.hardware.peripherals.wheels.moza.r12;
+  universal-pidff = config.boot.kernelPackages.callPackage (
+    pkgs.unstable.path + "/pkgs/os-specific/linux/universal-pidff"
+  ) { };
 
+  cfg = config.${namespace}.hardware.peripherals.wheels.moza.r12;
 in
 {
   options.${namespace}.hardware.peripherals.wheels.moza.r12 = {
@@ -17,16 +20,13 @@ in
   };
   config = mkIf cfg.enable {
     boot = {
-      extraModulePackages = [
-        pkgs.${namespace}.universal-pidff
-        # config.boot.kernelPackages.universal-pidff
-      ];
+      extraModulePackages = [ universal-pidff ];
     };
     environment.systemPackages = [
-      pkgs.${namespace}.boxflat
+      pkgs.unstable.boxflat
       pkgs.linuxConsoleTools
       # pkgs.${namespace}.ffb-tools
     ];
-    services.udev.packages = [ pkgs.${namespace}.boxflat ];
+    services.udev.packages = [ pkgs.unstable.boxflat ];
   };
 }

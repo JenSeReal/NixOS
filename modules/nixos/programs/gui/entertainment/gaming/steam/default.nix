@@ -17,10 +17,21 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.steam = enabled;
+    hardware.steam-hardware = enabled;
+
+    programs.steam = {
+      enable = true;
+      extest = enabled;
+      localNetworkGameTransfers.openFirewall = true;
+      protontricks = enabled;
+      remotePlay.openFirewall = true;
+
+      extraCompatPackages = with pkgs.unstable; [ proton-ge-bin.steamcompattool ];
+    };
     environment.systemPackages = with pkgs; [
       libgdiplus
       steamcmd
+      steamtinkerlaunch
       # steam-tui
 
       wineWowPackages.waylandFull

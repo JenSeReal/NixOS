@@ -100,7 +100,6 @@ in
           "editor.tabSize" = 2;
           "editor.autoClosingBrackets" = "always";
           "editor.autoClosingQuotes" = "always";
-          "editor.defaultFormatter" = "nvarner.typst-lsp";
         };
 
         "codeium.enableConfig" = {
@@ -112,6 +111,8 @@ in
         "css.format.newlineBetweenRules" = true;
         "css.format.newlineBetweenSelectors" = true;
         "css.format.spaceAroundSelectorSeparator" = true;
+
+        "direnv.restart.automatic" = true;
 
         "editor.bracketPairColorization.enabled" = true;
         "editor.fontFamily" =
@@ -186,7 +187,6 @@ in
         "terminal.integrated.cursorStyle" = mkDefault "line";
         "terminal.integrated.defaultProfile.osx" =
           mkIf config.JenSeReal.programs.shells.nushell.enable "nu";
-        "typst-lsp.experimentalFormatterMode" = "on";
 
         "vsicons.dontShowNewVersionMessage" = true;
 

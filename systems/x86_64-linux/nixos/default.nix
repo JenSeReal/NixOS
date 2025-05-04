@@ -68,7 +68,6 @@ in
 
   environment.systemPackages = with pkgs; [
     bat
-    bottles-unwrapped
     btop
     capitaine-cursors
     codeium
@@ -88,7 +87,6 @@ in
     hunspell
     hunspellDicts.de_DE
     hunspellDicts.en_US
-    hyprpicker
     inkscape-with-extensions
     kdePackages.kdenlive
     killall
@@ -204,16 +202,12 @@ in
       lutris = enabled;
       steam = enabled;
     };
-    # desktop.environment.sway = enabled;
     desktop.environment.hyprland = enabled;
     hardware = {
       audio.pipewire = enabled;
       bluetooth = enabled;
       opengl = enabled;
-      peripherals.wheels = {
-        # logitech.g923 = enabled;
-        moza.r12 = enabled;
-      };
+      peripherals.wheelsmoza.r12 = enabled;
     };
     nix = enabled;
     security = {

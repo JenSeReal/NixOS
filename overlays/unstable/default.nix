@@ -1,4 +1,4 @@
-{ channels, ... }:
+{ channels, inputs, ... }:
 final: prev: {
   inherit (channels.nixpkgs-unstable)
     aerospace
@@ -16,4 +16,9 @@ final: prev: {
     wineWowPackages
     winetricks
     ;
+
+  unstable = import inputs.nixpkgs-unstable {
+    system = final.system;
+    config.allowUnfree = true;
+  };
 }
