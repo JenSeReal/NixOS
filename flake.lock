@@ -1500,6 +1500,22 @@
     },
     "nixpkgs_10": {
       "locked": {
+        "lastModified": 1672428209,
+        "narHash": "sha256-eejhqkDz2cb2vc5VeaWphJz8UXNuoNoM8/Op8eWv2tQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "293a28df6d7ff3dec1e61e37cc4ee6e6c0fb0847",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_11": {
+      "locked": {
         "lastModified": 1709386671,
         "narHash": "sha256-VPqfBnIJ+cfa78pd4Y5Cr6sOWVW8GYHRVucxJGmRf8Q=",
         "owner": "NixOS",
@@ -1622,16 +1638,16 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1672428209,
-        "narHash": "sha256-eejhqkDz2cb2vc5VeaWphJz8UXNuoNoM8/Op8eWv2tQ=",
+        "lastModified": 1735291276,
+        "narHash": "sha256-NYVcA06+blsLG6wpAbSPTCyLvxD/92Hy4vlY9WxFI1M=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "293a28df6d7ff3dec1e61e37cc4ee6e6c0fb0847",
+        "rev": "634fd46801442d760e09493a794c4f15db2d0cbb",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1660,7 +1676,7 @@
     },
     "nmd": {
       "inputs": {
-        "nixpkgs": "nixpkgs_9",
+        "nixpkgs": "nixpkgs_10",
         "scss-reset": "scss-reset"
       },
       "locked": {
@@ -1799,6 +1815,7 @@
         "nur": "nur",
         "ragenix": "ragenix",
         "rust-overlay": "rust-overlay_3",
+        "simshmbridge": "simshmbridge",
         "snowfall-frost": "snowfall-frost",
         "snowfall-lib": "snowfall-lib_3",
         "sops-nix": "sops-nix",
@@ -1882,6 +1899,27 @@
       "original": {
         "owner": "andreymatin",
         "repo": "scss-reset",
+        "type": "github"
+      }
+    },
+    "simshmbridge": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_9"
+      },
+      "locked": {
+        "dir": "tools/distro/nix",
+        "lastModified": 1745962461,
+        "narHash": "sha256-IhXAmrLI3t76kEGsXN/LuqrnWXU89mWCwKcKA69B6Po=",
+        "owner": "spacefreak18",
+        "repo": "simshmbridge",
+        "rev": "5ba1ad8946d27af221089359ceaa528160553e63",
+        "type": "github"
+      },
+      "original": {
+        "dir": "tools/distro/nix",
+        "owner": "spacefreak18",
+        "repo": "simshmbridge",
+        "rev": "5ba1ad8946d27af221089359ceaa528160553e63",
         "type": "github"
       }
     },
@@ -2258,7 +2296,7 @@
     "typst-live": {
       "inputs": {
         "crane": "crane_3",
-        "nixpkgs": "nixpkgs_10",
+        "nixpkgs": "nixpkgs_11",
         "systems": "systems_9"
       },
       "locked": {

@@ -26,6 +26,7 @@ in
       pkgs.unstable.boxflat
       pkgs.linuxConsoleTools
       # pkgs.${namespace}.ffb-tools
+      pkgs.${namespace}.monocoque
     ];
     services.udev.packages = [ pkgs.unstable.boxflat ];
   };

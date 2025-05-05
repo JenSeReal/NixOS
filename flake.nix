@@ -105,6 +105,8 @@
     # stylix.url = "github:danth/stylix/master";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix/release-24.11";
+
+    simshmbridge.url = "github:spacefreak18/simshmbridge?rev=5ba1ad8946d27af221089359ceaa528160553e63&dir=tools/distro/nix";
   };
 
   outputs =
