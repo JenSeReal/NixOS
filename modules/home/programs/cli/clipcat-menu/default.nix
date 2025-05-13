@@ -9,13 +9,12 @@
 let
   inherit (lib)
     mkEnableOption
-    mkPackageOption
     mkIf
     mkOption
     types
     ;
 
-  inherit (lib.${namespace}) filterNulls;
+  inherit (lib.${namespace}) filterNulls mkPackageOpt';
 
   logModule = types.submodule {
     options = {
@@ -143,7 +142,7 @@ in
 {
   options.JenSeReal.programs.clipcat-menu = {
     enable = mkEnableOption "Enable clipcat-menu integration.";
-    package = mkPackageOption pkgs "clipcat" { };
+    package = mkPackageOpt' pkgs.clipcat;
 
     settings = mkOption {
       type = settingsModule;
@@ -153,7 +152,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages = [
+      cfg.package
+      pkgs.skim
+    ];
 
     home.file.".config/clipcat/clipcat-menu.toml".source =
       (pkgs.formats.toml { }).generate "clipcat-menu.toml"
