@@ -48,7 +48,7 @@ in
           "stayfocused, title:^()$,class:^(steam)$"
           "minsize 1 1, title:^()$,class:^(steam)$"
 
-          "workspace 9 silent, class:^(discord|WebCord)$"
+          "workspace 9 silent, class:^(discord|WebCord|vesktop)$"
           "workspace 10 silent, class:^(steam)$"
         ];
       };

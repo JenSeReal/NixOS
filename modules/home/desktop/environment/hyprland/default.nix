@@ -37,13 +37,8 @@ in
     # };
 
     home.packages = with pkgs; [
-      grim
       hyprsunset
       pkgs.${namespace}.screen-recorder
-      slurp
-      xwaylandvideobridge
-      wl-screenrec
-      skim
     ];
 
     services.kanshi.enable = true;

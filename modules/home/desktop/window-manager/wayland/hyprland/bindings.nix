@@ -209,7 +209,7 @@ in
             "${cfg.settings.modifyer.mainMod}, D, exec, ${getExe cfg.settings.defaultPrograms.launcher}"
             "${cfg.settings.modifyer.mainModShift}, D, exec, ${getExe cfg.settings.defaultPrograms.secondaryLauncher}"
             "${cfg.settings.modifyer.mainMod}, E, exec, ${getExe cfg.settings.defaultPrograms.explorer}"
-            "${cfg.settings.modifyer.mainMod}, Y, exec, [float; center; focus] ${getExe cfg.settings.defaultPrograms.terminal} start ${
+            "${cfg.settings.modifyer.mainMod}, C, exec, [float; center; focus] ${getExe cfg.settings.defaultPrograms.terminal} start ${
               getExe' config.${namespace}.programs.clipcat-menu.package "clipcat-menu"
             }"
 

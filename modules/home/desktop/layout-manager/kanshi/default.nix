@@ -14,14 +14,14 @@ let
   msi = {
     status = "enable";
     criteria = "Microstep MSI MAG271C 0x0000011E";
-    mode = "1920x1080@60.00Hz";
+    mode = "1920x1080@144.00Hz";
     scale = 1.0;
   };
 
   lg = {
     status = "enable";
     criteria = "LG Electronics LG ULTRAWIDE 0x00017279";
-    mode = "2560x1080@59.94Hz";
+    mode = "2560x1080@144.00Hz";
     scale = 1.0;
   };
 
@@ -41,12 +41,14 @@ in
 
       settings = [
         {
-          profile.name = "undocked";
-          profile.outputs = [ laptop ];
+          profile = {
+            name = "undocked";
+            outputs = [ laptop ];
+          };
         }
 
         {
-          profile.name = "home";
+          profile.name = "home-double";
           profile.outputs = [
             (
               laptop
@@ -66,11 +68,10 @@ in
         }
 
         {
-          profile.name = "home-without-msi";
+          profile.name = "home-single";
           profile.outputs = [
-            (laptop // { position = "0,0"; })
+            (laptop // { status = "disable"; })
             (lg // { position = "${toString (builtins.floor (1920 / laptop.scale))},0"; })
-            (msi // { status = "disable"; })
           ];
         }
 

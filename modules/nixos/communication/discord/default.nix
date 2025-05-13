@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.JenSeReal;
 let
@@ -10,7 +15,7 @@ in
   };
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      webcord
+      vesktop
     ];
   };
 }

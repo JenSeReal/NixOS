@@ -102,7 +102,6 @@ in
     thunderbird
     ventoy-bin-full
     vlc
-    webcord
     yazi
     zoxide
   ];
@@ -231,7 +230,10 @@ in
       };
       cursor = enabled;
       fonts = enabled;
-      keyboard = enabled;
+      keyboard = {
+        enable = true;
+        keychron = enabled;
+      };
       locale = enabled;
       power-management = enabled;
       shells.nushell = enabled;

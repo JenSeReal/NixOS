@@ -19,6 +19,7 @@ in
 
   config = mkIf cfg.enable {
     ${namespace} = {
+      communication.discord = enabled;
       desktop = {
         window-manager.wayland.hyprland = enabled;
         display-manager.tuigreet = {

@@ -14,7 +14,7 @@ in
         monitor = [
           ",preferred,auto,1"
           "eDP-1, preferred, auto, 1.333333, bitdepth, 10"
-          "desc:LG Electronics LG ULTRAWIDE 0x00017279, 2560x1080@144.00, auto, 1, bitdepth, 10"
+          # "desc:LG Electronics LG ULTRAWIDE 0x00017279, modeline 601.50  2560 2776 3056 3552  1080 1083 1093 1177 -hsync +vsync, auto, 1, bitdepth, 10"
         ];
       };
     };
