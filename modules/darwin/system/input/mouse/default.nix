@@ -18,7 +18,7 @@ in
     ${namespace}.programs.cli.homebrew = {
       enable = true;
       additional_casks = [
-        "unnaturalscrollwheels" # "logitech-g-hub"
+        "unnaturalscrollwheels"
       ];
     };
 
