@@ -33,7 +33,6 @@ in
       orientation = "bottom";
       persistent-apps = [
         "/Applications/Firefox.app"
-        "/Applications/Nix Trampolines/Arc.app"
         "/Applications/Slack.app"
         "/Applications/Microsoft Outlook.app"
         "/Applications/Microsoft Teams.app"

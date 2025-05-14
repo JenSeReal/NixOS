@@ -31,7 +31,6 @@ in
     launchd.user.agents.middleclick = {
       command = "/Applications/MiddleClick.app/Contents/MacOS/MiddleClick";
       serviceConfig = {
-        KeepAlive = true;
         RunAtLoad = true;
       };
     };

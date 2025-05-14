@@ -39,7 +39,7 @@ let
     {
       key = "4";
       name = "productive";
-      apps = [ "com.citrix.receiver.nomas" ];
+      apps = [ "com.citrix.receiver.icaviewer.mac" ];
     }
     {
       key = "5";
