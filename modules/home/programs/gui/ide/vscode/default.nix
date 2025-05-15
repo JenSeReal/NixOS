@@ -4,15 +4,14 @@
   inputs,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkEnableOption mkDefault;
   cfg = config.JenSeReal.programs.gui.ide.vscode;
 
   pkgs-ext = import inputs.nixpkgs {
     inherit (pkgs) system;
     config.allowUnfree = true;
-    overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+    overlays = [inputs.nix-vscode-extensions.overlays.default];
   };
   marketplace = pkgs-ext.vscode-marketplace;
 
@@ -26,20 +25,20 @@ let
       "vscode-insiders" = "Code - Insiders";
       "vscodium" = "VSCodium";
     }
-    .${vscodePname};
+    .${
+      vscodePname
+    };
 
   userDir =
-    if is-darwin then
-      "Library/Application Support/${configDir}/User"
-    else
-      "${config.xdg.configHome}/${configDir}/User";
+    if is-darwin
+    then "Library/Application Support/${configDir}/User"
+    else "${config.xdg.configHome}/${configDir}/User";
 
   configFilePath = "${userDir}/settings.json";
   # keybindingsFilePath = "${userDir}/keybindings.json";
 
-  pathsToMakeWritable = lib.flatten [ configFilePath ];
-in
-{
+  pathsToMakeWritable = lib.flatten [configFilePath];
+in {
   options.JenSeReal.programs.gui.ide.vscode = {
     enable = mkEnableOption "Whether or not to enable vs code.";
   };
@@ -52,7 +51,6 @@ in
   config = mkIf cfg.enable {
     services.vscode-server.enable = true;
     programs.vscode = {
-
       enable = true;
 
       # profiles.default = {
@@ -101,6 +99,8 @@ in
           "editor.autoClosingBrackets" = "always";
           "editor.autoClosingQuotes" = "always";
         };
+
+        "biome.lsp.bin" = lib.getExe pkgs.unstable.biome;
 
         "codeium.enableConfig" = {
           "*" = true;
@@ -168,21 +168,19 @@ in
         "keyboard.dispatch" = "keyCode";
 
         "nix.enableLanguageServer" = true;
-        "nix.formatterPath" = "nixfmt";
-        "nix.serverPath" = "nixd";
-        "nix.serverSettings" = {
-          "nixd" = {
-            "formatting" = {
-              "command" = [ "nixfmt" ];
-            };
-          };
-        };
+        "nix.serverPath" = lib.getExe pkgs.unstable.nixd;
+        "nix.serverSettings"."nixd"."formatting"."command" = [
+          "${lib.getExe pkgs.unstable.alejandra}"
+        ];
 
         "remote.SSH.useLocalServer" = false;
 
+        "redhat.telemetry.enabled" = false;
+
         "search.followSymlinks" = false;
 
-        "telemetry.telemetryLevel" = "all";
+        "telemetry.telemetryLevel" = "off";
+
         "terminal.integrated.fontFamily" = mkDefault "'FiraCode Nerd Font', 'monospace'";
         "terminal.integrated.cursorStyle" = mkDefault "line";
         "terminal.integrated.defaultProfile.osx" =
@@ -201,61 +199,64 @@ in
         "workbench.tree.indent" = 16;
 
         "yaml.format.enable" = false;
+
+        "update.mode" = "none";
       };
 
-      extensions = [
-        marketplace.yzhang.markdown-all-in-one
-        marketplace.asciidoctor.asciidoctor-vscode
-        marketplace.tamasfe.even-better-toml
-        marketplace.redhat.vscode-yaml
-        marketplace.kennylong.kubernetes-yaml-formatter
-        marketplace.ms-azuretools.vscode-docker
-        marketplace.usernamehw.errorlens
-        marketplace.cordx56.rustowl-vscode
-        marketplace.shardulm94.trailing-spaces
-        marketplace.christian-kohler.path-intellisense
-        marketplace.vscode-icons-team.vscode-icons
-        marketplace.redhat.vscode-xml
-        marketplace.oderwat.indent-rainbow
-        marketplace.rust-lang.rust-analyzer
-        marketplace.fill-labs.dependi
-        marketplace.tauri-apps.tauri-vscode
-        marketplace.editorconfig.editorconfig
-        # marketplace.vadimcn.vscode-lldb
-        marketplace.pflannery.vscode-versionlens
-        marketplace.lorenzopirro.rust-flash-snippets
-        marketplace.zhangyue.rust-mod-generator
-        marketplace.jedeop.crates-completer
-        marketplace.jscearcy.rust-doc-viewer
-        marketplace.biomejs.biome
-        marketplace.rangav.vscode-thunder-client
-        marketplace.dotjoshjohnson.xml
-        marketplace.jgclark.vscode-todo-highlight
-        marketplace.gruntfuggly.todo-tree
-        marketplace.chrmarti.regex
-        marketplace.aaron-bond.better-comments
-        marketplace.ms-vsliveshare.vsliveshare
-        marketplace.pinage404.nix-extension-pack
-        marketplace.robbowen.synthwave-vscode
-        marketplace.ms-vscode-remote.vscode-remote-extensionpack
-        marketplace.formulahendry.docker-explorer
-        marketplace.redhat.java
-        marketplace.vscjava.vscode-java-test
-        marketplace.vscjava.vscode-java-debug
-        marketplace.vscjava.vscode-maven
-        marketplace.vscjava.vscode-java-dependency
-        marketplace.vscjava.vscode-spring-initializr
-        marketplace.vscjava.vscode-gradle
-        marketplace.codeium.codeium
-        marketplace.richardwillis.vscode-spotless-gradle
-        marketplace.mathiasfrohlich.kotlin
-        marketplace.myriad-dreamin.tinymist
-        marketplace.hashicorp.terraform
-        marketplace.mgtrrz.terraform-completer
+      extensions = with marketplace;
+        [
+          yzhang.markdown-all-in-one
+          asciidoctor.asciidoctor-vscode
+          tamasfe.even-better-toml
+          redhat.vscode-yaml
+          kennylong.kubernetes-yaml-formatter
+          ms-azuretools.vscode-docker
+          usernamehw.errorlens
+          cordx56.rustowl-vscode
+          shardulm94.trailing-spaces
+          christian-kohler.path-intellisense
+          vscode-icons-team.vscode-icons
+          redhat.vscode-xml
+          oderwat.indent-rainbow
+          rust-lang.rust-analyzer
+          fill-labs.dependi
+          tauri-apps.tauri-vscode
+          editorconfig.editorconfig
+          # vadimcn.vscode-lldb
+          pflannery.vscode-versionlens
+          lorenzopirro.rust-flash-snippets
+          zhangyue.rust-mod-generator
+          jedeop.crates-completer
+          jscearcy.rust-doc-viewer
+          biomejs.biome
+          rangav.vscode-thunder-client
+          dotjoshjohnson.xml
+          jgclark.vscode-todo-highlight
+          gruntfuggly.todo-tree
+          chrmarti.regex
+          aaron-bond.better-comments
+          ms-vsliveshare.vsliveshare
+          pinage404.nix-extension-pack
+          robbowen.synthwave-vscode
+          ms-vscode-remote.vscode-remote-extensionpack
+          formulahendry.docker-explorer
+          redhat.java
+          vscjava.vscode-java-test
+          vscjava.vscode-java-debug
+          vscjava.vscode-maven
+          vscjava.vscode-java-dependency
+          vscjava.vscode-spring-initializr
+          vscjava.vscode-gradle
+          codeium.codeium
+          richardwillis.vscode-spotless-gradle
+          mathiasfrohlich.kotlin
+          myriad-dreamin.tinymist
+          hashicorp.terraform
+          mgtrrz.terraform-completer
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
 
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
-
-      keybindings = [ ];
+      keybindings = [];
     };
 
     # };

@@ -4,23 +4,15 @@
   lib,
   ...
 }:
-
 inputs.devenv.lib.mkShell {
   inherit inputs pkgs;
 
   modules = [
     {
-
       name = "Basic development shell";
       dotenv.disableHint = true;
 
-      languages = {
-        nix.enable = true;
-        nix.lsp.package = pkgs.nixd;
-      };
-
-      packages =
-        with pkgs;
+      packages = with pkgs;
         [
           hydra-check
           nix-diff
@@ -34,8 +26,7 @@ inputs.devenv.lib.mkShell {
           jemalloc
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin (
-          with pkgs.darwin.apple_sdk.frameworks;
-          [
+          with pkgs.darwin.apple_sdk.frameworks; [
             Cocoa
             CoreFoundation
             CoreServices

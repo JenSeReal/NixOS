@@ -12,7 +12,6 @@ in
   imports = [ inputs.ragenix.darwinModules.default ];
 
   environment.systemPackages = with pkgs; [
-    vscode
     git
     lazygit
     pciutils
