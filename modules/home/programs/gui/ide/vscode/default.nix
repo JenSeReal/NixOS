@@ -253,6 +253,7 @@ in {
           myriad-dreamin.tinymist
           hashicorp.terraform
           mgtrrz.terraform-completer
+          grafana.grafana-alloy
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
 
