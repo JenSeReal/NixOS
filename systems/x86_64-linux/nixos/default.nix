@@ -5,13 +5,10 @@
   namespace,
   inputs,
   ...
-}:
-let
+}: let
   inherit (lib) mkForce;
   inherit (lib.${namespace}) enabled;
-
-in
-{
+in {
   imports = with inputs; [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-hidpi
@@ -55,7 +52,7 @@ in
   services.btrfs.autoScrub = {
     enable = true;
     interval = "weekly";
-    fileSystems = [ "/" ];
+    fileSystems = ["/"];
   };
 
   security.pam.services.swaylock = {
@@ -108,7 +105,7 @@ in
   services.gvfs.enable = true;
 
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = [ ];
+  programs.nix-ld.libraries = [];
 
   programs.neovim = {
     enable = true;
@@ -118,7 +115,7 @@ in
   };
 
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ config.sops.secrets."wifi.env".path ];
+    environmentFiles = [config.sops.secrets."wifi.env".path];
     profiles = {
       "FRITZ!Box 7590 EW" = {
         connection = {
@@ -142,7 +139,7 @@ in
           addr-gen-mode = "default";
           method = "auto";
         };
-        proxy = { };
+        proxy = {};
       };
       "FRITZ!Box 6690 BD" = {
         connection = {
@@ -166,7 +163,7 @@ in
           addr-gen-mode = "default";
           method = "auto";
         };
-        proxy = { };
+        proxy = {};
       };
       "PPP-Netz" = {
         connection = {
@@ -190,7 +187,7 @@ in
           addr-gen-mode = "default";
           method = "auto";
         };
-        proxy = { };
+        proxy = {};
       };
     };
   };

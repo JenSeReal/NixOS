@@ -3,12 +3,9 @@
   lib,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib.${namespace}) enabled;
-
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
   ];

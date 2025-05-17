@@ -1,24 +1,21 @@
 {
   config,
   lib,
-  inputs,
   pkgs,
+  namespace,
   ...
-}:
+}: let
+  inherit (lib) mkEnableOption mkIf;
 
-with lib;
-with lib.JenSeReal;
-with inputs;
-let
-  cfg = config.JenSeReal.desktop.window-manager.wayland.hyprland;
-in
-{
-  options.JenSeReal.desktop.window-manager.wayland.hyprland = with types; {
+  cfg = config.${namespace}.desktop.window-manager.wayland.hyprland;
+in {
+  options.${namespace}.desktop.window-manager.wayland.hyprland = {
     enable = mkEnableOption "Whether or not to use Hyprland as the desktop environment.";
   };
 
   config = mkIf cfg.enable {
     environment.sessionVariables = {
+      NIXOS_OZONE_WL = 1;
       CLUTTER_BACKEND = "wayland";
       GDK_BACKEND = "wayland";
       HYPRLAND_LOG_WLR = "1";
@@ -47,7 +44,7 @@ in
       enable = true;
       xdgOpenUsePortal = true;
       config = {
-        common.default = [ "gtk" ];
+        common.default = ["gtk"];
         hyprland.default = [
           "gtk"
           "hyprland"
