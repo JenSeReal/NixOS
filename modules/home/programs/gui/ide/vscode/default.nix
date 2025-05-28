@@ -91,6 +91,14 @@ in {
           "editor.defaultFormatter" = "kennylong.kubernetes-yaml-formatter";
         };
 
+        "[json]" = {
+          "editor.defaultFormatter" = "biomejs.biome";
+          "editor.tabSize" = 2;
+          "editor.insertSpaces" = true;
+          "editor.formatOnSave" = true;
+          "editor.formatOnPaste" = true;
+        };
+
         "[typst]" = {
           "editor.formatOnPaste" = true;
           "editor.formatOnSave" = true;
