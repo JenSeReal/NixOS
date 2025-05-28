@@ -3,14 +3,12 @@
   lib,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
 
-  cfg = config.${namespace}.system.nix;
-in
-{
-  imports = [ (lib.snowfall.fs.get-file "modules/common/system/nix/default.nix") ];
+  cfg = config.${namespace}.nix;
+in {
+  imports = [(lib.snowfall.fs.get-file "modules/common/nix/default.nix")];
 
   config = mkIf cfg.enable {
     services.nix-daemon.enable = true;

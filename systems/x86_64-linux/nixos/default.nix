@@ -206,7 +206,6 @@ in {
       opengl = enabled;
       peripherals.wheels.moza.r12 = enabled;
     };
-    nix = enabled;
     security = {
       bitwarden = enabled;
       gnupg = enabled;

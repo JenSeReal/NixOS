@@ -1,17 +1,14 @@
 {
   config,
   lib,
+  namespace,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.JenSeReal.nix;
+  cfg = config.${namespace}.nix;
 in {
-  options.JenSeReal.nix = {
-    enable = mkEnableOption "Whether or not to enable additional nix config.";
-  };
-
-  imports = [(lib.snowfall.fs.get-file "modules/common/system/nix/default.nix")];
+  imports = [(lib.snowfall.fs.get-file "modules/common/nix/default.nix")];
 
   config = mkIf cfg.enable {
     nix = {

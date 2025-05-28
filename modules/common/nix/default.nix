@@ -6,11 +6,8 @@
   namespace,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkDefault;
-  inherit (lib.types) package;
-  inherit (lib.${namespace}) mkOpt;
-
-  cfg = config.${namespace}.system.nix;
+  inherit (lib) mkIf mkDefault;
+  inherit (lib.${namespace}) mkBoolOpt' mkPackageOpt';
 
   users = [
     "root"
@@ -18,10 +15,12 @@
     "nix-builder"
     config.${namespace}.user.name
   ];
+
+  cfg = config.${namespace}.nix;
 in {
-  options.${namespace}.system.nix = {
-    enable = mkEnableOption "Whether or not to manage nix configuration.";
-    package = mkOpt package pkgs.nixVersions.latest "Which nix package to use.";
+  options.${namespace}.nix = {
+    enable = mkBoolOpt' true;
+    package = mkPackageOpt' pkgs.nixVersions.latest;
   };
 
   config = mkIf cfg.enable {
