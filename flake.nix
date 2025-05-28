@@ -2,14 +2,14 @@
   description = "JenSeReals flake repository";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
       # url = "github:nix-community/home-manager/master";
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur = {
@@ -50,7 +50,7 @@
     };
     ragenix.url = "github:yaxitech/ragenix";
 
-    darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     mac-app-util = {
       url = "github:hraban/mac-app-util";
@@ -104,30 +104,28 @@
 
     # stylix.url = "github:danth/stylix/master";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix/release-25.05";
 
     simshmbridge.url = "github:spacefreak18/simshmbridge?rev=5ba1ad8946d27af221089359ceaa528160553e63&dir=tools/distro/nix";
   };
 
-  outputs =
-    { self, ... }@inputs:
-    let
+  outputs = {self, ...} @ inputs: let
+    inherit inputs;
+
+    lib = inputs.snowfall-lib.mkLib {
       inherit inputs;
+      src = ./.;
 
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
-
-        snowfall = {
-          meta = {
-            name = "JenSeReal";
-            title = "JenSeReal";
-          };
-
-          namespace = "JenSeReal";
+      snowfall = {
+        meta = {
+          name = "JenSeReal";
+          title = "JenSeReal";
         };
+
+        namespace = "JenSeReal";
       };
-    in
+    };
+  in
     lib.mkFlake {
       outputs-builder = channels: {
         formatter = channels.nixpkgs.alejandra;
@@ -135,7 +133,7 @@
 
       channels-config = {
         allowUnfree = true;
-        permittedInsecurePackages = [ ];
+        permittedInsecurePackages = [];
       };
 
       overlays = with inputs; [
