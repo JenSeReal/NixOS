@@ -3,13 +3,10 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.JenSeReal.hardware.bluetooth;
-in
-{
+in {
   options.JenSeReal.hardware.bluetooth = {
     enable = mkEnableOption "Whether or not to enable bluetooth.";
   };
@@ -27,11 +24,11 @@ in
         "network.target"
         "sound.target"
       ];
-      wantedBy = [ "default.target" ];
+      wantedBy = ["default.target"];
       serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     };
 
-    hardware.pulseaudio.configFile = pkgs.writeText "default.pa" ''
+    services.pulseaudio.configFile = pkgs.writeText "default.pa" ''
       load-module module-bluetooth-policy
       load-module module-bluetooth-discover
       ## module fails to load with
@@ -48,6 +45,6 @@ in
       };
     };
 
-    hardware.pulseaudio.extraConfig = "load-module module-switch-on-connect";
+    services.pulseaudio.extraConfig = "load-module module-switch-on-connect";
   };
 }

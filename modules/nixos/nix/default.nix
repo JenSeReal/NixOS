@@ -1,36 +1,30 @@
-{ config, lib, ... }:
-
-let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.JenSeReal.nix;
-
-in
-{
+in {
   options.JenSeReal.nix = {
     enable = mkEnableOption "Whether or not to enable additional nix config.";
   };
 
+  imports = [(lib.snowfall.fs.get-file "modules/common/system/nix/default.nix")];
+
   config = mkIf cfg.enable {
     nix = {
-      extraOptions = ''
-        warn-dirty = false
-      '';
       gc = {
         dates = "weekly";
       };
 
       optimise = {
-        automatic = true;
-        dates = [ "weekly" ];
+        dates = ["weekly"];
       };
 
       settings = {
-        experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
-        trusted-users = [ "@wheel" ];
+        trusted-users = ["@wheel"];
       };
     };
   };

@@ -4,8 +4,7 @@
   pkgs,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkEnableOption;
   inherit (lib.types) listOf package;
   inherit (lib.${namespace}) mkOpt;
@@ -14,15 +13,11 @@ let
     cascadia-code
     google-fonts
 
-    (nerdfonts.override {
-      fonts = [
-        "FiraMono"
-        "FiraCode"
-        "Meslo"
-        "Monaspace"
-        "NerdFontsSymbolsOnly"
-      ];
-    })
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.meslo-lg
+    nerd-fonts.monaspace
+    nerd-fonts.symbols-only
 
     noto-fonts
     noto-fonts-cjk-sans
@@ -37,11 +32,10 @@ let
   ];
 
   cfg = config.JenSeReal.system.fonts;
-in
-{
+in {
   options.JenSeReal.system.fonts = {
     enable = mkEnableOption "Whether or not to manage fonts.";
-    additionalFonts = mkOpt (listOf package) [ ] "Custom font packages to install.";
+    additionalFonts = mkOpt (listOf package) [] "Custom font packages to install.";
   };
 
   config = mkIf cfg.enable {

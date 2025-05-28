@@ -4,13 +4,11 @@
   pkgs,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.JenSeReal.theming.stylix;
-in
-{
+in {
   options.JenSeReal.theming.stylix = {
     enable = mkEnableOption "Whether or not to enable stylix theming.";
   };
@@ -32,10 +30,10 @@ in
       size = 24;
     };
 
-    stylix.fonts.monospace = with pkgs; {
-      name = "Fira Code";
-      package = fira-code;
-    };
+    # stylix.fonts.monospace = with pkgs; {
+    # name = "Fira Code";
+    # package = fira-code;
+    # };
 
     stylix.targets.vscode.enable = false;
   };

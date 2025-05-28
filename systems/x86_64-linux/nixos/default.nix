@@ -22,6 +22,7 @@ in {
 
   environment.sessionVariables = {
     GSK_RENDERER = "gl";
+    PROTON_ENABLE_WAYLAND = "1";
   };
 
   networking.hostName = "nixos";
@@ -47,7 +48,7 @@ in {
     printing = enabled;
   };
 
-  hardware.pulseaudio.enable = mkForce false;
+  services.pulseaudio.enable = mkForce false;
 
   services.btrfs.autoScrub = {
     enable = true;
@@ -97,7 +98,7 @@ in {
     rm-improved
     spotify
     thunderbird
-    ventoy-bin-full
+    # ventoy-bin-full
     vlc
     yazi
     zoxide

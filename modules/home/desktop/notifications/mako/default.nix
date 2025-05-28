@@ -1,17 +1,19 @@
-{ config, lib, ... }:
-with lib;
-with lib.JenSeReal;
-let
-  cfg = config.JenSeReal.desktop.notifications.mako;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkIf;
+
+  cfg = config.JenSeReal.desktop.notifications.mako;
+in {
   options.JenSeReal.desktop.notifications.mako = {
     enable = mkEnableOption "Mako.";
   };
   config = mkIf cfg.enable {
     services.mako = {
       enable = true;
-      defaultTimeout = 10000;
+      settings.default-timeout = 10000;
     };
   };
 }

@@ -4,8 +4,7 @@
   pkgs,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.theming.stylix;
@@ -13,8 +12,7 @@ let
   # theme = "tokyo-night-terminal-storm";
   opacity = 0.95;
   font-size = 11;
-in
-{
+in {
   options.${namespace}.theming.stylix = {
     enable = mkEnableOption "Whether or not to enable stylix theming.";
   };
@@ -54,10 +52,10 @@ in
         name = "Noto Sans CJK JP";
       };
 
-      monospace = {
-        package = maple-mono;
-        name = "Maple Mono";
-      };
+      # monospace = {
+      #   package = maple-mono;
+      #   name = "Maple Mono";
+      # };
 
       emoji = {
         package = noto-fonts-emoji;
