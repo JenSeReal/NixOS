@@ -4,12 +4,10 @@
   pkgs,
   inputs,
   ...
-}:
-let
+}: let
   inherit (lib.${namespace}) enabled;
-in
-{
-  imports = [ inputs.ragenix.darwinModules.default ];
+in {
+  imports = [inputs.ragenix.darwinModules.default];
 
   environment.systemPackages = with pkgs; [
     git
@@ -33,10 +31,13 @@ in
     # gimp
     # inkscape
     act
-    postman
+    # postman
     devenv
     seabird
   ];
+
+  # FIXME: migrate settings to hm or other then remove
+  system.primaryUser = "jpl";
 
   JenSeReal = {
     desktop.environments.aerospace = enabled;

@@ -11,8 +11,6 @@ in {
   imports = [(lib.snowfall.fs.get-file "modules/common/nix/default.nix")];
 
   config = mkIf cfg.enable {
-    services.nix-daemon.enable = true;
-
     nix = {
       settings = {
         build-users-group = "nixbld";
