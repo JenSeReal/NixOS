@@ -3,10 +3,10 @@
   lib,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkEnableOption mkOption;
-  inherit (lib.types)
+  inherit
+    (lib.types)
     listOf
     str
     attrsOf
@@ -18,42 +18,41 @@ let
   inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.cli.homebrew;
-in
-{
+in {
   options.${namespace}.programs.cli.homebrew = {
     enable = mkEnableOption "Wether to enable homebrew.";
 
-    additional_taps = mkOpt (listOf str) [ ] "A list of additional taps to install";
-    additional_brews = mkOpt (listOf str) [ ] "A list of additional brews to install";
+    additional_taps = mkOpt (listOf str) [] "A list of additional taps to install";
+    additional_brews = mkOpt (listOf str) [] "A list of additional brews to install";
     additional_casks = mkOpt (listOf (
       coercedTo str
-        (name: {
-          inherit name;
-          args = { };
-        })
-        (submodule {
-          options = {
-            name = mkOption {
-              type = str;
-              description = "Name of the cask to install";
-            };
-            args = mkOption {
-              type = submodule {
-                options = {
-                  no_quarantine = mkOption {
-                    type = bool;
-                    default = false;
-                    description = "Whether to disable quarantine for the cask";
-                  };
+      (name: {
+        inherit name;
+        args = {};
+      })
+      (submodule {
+        options = {
+          name = mkOption {
+            type = str;
+            description = "Name of the cask to install";
+          };
+          args = mkOption {
+            type = submodule {
+              options = {
+                no_quarantine = mkOption {
+                  type = bool;
+                  default = false;
+                  description = "Whether to disable quarantine for the cask";
                 };
               };
-              default = { };
-              description = "Arguments for the cask installation";
             };
+            default = {};
+            description = "Arguments for the cask installation";
           };
-        })
-    )) [ ] "List of Homebrew casks to install";
-    additional_mas_apps = mkOpt (attrsOf ints.positive) { } "A list of additional mas to install";
+        };
+      })
+    )) [] "List of Homebrew casks to install";
+    additional_mas_apps = mkOpt (attrsOf ints.positive) {} "A list of additional mas to install";
   };
 
   config = mkIf cfg.enable {
@@ -72,17 +71,19 @@ in
         cleanup = "zap";
       };
 
-      masApps = { } // cfg.additional_mas_apps;
+      masApps = {} // cfg.additional_mas_apps;
 
-      taps = [ "homebrew/bundle" ] ++ cfg.additional_taps;
+      taps = ["homebrew/bundle"] ++ cfg.additional_taps;
 
-      brews = [ ] ++ cfg.additional_brews;
+      brews = [] ++ cfg.additional_brews;
 
-      casks = [
-        "steam"
-        "headlamp"
-        "mattermost"
-      ] ++ cfg.additional_casks;
+      casks =
+        [
+          "steam"
+          "headlamp"
+          "mattermost"
+        ]
+        ++ cfg.additional_casks;
     };
   };
 }

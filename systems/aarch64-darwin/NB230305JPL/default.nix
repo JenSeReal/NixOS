@@ -10,6 +10,7 @@ in {
   imports = [inputs.ragenix.darwinModules.default];
 
   environment.systemPackages = with pkgs; [
+    google-chrome
     git
     lazygit
     pciutils
@@ -28,7 +29,7 @@ in {
     discord
     wget
     jetbrains.idea-community-bin
-    # gimp
+    gimp
     # inkscape
     act
     # postman
