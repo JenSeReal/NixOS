@@ -32,7 +32,7 @@ in
   programs.zsh = {
     enable = true;
 
-    initExtra = mkIf is-darwin ''
+    initContent = mkIf is-darwin ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
       export PATH="/Users/jpl/.rd/bin:$PATH"
     '';
@@ -81,6 +81,8 @@ in
         ide.vscode = enabled;
         terminal-emulators.wezterm = enabled;
       };
+
+      firefox = enabled;
 
       tui.nvim = enabled;
 

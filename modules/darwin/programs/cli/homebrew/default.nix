@@ -73,7 +73,7 @@ in {
 
       masApps = {} // cfg.additional_mas_apps;
 
-      taps = ["homebrew/bundle"] ++ cfg.additional_taps;
+      taps = [] ++ cfg.additional_taps;
 
       brews = [] ++ cfg.additional_brews;
 

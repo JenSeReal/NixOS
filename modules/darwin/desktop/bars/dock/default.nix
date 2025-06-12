@@ -3,13 +3,11 @@
   lib,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.desktop.bars.dock;
-in
-{
+in {
   options.${namespace}.desktop.bars.dock = {
     enable = mkEnableOption "Wether to enable dock configuration.";
   };
@@ -33,10 +31,8 @@ in
       orientation = "bottom";
       persistent-apps = [
         "/Applications/Firefox.app"
-        "/Applications/Slack.app"
         "/Applications/Microsoft Outlook.app"
         "/Applications/Microsoft Teams.app"
-        "/Applications/zoom.us.app"
       ];
       mru-spaces = false;
       wvous-tl-corner = 1;

@@ -35,10 +35,11 @@ in {
     # postman
     devenv
     seabird
+    slack
   ];
 
   # FIXME: migrate settings to hm or other then remove
-  system.primaryUser = "jpl";
+  system.primaryUser = "jfp";
 
   JenSeReal = {
     desktop.environments.aerospace = enabled;

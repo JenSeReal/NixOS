@@ -3,16 +3,15 @@
   lib,
   namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
 
   ctrl_left = 30064771296;
+  option_left = 30064771298;
   command_left = 30064771299;
 
   cfg = config.${namespace}.system.input.keyboard;
-in
-{
+in {
   options.${namespace}.system.input.keyboard = {
     enable = mkEnableOption "Whether or not to enable keyboard configurations.";
   };
@@ -29,6 +28,10 @@ in
           }
           {
             HIDKeyboardModifierMappingSrc = command_left;
+            HIDKeyboardModifierMappingDst = option_left;
+          }
+          {
+            HIDKeyboardModifierMappingSrc = option_left;
             HIDKeyboardModifierMappingDst = ctrl_left;
           }
         ];
