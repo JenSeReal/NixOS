@@ -115,6 +115,7 @@ in {
             "browser.startup.page" = 3;
             "browser.urlbar.keepPanelOpenDuringImeComposition" = true;
             "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+            "browser.translations.enable" = false;
 
             "devtools.chrome.enabled" = true;
             "devtools.debugger.remote-enabled" = true;

@@ -27,6 +27,8 @@ in {
         # FIX: shouldn't disable, but getting sandbox max size errors on darwin
         # darwin-rebuild --rollback on testing changing
         sandbox = lib.mkForce false;
+
+        ssl-cert-file = "/etc/nix/ca_cert.pem";
       };
       extraOptions = ''
         connect-timeout = 10

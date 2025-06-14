@@ -25,14 +25,9 @@ inputs.devenv.lib.mkShell {
           # snowfallorg.frost
           jemalloc
         ]
-        ++ lib.optionals pkgs.stdenv.isDarwin (
-          with pkgs.darwin.apple_sdk.frameworks; [
-            Cocoa
-            CoreFoundation
-            CoreServices
-            Security
-          ]
-        );
+        ++ lib.optionals pkgs.stdenv.isDarwin [
+          apple-sdk_15
+        ];
 
       enterShell = ''
         [ ! -f .env ] || export $(grep -v '^#' .env | xargs)

@@ -72,7 +72,7 @@ in {
             "spotlessGradle.diagnostics.enable" = true;
             "spotlessGradle.format.enable" = true;
             "editor.codeActionsOnSave" = {
-              "source.fixAll.spotlessGradle" = true;
+              "source.fixAll.spotlessGradle" = "always";
             };
           };
 
