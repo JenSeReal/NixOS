@@ -30,7 +30,6 @@ in {
       show-process-indicators = true;
       orientation = "bottom";
       persistent-apps = [
-        "/Applications/Firefox.app"
         "/Applications/Microsoft Outlook.app"
         "/Applications/Microsoft Teams.app"
       ];

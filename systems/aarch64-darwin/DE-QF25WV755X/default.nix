@@ -34,9 +34,8 @@ in {
     # inkscape
     act
     # postman
-    devenv
+    # devenv
     seabird
-    slack
   ];
 
   # FIXME: migrate settings to hm or other then remove
