@@ -4,15 +4,12 @@
   namespace,
   pkgs,
   ...
-}:
-
-let
+}: let
   inherit (lib) mkEnableOption mkIf getExe;
   inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.desktop.environment.hyprland;
-in
-{
+in {
   options.${namespace}.desktop.environment.hyprland = {
     enable = mkEnableOption "Whether or not to enable sway window manager.";
   };
@@ -20,6 +17,12 @@ in
   config = mkIf cfg.enable {
     ${namespace} = {
       communication.discord = enabled;
+      programs = {
+        desktop.screen-lockers.hyprlock.enable = true;
+      };
+      services = {
+        desktop.idle-managers.hypridle.enable = true;
+      };
       desktop = {
         window-manager.wayland.hyprland = enabled;
         display-manager.tuigreet = {
@@ -32,14 +35,13 @@ in
         notifications.mako.enable = true;
         portals.xdg.enable = true;
         logout-menu.wlogout.enable = true;
-        screen-locker.swaylock-effects.enable = true;
+        # screen-locker.swaylock-effects.enable = true;
         libraries.qt.enable = true;
         layout-manager = {
           kanshi.enable = true;
           way-displays.enable = true;
           wlr-randr.enable = true;
         };
-
       };
       hardware.audio.pipewire.enable = true;
       suites.wlroots.enable = true;
@@ -53,7 +55,6 @@ in
         file-manager.nemo.enable = true;
       };
       theming.stylix.enable = true;
-
     };
 
     environment.systemPackages = with pkgs; [

@@ -2,15 +2,14 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
-  cfg = config.JenSeReal.desktop.screen-locker.swaylock-effects;
-in
-{
-  options.JenSeReal.desktop.screen-locker.swaylock-effects = {
-    enable = mkEnableOption "Whether or not to add swaylock-effects.";
+  cfg = config.${namespace}.programs.desktop.screen-lockers.swaylock;
+in {
+  options.${namespace}.programs.desktop.screen-lockers.swaylock = {
+    enable = mkEnableOption "Whether or not to add swaylock.";
   };
 
   config = mkIf cfg.enable {

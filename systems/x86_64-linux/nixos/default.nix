@@ -56,21 +56,13 @@ in {
     fileSystems = ["/"];
   };
 
-  security.pam.services.swaylock = {
-    text = ''
-      auth sufficient pam_unix.so try_first_pass likeauth nullok
-      auth sufficient pam_fprintd.so
-      auth include login
-    '';
-  };
-
   environment.systemPackages = with pkgs; [
     bat
     btop
     capitaine-cursors
     codeium
     curl
-    devenv
+    # devenv
     davinci-resolve
     delta
     direnv

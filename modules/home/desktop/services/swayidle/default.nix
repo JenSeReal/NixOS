@@ -4,16 +4,14 @@
   namespace,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf getExe getExe';
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.desktop.service.swayidle;
 
   resumeCommand = "${getExe pkgs.wlopm} --on \*";
-in
-{
+in {
   options.${namespace}.desktop.service.swayidle = {
     enable = mkBoolOpt false "Whether to enable swayidle service.";
   };
@@ -51,22 +49,18 @@ in
     };
   };
 }
-
 # { pkgs, config, lib, ... }:
 # with lib;
 # with lib.JenSeReal;
 # let
 #   cfg = config.JenSeReal.desktop.idle-managers.swayidle;
-
 #   swaylock = "${config.programs.swaylock.package}/bin/swaylock";
 #   pgrep = "${pkgs.procps}/bin/pgrep";
 #   pactl = "${pkgs.pulseaudio}/bin/pactl";
 #   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
 #   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
-
 #   isLocked = "${pgrep} -x ${swaylock}";
 #   lockTime = cfg.lockTime * 60;
-
 #   afterLockTimeout = { timeout, command, resumeCommand ? null }: [
 #     {
 #       timeout = lockTime + timeout;
@@ -83,7 +77,6 @@ in
 #       mkEnableOption "Whether to enable swayidle in the desktop environment.";
 #     lockTime = mkOpt int 4 "The time in Minutes to lock the screen";
 #   };
-
 #   config = mkIf cfg.enable {
 #     services.swayidle = {
 #       enable = true;
@@ -123,3 +116,4 @@ in
 #     };
 #   };
 # }
+

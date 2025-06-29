@@ -4,13 +4,15 @@
   pkgs,
   namespace,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     getExe
     ;
+
+  inherit (lib.${namespace}) enabled;
 
   mainMod = "SUPER";
 
@@ -18,8 +20,7 @@ let
   screenshotter = getExe pkgs.${namespace}.screenshotter;
 
   cfg = config.JenSeReal.desktop.environment.hyprland;
-in
-{
+in {
   options.JenSeReal.desktop.environment.hyprland = {
     enable = mkEnableOption "Hyprland.";
   };
@@ -41,7 +42,6 @@ in
       pkgs.${namespace}.screen-recorder
     ];
 
-    services.kanshi.enable = true;
     JenSeReal.desktop = {
       window-managers.hyprland = {
         enable = true;
@@ -95,28 +95,33 @@ in
           ];
         };
       };
-      bars.waybar.enable = true;
-      launchers.kickoff.enable = true;
-      launchers.anyrun.enable = true;
-      notifications.mako.enable = true;
-      idle-manager.hypridle.enable = true;
-      screen-locker.swaylock-effects.enable = true;
-      layout-manager.kanshi.enable = true;
-      layout-manager.way-displays.enable = true;
-      # library.qt.enable = true;
+      bars.waybar = enabled;
+      launchers.kickoff = enabled;
+      launchers.anyrun = enabled;
+      notifications.mako = enabled;
+      layout-manager.kanshi = enabled;
+      layout-manager.way-displays = enabled;
+
+      # library.qt = enabled;
     };
-    # JenSeReal.programs.gui.browser.firefox.enable = true;
-    JenSeReal.programs.gui.terminal-emulators.kitty.enable = true;
+    # JenSeReal.programs.gui.browser.firefox = enabled;
+    JenSeReal.programs.gui.terminal-emulators.kitty = enabled;
     JenSeReal.programs = {
+      desktop = {
+        screen-lockers.hyprlock = enabled;
+      };
       clipcat-menu = {
         enable = true;
         settings.finder = "skim";
       };
-      clipcatctl.enable = true;
+      clipcatctl = enabled;
     };
-    JenSeReal.services.desktop.clipboard-managers = {
-      clipcatd.enable = true;
-      clipsync.enable = true;
+    JenSeReal.services.desktop = {
+      clipboard-managers = {
+        clipcatd = enabled;
+        clipsync = enabled;
+      };
+      idle-managers.hypridle = enabled;
     };
   };
 }

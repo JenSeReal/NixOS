@@ -4,14 +4,11 @@
   namespace,
   pkgs,
   ...
-}:
-
-let
+}: let
   inherit (lib) mkIf mkEnableOption;
   inherit (lib.${namespace}) enabled;
   cfg = config.${namespace}.programs.gui.entertainment.gaming.steam;
-in
-{
+in {
   options.${namespace}.programs.gui.entertainment.gaming.steam = {
     enable = mkEnableOption "Whether or not to enable pipewire.";
   };
@@ -26,7 +23,7 @@ in
       protontricks = enabled;
       remotePlay.openFirewall = true;
 
-      extraCompatPackages = with pkgs.unstable; [ proton-ge-bin.steamcompattool ];
+      extraCompatPackages = with pkgs.unstable; [proton-ge-bin.steamcompattool];
     };
     environment.systemPackages = with pkgs; [
       libgdiplus
@@ -35,7 +32,7 @@ in
       # steam-tui
 
       wineWowPackages.waylandFull
-      bottles
+      (bottles.override {extraLibraries = pkgs: [libunwind];})
       gamescope
       lutris
       proton-caller
