@@ -7,34 +7,35 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.JenSeReal.theming.stylix;
+  cfg = config.${namespace}.theming.stylix;
 in {
-  options.JenSeReal.theming.stylix = {
+  options.${namespace}.theming.stylix = {
     enable = mkEnableOption "Whether or not to enable stylix theming.";
   };
 
   config = mkIf cfg.enable {
-    stylix.image = ./P13_Background1.png;
-    stylix.polarity = "dark";
-    stylix.base16Scheme = ./synthwave84.yaml;
+    # stylix.enable = true;
+    # stylix.image = ./P13_Background1.png;
+    # stylix.polarity = "dark";
+    # stylix.base16Scheme = ./synthwave84.yaml;
 
-    # stylix.cursor = with pkgs; {
-    #   package = phinger-cursors;
-    #   name = "phinger-cursors-light";
-    #   size = 32;
+    # # stylix.cursor = with pkgs; {
+    # #   package = phinger-cursors;
+    # #   name = "phinger-cursors-light";
+    # #   size = 32;
+    # # };
+
+    # stylix.cursor = {
+    #   package = pkgs.${namespace}.layan-cursors;
+    #   name = "layan-white-cursors";
+    #   size = 24;
     # };
 
-    stylix.cursor = {
-      package = pkgs.${namespace}.layan-cursors;
-      name = "layan-white-cursors";
-      size = 24;
-    };
+    # # stylix.fonts.monospace = with pkgs; {
+    # # name = "Fira Code";
+    # # package = fira-code;
+    # # };
 
-    # stylix.fonts.monospace = with pkgs; {
-    # name = "Fira Code";
-    # package = fira-code;
-    # };
-
-    stylix.targets.vscode.enable = false;
+    # stylix.targets.vscode.enable = false;
   };
 }

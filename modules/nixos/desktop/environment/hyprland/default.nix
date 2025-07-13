@@ -54,7 +54,7 @@ in {
         # browser.firefox.enable = true;
         file-manager.nemo.enable = true;
       };
-      theming.stylix.enable = true;
+      # theming.stylix.enable = true;
     };
 
     environment.systemPackages = with pkgs; [

@@ -102,9 +102,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # stylix.url = "github:danth/stylix/master";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.url = "github:danth/stylix/release-25.05";
+    # stylix.url = "github:danth/stylix/release-25.05";
+    # stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     simshmbridge.url = "github:spacefreak18/simshmbridge?rev=5ba1ad8946d27af221089359ceaa528160553e63&dir=tools/distro/nix";
   };
@@ -150,7 +149,7 @@
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             nixvim.nixDarwinModules.nixvim
-            stylix.darwinModules.stylix
+            # stylix.darwinModules.stylix
             mac-app-util.darwinModules.default
             ragenix.darwinModules.default
           ];
@@ -161,7 +160,7 @@
             sops-nix.homeManagerModules.sops
             ragenix.homeManagerModules.default
             vscode-server.homeModules.default
-            stylix.homeManagerModules.stylix
+            # stylix.homeManagerModules.stylix
           ];
 
           nixos = with inputs; [
@@ -170,7 +169,7 @@
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             ragenix.nixosModules.default
-            stylix.nixosModules.stylix
+            # stylix.nixosModules.stylix
           ];
         };
       };

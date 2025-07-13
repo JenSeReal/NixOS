@@ -34,7 +34,7 @@ in {
     # inkscape
     act
     # postman
-    # devenv
+    devenv
     seabird
   ];
 
