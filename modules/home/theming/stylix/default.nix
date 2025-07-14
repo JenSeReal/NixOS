@@ -14,28 +14,72 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # stylix.enable = true;
-    # stylix.image = ./P13_Background1.png;
-    # stylix.polarity = "dark";
-    # stylix.base16Scheme = ./synthwave84.yaml;
+    stylix = {
+      enable = true;
+      image = ./P13_Background1.png;
+      polarity = "dark";
+      base16Scheme = ./synthwave84.yaml;
 
-    # # stylix.cursor = with pkgs; {
-    # #   package = phinger-cursors;
-    # #   name = "phinger-cursors-light";
-    # #   size = 32;
-    # # };
+      cursor = {
+        package = pkgs.${namespace}.layan-cursors;
+        name = "layan-white-cursors";
+        size = 24;
+      };
 
-    # stylix.cursor = {
-    #   package = pkgs.${namespace}.layan-cursors;
-    #   name = "layan-white-cursors";
-    #   size = 24;
-    # };
+      opacity = {
+        desktop = 1.0;
+        applications = 0.90;
+        terminal = 0.90;
+        popups = 1.0;
+      };
 
-    # # stylix.fonts.monospace = with pkgs; {
-    # # name = "Fira Code";
-    # # package = fira-code;
-    # # };
+      # cursor = with pkgs; {
+      #   package = phinger-cursors;
+      #   name = "phinger-cursors-light";
+      #   size = 24;
+      # };
 
-    # stylix.targets.vscode.enable = false;
+      fonts = with pkgs; {
+        sizes = {
+          desktop = 11;
+          applications = 12;
+          terminal = 13;
+          popups = 12;
+        };
+
+        serif = {
+          package = monaspace;
+          name =
+            if stdenv.hostPlatform.isDarwin
+            then "Monaspace Xenon"
+            else "MonaspaceXenon";
+        };
+        sansSerif = {
+          package = monaspace;
+          name =
+            if stdenv.hostPlatform.isDarwin
+            then "Monaspace Argon"
+            else "MonaspaceArgon";
+        };
+        monospace = {
+          package = monaspace;
+          name =
+            if stdenv.hostPlatform.isDarwin
+            then "Monaspace Neon Var"
+            else "MonaspaceNeon";
+        };
+        emoji = {
+          package = noto-fonts-color-emoji;
+          name = "Noto Color Emoji";
+        };
+      };
+
+      targets = {
+        vscode = {
+          enable = true;
+          profileNames = ["stylix"];
+        };
+      };
+    };
   };
 }

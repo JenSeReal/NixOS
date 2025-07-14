@@ -8,13 +8,12 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
-      # url = "github:nix-community/home-manager/master";
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur = {
       url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
@@ -27,9 +26,7 @@
 
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     fw-ectool = {
@@ -50,8 +47,10 @@
     };
     ragenix.url = "github:yaxitech/ragenix";
 
-    darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    darwin = {
+      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
     mac-app-util = {
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -73,24 +72,32 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devshell.url = "github:numtide/devshell";
-    devshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    devenv.url = "github:cachix/devenv";
-    devenv.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    rust-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # wezterm.url = "github:wez/wezterm/main?dir=nix";
-    # wezterm.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    vscode-server.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     anyrun.url = "github:anyrun-org/anyrun";
     anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
@@ -102,8 +109,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # stylix.url = "github:danth/stylix/release-25.05";
-    # stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix = {
+      url = "github:danth/stylix/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     simshmbridge.url = "github:spacefreak18/simshmbridge?rev=5ba1ad8946d27af221089359ceaa528160553e63&dir=tools/distro/nix";
   };
@@ -160,7 +169,7 @@
             sops-nix.homeManagerModules.sops
             ragenix.homeManagerModules.default
             vscode-server.homeModules.default
-            # stylix.homeManagerModules.stylix
+            stylix.homeManagerModules.stylix
           ];
 
           nixos = with inputs; [
@@ -169,7 +178,7 @@
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             ragenix.nixosModules.default
-            # stylix.nixosModules.stylix
+            stylix.nixosModules.stylix
           ];
         };
       };

@@ -114,7 +114,6 @@ in {
             "*" = true;
             "nix" = true;
           };
-
           "css.format.enable" = true;
           "css.format.newlineBetweenRules" = true;
           "css.format.newlineBetweenSelectors" = true;
@@ -123,9 +122,30 @@ in {
           "direnv.restart.automatic" = true;
 
           "editor.bracketPairColorization.enabled" = true;
-          "editor.fontFamily" =
-            lib.mkDefault "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'";
-          "editor.fontLigatures" = true;
+          # "editor.fontFamily" =
+          #   lib.mkDefault "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'";
+          # "editor.fontLigatures" = true;
+          "editor.fontSize" = 16;
+          "editor.fontVariations" = "'wght' 350";
+          "editor.fontFamily" = "'Monaspace Neon', monospace";
+          "editor.fontLigatures" = "'calt', 'liga', 'dlig'";
+          # "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
+          "editor.tokenColorCustomizations" = {
+            "textMateRules" = [
+              {
+                "scope" = "comment";
+                "settings" = {"fontStyle" = "italic";};
+              }
+              {
+                "scope" = "storage,entity,variable";
+                "settings" = {"fontStyle" = "";};
+              }
+            ];
+          };
+          "terminal.integrated.fontFamily" = "Monaspace Neon Var, Fira Code, Monaco, monospace";
+          "terminal.integrated.fontSize" = 14;
+          "terminal.integrated.fontWeight" = 500;
+          "terminal.integrated.fontWeightBold" = 800;
           "editor.inlayHints.enabled" = "on";
           "editor.linkedEditing" = true;
           "editor.codeActionsOnSave" = {
@@ -189,7 +209,7 @@ in {
 
           "telemetry.telemetryLevel" = "off";
 
-          "terminal.integrated.fontFamily" = mkDefault "'FiraCode Nerd Font', 'monospace'";
+          # "terminal.integrated.fontFamily" = mkDefault "'FiraCode Nerd Font', 'monospace'";
           "terminal.integrated.cursorStyle" = mkDefault "line";
           "terminal.integrated.defaultProfile.osx" =
             mkIf config.JenSeReal.programs.shells.nushell.enable "nu";

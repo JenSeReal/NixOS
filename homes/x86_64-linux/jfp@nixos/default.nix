@@ -6,7 +6,7 @@
 }: let
   inherit (lib.${namespace}) enabled;
 in {
-  ${namespace} = {
+  JenSeReal = {
     desktop = {
       # environment.sway = enabled;
       environment.hyprland = enabled;
@@ -32,7 +32,7 @@ in {
       gui.ide.vscode = enabled;
     };
     security.sops = enabled;
-    # theming.stylix = enabled;
+    theming.stylix = enabled;
   };
 
   sops.secrets."ssh/jfp.one" = {
