@@ -264,7 +264,6 @@ in {
             chrmarti.regex
             aaron-bond.better-comments
             ms-vsliveshare.vsliveshare
-            pinage404.nix-extension-pack
             robbowen.synthwave-vscode
             ms-vscode-remote.vscode-remote-extensionpack
             formulahendry.docker-explorer
@@ -282,6 +281,10 @@ in {
             hashicorp.terraform
             mgtrrz.terraform-completer
             grafana.grafana-alloy
+            notblank00.hexeditor
+            jnoortheen.nix-ide
+            mkhl.direnv
+            arrterian.nix-env-selector
           ]
           ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
 

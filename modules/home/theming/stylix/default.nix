@@ -64,9 +64,9 @@ in {
         monospace = {
           package = monaspace;
           name =
-            if stdenv.hostPlatform.isDarwin
-            then "Monaspace Neon Var"
-            else "MonaspaceNeon";
+            if pkgs.stdenv.hostPlatform.isDarwin
+            then "Monaspace Krypton"
+            else "MonaspaceKrypton";
         };
         emoji = {
           package = noto-fonts-color-emoji;

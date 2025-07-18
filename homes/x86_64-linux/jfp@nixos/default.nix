@@ -30,6 +30,7 @@ in {
       gui.terminal-emulators.kitty = enabled;
       gui.terminal-emulators.wezterm = enabled;
       gui.ide.vscode = enabled;
+      gui.ide.zed = enabled;
     };
     security.sops = enabled;
     theming.stylix = enabled;
