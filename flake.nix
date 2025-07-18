@@ -158,7 +158,7 @@
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             nixvim.nixDarwinModules.nixvim
-            # stylix.darwinModules.stylix
+            stylix.darwinModules.stylix
             mac-app-util.darwinModules.default
             ragenix.darwinModules.default
           ];

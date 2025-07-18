@@ -3,13 +3,10 @@
   lib,
   namespace,
   ...
-}:
-
-let
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.${namespace}.system.input.mouse;
-in
-{
+in {
   options.${namespace}.system.input.mouse = {
     enable = mkEnableOption "Whether or not to manage mouse settings.";
   };
@@ -22,7 +19,7 @@ in
       ];
     };
 
-    system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 1.0;
+    system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
 
     launchd.user.agents.unnaturalscrollwheels = {
       command = "/Applications/UnnaturalScrollWheels.app/Contents/MacOS/UnnaturalScrollWheels";

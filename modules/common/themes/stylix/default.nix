@@ -7,9 +7,9 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.${namespace}.theming.stylix;
+  cfg = config.${namespace}.themes.stylix;
 in {
-  options.${namespace}.theming.stylix = {
+  options.${namespace}.themes.stylix = {
     enable = mkEnableOption "Whether or not to enable stylix theming.";
   };
 
@@ -17,7 +17,7 @@ in {
     lib.optionalAttrs (options ? stylix) {
       stylix = {
         enable = true;
-        image = ./2.jpg;
+        image = ./P13_Background1.png;
         base16Scheme = ./synthwave84.yaml;
       };
     }

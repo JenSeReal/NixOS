@@ -186,7 +186,7 @@ in {
   };
 
   ${namespace} = {
-    theming.stylix = enabled;
+    themes.stylix = enabled;
     programs.gui.entertainment.gaming = {
       lutris = enabled;
       steam = enabled;

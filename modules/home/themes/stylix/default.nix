@@ -7,18 +7,18 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.${namespace}.theming.stylix;
+  cfg = config.${namespace}.themes.stylix;
 in {
-  options.${namespace}.theming.stylix = {
+  options.${namespace}.themes.stylix = {
     enable = mkEnableOption "Whether or not to enable stylix theming.";
   };
 
   config = mkIf cfg.enable {
     stylix = {
       enable = true;
-      image = ./P13_Background1.png;
+      image = lib.snowfall.fs.get-file "modules/common/themes/stylix/P13_Background1.png";
       polarity = "dark";
-      base16Scheme = ./synthwave84.yaml;
+      base16Scheme = lib.snowfall.fs.get-file "modules/common/themes/stylix/synthwave84.yaml";
 
       cursor = {
         package = pkgs.${namespace}.layan-cursors;
@@ -75,10 +75,8 @@ in {
       };
 
       targets = {
-        vscode = {
-          enable = true;
-          profileNames = ["stylix"];
-        };
+        vscode.profileNames = ["stylix"];
+        firefox.profileNames = ["${config.${namespace}.user.name}"];
       };
     };
   };

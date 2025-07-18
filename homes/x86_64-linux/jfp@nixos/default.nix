@@ -33,7 +33,7 @@ in {
       gui.ide.zed = enabled;
     };
     security.sops = enabled;
-    theming.stylix = enabled;
+    themes.stylix = enabled;
   };
 
   sops.secrets."ssh/jfp.one" = {

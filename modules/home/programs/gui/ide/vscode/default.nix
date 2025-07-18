@@ -125,10 +125,10 @@ in {
           # "editor.fontFamily" =
           #   lib.mkDefault "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'";
           # "editor.fontLigatures" = true;
-          "editor.fontSize" = 16;
-          "editor.fontVariations" = "'wght' 350";
-          "editor.fontFamily" = "'Monaspace Neon', monospace";
-          "editor.fontLigatures" = "'calt', 'liga', 'dlig'";
+          # "editor.fontSize" = 16;
+          # "editor.fontVariations" = "'wght' 350";
+          # "editor.fontFamily" = "'Monaspace Neon', monospace";
+          # "editor.fontLigatures" = "'calt', 'liga', 'dlig'";
           # "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
           "editor.tokenColorCustomizations" = {
             "textMateRules" = [
@@ -142,10 +142,7 @@ in {
               }
             ];
           };
-          "terminal.integrated.fontFamily" = "Monaspace Neon Var, Fira Code, Monaco, monospace";
-          "terminal.integrated.fontSize" = 14;
-          "terminal.integrated.fontWeight" = 500;
-          "terminal.integrated.fontWeightBold" = 800;
+
           "editor.inlayHints.enabled" = "on";
           "editor.linkedEditing" = true;
           "editor.codeActionsOnSave" = {
@@ -213,6 +210,10 @@ in {
           "terminal.integrated.cursorStyle" = mkDefault "line";
           "terminal.integrated.defaultProfile.osx" =
             mkIf config.JenSeReal.programs.shells.nushell.enable "nu";
+          # "terminal.integrated.fontFamily" = "Monaspace Neon Var, Fira Code, Monaco, monospace";
+          # "terminal.integrated.fontSize" = 14;
+          # "terminal.integrated.fontWeight" = 500;
+          # "terminal.integrated.fontWeightBold" = 800;
 
           "vsicons.dontShowNewVersionMessage" = true;
 
