@@ -46,8 +46,10 @@ in {
         indent_guides.coloring = "indent_aware";
 
         inlay_hints = {
-          enabled = true;
+          enabled = false;
           show_background = false;
+
+          toggle_on_modifiers_press.alt = true;
         };
 
         languages = {
