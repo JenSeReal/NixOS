@@ -4,11 +4,13 @@
   pkgs,
   namespace,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.themes.stylix;
-in {
+in
+{
   options.${namespace}.themes.stylix = {
     enable = mkEnableOption "Whether or not to enable stylix theming.";
   };
@@ -49,24 +51,15 @@ in {
 
         serif = {
           package = monaspace;
-          name =
-            if stdenv.hostPlatform.isDarwin
-            then "Monaspace Xenon"
-            else "MonaspaceXenon";
+          name = if stdenv.hostPlatform.isDarwin then "Monaspace Xenon" else "Monaspace Xenon";
         };
         sansSerif = {
           package = monaspace;
-          name =
-            if stdenv.hostPlatform.isDarwin
-            then "Monaspace Argon"
-            else "MonaspaceArgon";
+          name = if stdenv.hostPlatform.isDarwin then "Monaspace Argon" else "Monaspace Argon";
         };
         monospace = {
           package = monaspace;
-          name =
-            if pkgs.stdenv.hostPlatform.isDarwin
-            then "Monaspace Krypton"
-            else "MonaspaceKrypton";
+          name = if pkgs.stdenv.hostPlatform.isDarwin then "Monaspace Krypton" else "Monaspace Krypton";
         };
         emoji = {
           package = noto-fonts-color-emoji;
@@ -75,8 +68,8 @@ in {
       };
 
       targets = {
-        vscode.profileNames = ["stylix"];
-        firefox.profileNames = ["${config.${namespace}.user.name}"];
+        vscode.profileNames = [ "stylix" ];
+        firefox.profileNames = [ "${config.${namespace}.user.name}" ];
       };
     };
   };

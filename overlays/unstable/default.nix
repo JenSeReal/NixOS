@@ -18,6 +18,7 @@
     wine
     wineWowPackages
     winetricks
+    zed-editor
     ;
 
   unstable = import inputs.nixpkgs-unstable {
