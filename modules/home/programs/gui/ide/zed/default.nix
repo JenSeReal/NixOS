@@ -4,8 +4,7 @@
   namespace,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkEnableOption;
 
   biomeDefault = {
@@ -21,8 +20,7 @@ let
   };
 
   cfg = config.${namespace}.programs.gui.ide.zed;
-in
-{
+in {
   options.${namespace}.programs.gui.ide.zed = {
     enable = mkEnableOption "Whether or not to enable zed editor.";
   };
@@ -34,20 +32,17 @@ in
       enable = true;
       installRemoteServer = true;
       extraPackages = with pkgs.unstable; [
-        alejandra
         direnv
         devenv
         hexyl
-        nil
-        nixd
         rust-analyzer
         opentofu
         tofu-ls
-        (runCommand "terraform" { } ''
+        (runCommand "terraform" {} ''
           mkdir -p "$out"/bin
           ln -s ${lib.getExe opentofu} "$out"/bin/terraform
         '')
-        (runCommand "terraform-ls" { } ''
+        (runCommand "terraform-ls" {} ''
           mkdir -p "$out"/bin
           ln -s ${lib.getExe tofu-ls} "$out"/bin/terraform-ls
         '')
@@ -94,14 +89,17 @@ in
           "**/.settings"
           "**/terraform.tfstate"
           "**/*.lock.hcl"
+          "**/.direnv"
+          "**/.devenv"
+          "**/flake.lock"
         ];
         file_types = {
-          "Shell" = [ ".envrc*" ];
+          "Shell" = [".envrc*"];
         };
 
         languages = {
           Nix.formatter.external = {
-            command = "alejandra";
+            command = lib.getExe pkgs.unstable.alejandra;
             arguments = [
               "--quiet"
               "--"
@@ -109,30 +107,36 @@ in
           };
           YAML = {
             formatter.external = {
-              command = "yamlfmt";
-              arguments = [ "-in" ];
+              command = lib.getExe pkgs.unstable.yamlfmt;
+              arguments = ["-in"];
             };
             prettier = {
               allowed = false;
             };
           };
-          TOML.formatter.external.command = "taplo";
+          TOML.formatter.external.command = lib.getExe pkgs.unstable.taplo;
 
-          JavaScript = { } // biomeDefault;
-          TypeScript = { } // biomeDefault;
+          JavaScript = {} // biomeDefault;
+          TypeScript = {} // biomeDefault;
 
-          JSX = { } // biomeDefault;
-          TSX = { } // biomeDefault;
+          JSX = {} // biomeDefault;
+          TSX = {} // biomeDefault;
 
-          JSON = { } // biomeDefault;
+          JSON = {} // biomeDefault;
 
-          JSONC = { } // biomeDefault;
+          JSONC = {} // biomeDefault;
         };
 
         lsp = {
-          biome.settings = { };
+          biome.binary.path = lib.getExe pkgs.unstable.biome;
 
-          yaml-language-server.settings.yaml.schemaStore.enable = true;
+          nil.binary.path = lib.getExe pkgs.unstable.nil;
+          nixd.binary.path = lib.getExe pkgs.unstable.nixd;
+
+          yaml-language-server = {
+            settings.yaml.schemaStore.enable = true;
+            binary.path = lib.getExe pkgs.unstable.yaml-language-server;
+          };
         };
       };
     };

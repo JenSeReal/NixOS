@@ -74,7 +74,7 @@ in {
       ragenix = enabled;
     };
     programs.gui = {
-      browsers.arc = enabled;
+      # browsers.arc = enabled;
       logseq = enabled;
       headlamp = enabled;
       citrix = enabled;

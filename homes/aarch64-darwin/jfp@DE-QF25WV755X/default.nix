@@ -5,14 +5,12 @@
   pkgs,
   inputs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) enabled;
   is-darwin = pkgs.stdenv.isDarwin;
-in
-{
-  imports = [ inputs.ragenix.homeManagerModules.default ];
+in {
+  imports = [inputs.ragenix.homeManagerModules.default];
 
   age.secrets.ssh-config-jfp-one = {
     file = ./secrets/ssh-config-jfp-one.age;
@@ -71,14 +69,17 @@ in
         ripgrep = enabled;
         ssh = {
           enable = true;
-          includes = [ (lib.removePrefix ".ssh/" config.age.secrets.ssh-config-jfp-one.path) ];
+          includes = [(lib.removePrefix ".ssh/" config.age.secrets.ssh-config-jfp-one.path)];
         };
         thefuck = enabled;
         zoxide = enabled;
       };
 
       gui = {
-        ide.vscode = enabled;
+        ide = {
+          vscode = enabled;
+          zed = enabled;
+        };
         terminal-emulators.wezterm = enabled;
       };
 
