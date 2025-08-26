@@ -32,6 +32,9 @@ in {
       enable = true;
       installRemoteServer = true;
       extraPackages = with pkgs.unstable; [
+        nil
+        nixd
+        alejandra
         direnv
         devenv
         hexyl
@@ -99,7 +102,7 @@ in {
 
         languages = {
           Nix.formatter.external = {
-            command = lib.getExe pkgs.unstable.alejandra;
+            command = "alejandra";
             arguments = [
               "--quiet"
               "--"
@@ -114,7 +117,7 @@ in {
               allowed = false;
             };
           };
-          TOML.formatter.external.command = lib.getExe pkgs.unstable.taplo;
+          TOML.formatter.external.command = "taplo";
 
           JavaScript = {} // biomeDefault;
           TypeScript = {} // biomeDefault;
@@ -128,14 +131,8 @@ in {
         };
 
         lsp = {
-          biome.binary.path = lib.getExe pkgs.unstable.biome;
-
-          nil.binary.path = lib.getExe pkgs.unstable.nil;
-          nixd.binary.path = lib.getExe pkgs.unstable.nixd;
-
           yaml-language-server = {
             settings.yaml.schemaStore.enable = true;
-            binary.path = lib.getExe pkgs.unstable.yaml-language-server;
           };
         };
       };

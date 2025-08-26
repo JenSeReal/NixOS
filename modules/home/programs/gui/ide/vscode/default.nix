@@ -49,6 +49,8 @@ in {
   ];
 
   config = mkIf cfg.enable {
+    home.packages = [pkgs.unstable.codeium];
+
     services.vscode-server.enable = true;
     programs.vscode = {
       enable = true;
@@ -286,6 +288,7 @@ in {
             jnoortheen.nix-ide
             mkhl.direnv
             arrterian.nix-env-selector
+            opentofu.vscode-opentofu
           ]
           ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
 
