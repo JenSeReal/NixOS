@@ -110,11 +110,6 @@ in {
       desktop = {
         screen-lockers.hyprlock = enabled;
       };
-      clipcat-menu = {
-        enable = true;
-        settings.finder = "skim";
-      };
-      clipcatctl = enabled;
     };
     JenSeReal.services.desktop = {
       clipboard-managers = {
