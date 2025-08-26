@@ -3,18 +3,16 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.JenSeReal.gui.file-manager.nemo;
-in
-{
+in {
   options.JenSeReal.gui.file-manager.nemo = {
     enable = mkEnableOption "Whether or not to enable nemo.";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ nemo-with-extensions ];
+    environment.systemPackages = with pkgs; [nemo-with-extensions nemo-preview nemo-fileroller];
     services.gvfs.enable = true;
   };
 }
