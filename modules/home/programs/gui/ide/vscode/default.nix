@@ -44,7 +44,7 @@ in {
   };
 
   imports = [
-    ./mutable.nix
+    # ./mutable.nix
     inputs.vscode-server.homeModules.default
   ];
 
@@ -317,9 +317,9 @@ in {
       };
     };
 
-    home.file = lib.genAttrs pathsToMakeWritable (_: {
-      force = true;
-      mutable = true;
-    });
+    # home.file = lib.genAttrs pathsToMakeWritable (_: {
+    #   force = true;
+    #   mutable = true;
+    # });
   };
 }
