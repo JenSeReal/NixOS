@@ -1,6 +1,6 @@
 {lib, ...}: let
   inherit (lib) types mkOption;
-
+in {
   submapModule = types.submodule {
     options = {
       name = mkOption {
@@ -52,6 +52,4 @@
       };
     };
   };
-in {
-  inherit submapModule;
 }

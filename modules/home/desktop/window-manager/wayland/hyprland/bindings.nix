@@ -17,6 +17,7 @@
   scratchpad = getExe inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad;
   playerctl = getExe pkgs.playerctl;
   wpctl = getExe' pkgs.wireplumber "wpctl";
+  clipcat-menu = getExe' pkgs.clipcat "clipcat-menu";
 
   reload_script = pkgs.writeShellScript "reload.sh" ''
     killall .waybar-wrapped
@@ -76,7 +77,7 @@
 in {
   options.JenSeReal.desktop.window-managers.hyprland = {
     settings = lib.mkOption {
-      type = (import ./types/settingsModule.nix {inherit lib pkgs namespace;}).settingsModule;
+      type = (import ./modules/settings.nix {inherit lib pkgs namespace;}).settingsModule;
       default = {};
       description = "The settings for bindings";
     };
@@ -96,9 +97,7 @@ in {
             "${cfg.settings.modifyer.mainMod}, D, exec, ${getExe cfg.settings.defaultPrograms.launcher}"
             "${cfg.settings.modifyer.mainModShift}, D, exec, ${getExe cfg.settings.defaultPrograms.secondaryLauncher}"
             "${cfg.settings.modifyer.mainMod}, E, exec, ${getExe cfg.settings.defaultPrograms.explorer}"
-            "${cfg.settings.modifyer.mainMod}, C, exec, [float; center; focus] ${getExe cfg.settings.defaultPrograms.terminal} start ${
-              getExe' config.${namespace}.services.desktop.clipboard-managers.clipcatd "clipcat-menu"
-            }"
+            "${cfg.settings.modifyer.mainMod}, C, exec, [float; center; focus] ${getExe cfg.settings.defaultPrograms.terminal} start ${clipcat-menu}"
 
             "${cfg.settings.modifyer.mainModShift}, Q, killactive,"
             "${cfg.settings.modifyer.mainModShift}, C, exec, ${reload_script.outPath}"

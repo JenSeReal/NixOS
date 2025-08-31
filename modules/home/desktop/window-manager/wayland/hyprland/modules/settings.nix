@@ -6,7 +6,7 @@
 }: let
   inherit (lib) types mkOption;
   inherit (lib.${namespace}) mkStrOpt mkPackageOpt;
-
+in {
   settingsModule = types.submodule {
     options = {
       modifyer = mkOption {
@@ -33,7 +33,7 @@
         default = {};
       };
       submaps = mkOption {
-        type = types.listOf (import ./submap.nix).submapModule;
+        type = types.listOf (import ./submap.nix {inherit lib;}).submapModule;
         default = [];
         description = "List of submap configurations";
         example = lib.literalExpression ''
@@ -59,6 +59,4 @@
       };
     };
   };
-in {
-  inherit settingsModule;
 }
