@@ -12,9 +12,15 @@ delib.host {
     programs = {
       citrix-workspace.enable = true;
       codium.enable = true;
+      direnv.enable = true;
+      docker.enable = true;
+      fish.enable = true;
+      nu.enable = true;
       git.enable = true;
       zed.enable = true;
+      zsh.enable = true;
     };
+    desktop-environments.aerospace.enable = true;
   };
 
   darwin = {
