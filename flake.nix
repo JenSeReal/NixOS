@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
@@ -15,6 +16,7 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -47,7 +49,7 @@
     };
     ragenix.url = "github:yaxitech/ragenix";
 
-    darwin = {
+    nix-darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
@@ -57,31 +59,8 @@
     };
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
-    snowfall-lib = {
-      url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    snowfall-frost = {
-      url = "github:snowfallorg/frost";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake = {
-      url = "github:snowfallorg/flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     devenv = {
       url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -99,97 +78,51 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    anyrun.url = "github:anyrun-org/anyrun";
-    anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
-
-    typst-live.url = "github:ItsEthra/typst-live";
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     stylix = {
       url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    simshmbridge.url = "github:spacefreak18/simshmbridge?rev=5ba1ad8946d27af221089359ceaa528160553e63&dir=tools/distro/nix";
+    denix = {
+      url = "github:yunfachi/denix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        nix-darwin.follows = "nix-darwin";
+      };
+    };
   };
 
-  outputs = {self, ...} @ inputs: let
-    inherit inputs;
+  outputs = {denix, ...} @ inputs: let
+    mkConfigurations = moduleSystem:
+      denix.lib.configurations rec {
+        inherit moduleSystem;
+        homeManagerUser = "jfp";
 
-    lib = inputs.snowfall-lib.mkLib {
-      inherit inputs;
-      src = ./.;
+        paths = [
+          ./hosts
+          ./modules
+          ./rices
+        ];
 
-      snowfall = {
-        meta = {
-          name = "JenSeReal";
-          title = "JenSeReal";
-        };
+        # exclude = [
+        #   ./modules/programs/homebrew/types/caskOption.nix
+        # ];
 
-        namespace = "JenSeReal";
-      };
-    };
-  in
-    lib.mkFlake {
-      outputs-builder = channels: {
-        formatter = channels.nixpkgs.alejandra;
-      };
+        extensions = with denix.lib.extensions; [
+          args
+          (base.withConfig {
+            args.enable = true;
+          })
+        ];
 
-      channels-config = {
-        allowUnfree = true;
-        permittedInsecurePackages = [];
-      };
-
-      overlays = with inputs; [
-        flake.overlays.default
-        nur.overlays.default
-        snowfall-frost.overlays.default
-        rust-overlay.overlays.default
-        nix-vscode-extensions.overlays.default
-      ];
-
-      systems = {
-        modules = {
-          darwin = with inputs; [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            nixvim.nixDarwinModules.nixvim
-            stylix.darwinModules.stylix
-            mac-app-util.darwinModules.default
-            ragenix.darwinModules.default
-          ];
-
-          home = with inputs; [
-            anyrun.homeManagerModules.anyrun-with-all-plugins
-            nixvim.homeManagerModules.nixvim
-            sops-nix.homeManagerModules.sops
-            ragenix.homeManagerModules.default
-            vscode-server.homeModules.default
-            stylix.homeManagerModules.stylix
-          ];
-
-          nixos = with inputs; [
-            home-manager.nixosModules.home-manager
-            vscode-server.nixosModules.default
-            lanzaboote.nixosModules.lanzaboote
-            sops-nix.nixosModules.sops
-            ragenix.nixosModules.default
-            stylix.nixosModules.stylix
-          ];
+        specialArgs = {
+          inherit inputs moduleSystem homeManagerUser;
         };
       };
-
-      templates = {
-        default = {
-          path = ./templates/default;
-          description = "A very basic flake for dev environments";
-        };
-      };
-
-      defaultTemplate = self.templates.default;
-    };
+  in {
+    nixosConfigurations = mkConfigurations "nixos";
+    homeConfigurations = mkConfigurations "home";
+    darwinConfigurations = mkConfigurations "darwin";
+  };
 }

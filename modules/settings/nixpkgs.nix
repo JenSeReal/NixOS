@@ -1,0 +1,26 @@
+{delib, ...}: let
+  common.nixpkgs.config = {
+    allowUnfree = true;
+  };
+  files."nixpkgs/config.nix".text = ''
+    {
+      allowUnfree = true;
+    }
+  '';
+  variables."NIXPKGS_ALLOW_UNFREE" = 1;
+in
+  delib.module {
+    name = "settings.nixpkgs";
+
+    nixos.always =
+      common
+      // {
+        environment.variables = variables;
+      };
+    home.always =
+      common
+      // {
+        xdg.configFile = files;
+        home.sessionVariables = variables;
+      };
+  }
