@@ -2,10 +2,7 @@
 delib.module {
   name = "programs.bash";
 
-  options = with delib;
-    moduleOptions {
-      enable = boolOption false;
-    };
+  options = delib.singleEnableOption false;
 
   home.ifEnabled = {...}: {};
 
