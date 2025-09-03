@@ -37,7 +37,6 @@ delib.module {
         "if".app-id = "com.electron.realtimeboard";
         run = "move-node-to-workspace productive";
       }
-
       {
         "if".app-id = "com.microsoft.onenote.mac";
         run = "move-node-to-workspace notes";
@@ -59,13 +58,22 @@ delib.module {
         "if".app-id = "com.microsoft.Outlook";
         run = "move-node-to-workspace chat";
       }
+
       {
         "if".app-id = "com.microsoft.teams2";
         run = "move-node-to-workspace conference";
       }
       {
+        "if".app-id = "com.citrix.receiver.icaviewer.mac";
+        run = "move-node-to-workspace productive";
+      }
+      {
         "if".app-id = "us.zoom.xos";
         run = "move-node-to-workspace conference";
+      }
+      {
+        "if".app-id = "dev.zed.Zed";
+        run = "move-node-to-workspace code";
       }
     ];
   };

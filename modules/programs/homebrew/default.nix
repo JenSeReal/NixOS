@@ -1,6 +1,7 @@
 {
   delib,
   lib,
+  inputs,
   ...
 }:
 delib.module {
@@ -34,6 +35,7 @@ delib.module {
     cfg,
     ...
   }: let
+
     # Normalize casks to ensure they're all attribute sets
     normalizedCasks =
       map (
@@ -61,18 +63,13 @@ delib.module {
       };
       brews = cfg.additionalBrews;
       casks =
-        [
-          # Base casks
-          # "steam"
-          # "headlamp"
-        ]
-        ++ (map (
-            cask:
-              if cask.args == {}
-              then cask.name
-              else cask
-          )
-          normalizedCasks);
+        map (
+          cask:
+            if cask.args == {}
+            then cask.name
+            else cask
+        )
+        normalizedCasks;
       masApps = cfg.additionalMasApps;
       taps = cfg.additionalTaps;
     };

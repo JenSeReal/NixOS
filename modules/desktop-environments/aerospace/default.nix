@@ -8,13 +8,19 @@ delib.module {
     };
 
   darwin.ifEnabled = {
-    myconfig.programs = {
-      activity-monitor.enable = true;
-      aerospace.enable = true;
-      dock.enable = true;
-      finder.enable = true;
-      raycast.enable = true;
-      sketchybar.enable = true;
+    myconfig = {
+      programs = {
+        activity-monitor.enable = true;
+        aerospace.enable = true;
+        dock.enable = true;
+        finder.enable = true;
+        raycast.enable = true;
+        sketchybar.enable = true;
+      };
+
+      services = {
+        jankyborders.enable = true;
+      };
     };
 
     system.defaults = {

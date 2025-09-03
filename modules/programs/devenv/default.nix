@@ -11,8 +11,6 @@ delib.module {
       enable = boolOption false;
     };
 
-  home.ifEnabled = {...}: {};
-
   darwin.ifEnabled = {...}: {
     myconfig.programs.direnv.enable = true;
     environment.systemPackages = with pkgs; [

@@ -1,6 +1,7 @@
 {delib, ...}: let
   common.nixpkgs.config = {
     allowUnfree = true;
+    doCheck = false;
   };
   files."nixpkgs/config.nix".text = ''
     {

@@ -14,7 +14,9 @@ delib.host {
       codium.enable = true;
       direnv.enable = true;
       docker.enable = true;
+      # firefox.enable = true;
       fish.enable = true;
+      logseq.enable = true;
       nu.enable = true;
       git.enable = true;
       zed.enable = true;

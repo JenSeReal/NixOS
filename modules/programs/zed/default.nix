@@ -1,12 +1,24 @@
-{delib, ...}:
+{delib, pkgs, ...}:
 delib.module {
   name = "programs.zed";
-  options = delib.singleEnableOption false;
+  options = with delib; moduleOptions {
+    enable = boolOption false;
+    package = packageOption pkgs.zed-editor;
+  };
 
-  home.ifEnabled = {...}: {
-    programs.zed-editor = {
+  darwin.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
+  };
+
+  home.ifEnabled = {cfg, ...}: {
+    programs.zed-editor = with pkgs;{
       enable = true;
+      package = cfg.package;
       installRemoteServer = true;
     };
+  };
+
+  nixos.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
   };
 }

@@ -16,6 +16,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # firefox-addons = {
+    #   url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
@@ -103,18 +107,14 @@
           ./hosts
           ./modules
           ./rices
+          ./overlays
         ];
 
         # exclude = [
         #   ./modules/programs/homebrew/types/caskOption.nix
         # ];
 
-        extensions = with denix.lib.extensions; [
-          args
-          (base.withConfig {
-            args.enable = true;
-          })
-        ];
+        extensions = import ./extensions { delib = denix.lib; };
 
         specialArgs = {
           inherit inputs moduleSystem homeManagerUser;
