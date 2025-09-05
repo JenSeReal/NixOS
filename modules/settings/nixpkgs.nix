@@ -1,7 +1,14 @@
 {delib, ...}: let
-  common.nixpkgs.config = {
-    allowUnfree = true;
-    doCheck = false;
+  common.nixpkgs = {
+    config = {
+      allowUnfree = true;
+      doCheckByDefault = false;
+      # Or more specifically:
+      packageOverrides = pkgs: {
+        rsync = pkgs.rsync.overrideAttrs { doCheck = false; };
+        sbcl = pkgs.sbcl.overrideAttrs { doCheck = false; };
+      };
+    };
   };
   files."nixpkgs/config.nix".text = ''
     {
