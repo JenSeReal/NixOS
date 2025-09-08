@@ -1,17 +1,13 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.JenSeReal.security.polkit;
-in {
-  options.JenSeReal.security.polkit = {
-    enable = mkEnableOption "Whether or not to enable polkit.";
-  };
+}:
+delib.module {
+  name = "programs.polkit";
+  options = delib.singleEnableOption false;
 
-  config = mkIf cfg.enable {
+  nixos.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [kdePackages.polkit-kde-agent-1];
 
     security.polkit = {

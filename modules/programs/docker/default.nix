@@ -56,7 +56,8 @@ delib.module {
     };
   };
 
-  home.ifEnabled = {...}: {};
-
-  nixos.ifEnabled = {...}: {};
+  nixos.ifEnabled = {myconfig, ...}: {
+    virtualisation.docker.enable = true;
+    users.extraGroups.docker.members = [myconfig.username];
+  };
 }
