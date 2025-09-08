@@ -8,6 +8,8 @@ delib.module {
   name = "programs.codium";
   options = delib.singleEnableOption false;
 
+  darwin.ifEnabled = {...}: {};
+
   home.ifEnabled = {...}: {
     imports = [inputs.vscode-server.homeModules.default];
 
@@ -17,4 +19,6 @@ delib.module {
       package = pkgs.vscodium;
     };
   };
+
+  nixos.ifEnabled = {...}: {};
 }

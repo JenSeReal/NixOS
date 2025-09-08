@@ -2,16 +2,16 @@
   delib,
   pkgs,
   ...
-}:
-delib.module {
-  name = "programs.spotify";
-  options = delib.singleEnableOption false;
-
-  nixos.ifEnabled = {...}: {
+}: let
+  common = {
     environment.systemPackages = with pkgs; [spotify];
   };
+in
+  delib.module {
+    name = "programs.spotify";
+    options = delib.singleEnableOption false;
 
-  darwin.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs; [spotify];
-  };
-}
+    nixos.ifEnabled = {...}: common // {};
+
+    darwin.ifEnabled = {...}: common // {};
+  }

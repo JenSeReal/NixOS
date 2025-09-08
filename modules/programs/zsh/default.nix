@@ -5,11 +5,8 @@
 }:
 delib.module {
   name = "programs.zsh";
+  options = delib.singleEnableOption false;
 
-  options = with delib;
-    moduleOptions {
-      enable = boolOption false;
-    };
   home.ifEnabled = {...}: {};
 
   darwin.ifEnabled = {...}: {
@@ -22,8 +19,5 @@ delib.module {
       enableSyntaxHighlighting = true;
     };
     environment.shells = [pkgs.zsh];
-  };
-
-  nixos.ifEnabled = {...}: {
   };
 }

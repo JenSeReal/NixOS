@@ -5,11 +5,8 @@
 }:
 delib.module {
   name = "programs.fish";
+  options = delib.singleEnableOption false;
 
-  options = with delib;
-    moduleOptions {
-      enable = boolOption false;
-    };
   home.ifEnabled = {...}: {};
 
   darwin.ifEnabled = {...}: {

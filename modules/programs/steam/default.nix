@@ -8,7 +8,31 @@ delib.module {
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs; [steam];
+    hardware.steam-hardware.enable = true;
+
+    programs.steam = {
+      enable = true;
+      extest.enable = true;
+      localNetworkGameTransfers.openFirewall = true;
+      protontricks.enable = true;
+      remotePlay.openFirewall = true;
+
+      extraCompatPackages = with pkgs.unstable; [proton-ge-bin.steamcompattool];
+    };
+    environment.systemPackages = with pkgs; [
+      libgdiplus
+      steamcmd
+      steamtinkerlaunch
+      # steam-tui
+
+      wineWowPackages.waylandFull
+      (bottles.override {extraLibraries = pkgs: [libunwind];})
+      gamescope
+      proton-caller
+      protontricks
+      protonup-ng
+      protonup-qt
+    ];
   };
 
   darwin.ifEnabled = {...}: {

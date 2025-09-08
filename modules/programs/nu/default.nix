@@ -5,18 +5,14 @@
 }:
 delib.module {
   name = "programs.nu";
-
-  options = with delib;
-    moduleOptions {
-      enable = boolOption false;
-    };
-  home.ifEnabled = {...}: {};
+  options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {
     environment.systemPackages = [pkgs.nushell];
     environment.shells = [pkgs.nushell];
   };
 
-  nixos.ifEnabled = {...}: {
-  };
+  home.ifEnabled = {...}: {};
+
+  nixos.ifEnabled = {...}: {};
 }

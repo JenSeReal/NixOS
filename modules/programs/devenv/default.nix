@@ -5,11 +5,7 @@
 }:
 delib.module {
   name = "programs.devenv";
-
-  options = with delib;
-    moduleOptions {
-      enable = boolOption false;
-    };
+  options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {
     myconfig.programs.direnv.enable = true;

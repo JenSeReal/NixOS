@@ -15,7 +15,6 @@
 in
   delib.module {
     name = "programs.skhd";
-
     options = delib.singleEnableOption false;
 
     darwin.ifEnabled = {...}: {

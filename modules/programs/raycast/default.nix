@@ -5,7 +5,6 @@
 }:
 delib.module {
   name = "programs.raycast";
-
   options = with delib; singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

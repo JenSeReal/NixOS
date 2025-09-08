@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.headlamp";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.miro";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

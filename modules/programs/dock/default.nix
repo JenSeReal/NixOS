@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.dock";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

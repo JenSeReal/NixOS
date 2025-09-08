@@ -4,16 +4,12 @@
   ...
 }:
 delib.module {
-  name = "programs.direnv";
+  name = "programs.discord";
   options = delib.singleEnableOption false;
 
-  darwin.ifEnabled = {...}: {
+  nixos = {
     environment.systemPackages = with pkgs; [
-      direnv
-      nix-direnv
+      vesktop
     ];
-  };
-
-  nixos.ifEnabled = {...}: {
   };
 }

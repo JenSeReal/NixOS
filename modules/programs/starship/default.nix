@@ -1,9 +1,19 @@
-{delib, ...}:
-delib.module {
-  name = "programs.starship";
-  options = delib.singleEnableOption false;
+{
+  delib,
+  pkgs,
+  ...
+}: let
+  common = {environment.systemPackages = [pkgs.starship];};
+in
+  delib.module {
+    name = "programs.starship";
+    options = delib.singleEnableOption false;
 
-  home.ifEnabled = {...}: {
-    programs.starship.enable = true;
-  };
-}
+    darwin.ifEnabled = common // {};
+
+    home.ifEnabled = {...}: {
+      programs.starship.enable = true;
+    };
+
+    nixos.ifEnabled = common // {};
+  }

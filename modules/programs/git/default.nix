@@ -7,7 +7,6 @@
 }:
 delib.module {
   name = "programs.git";
-
   options = with delib;
     moduleOptions {
       enable = boolOption false;
@@ -17,6 +16,8 @@ delib.module {
       signByDefault = boolOption true;
       signingKey = strOption "${homeconfig.home.homeDirectory}/.ssh/id_ed25519";
     };
+
+  darwin.ifEnabled = {...}: {};
 
   home.ifEnabled = {cfg, ...}: {
     programs.git = {
@@ -91,7 +92,7 @@ delib.module {
     programs.gh.enable = true;
   };
 
-  nixos.ifEnabled = {
+  nixos.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [
       bfg-repo-cleaner
       git
@@ -102,6 +103,4 @@ delib.module {
       gitlint
     ];
   };
-
-  darwin.ifEnabled = {...}: {};
 }

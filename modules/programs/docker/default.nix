@@ -5,13 +5,7 @@
 }:
 delib.module {
   name = "programs.docker";
-
-  options = with delib;
-    moduleOptions {
-      enable = boolOption false;
-    };
-
-  home.ifEnabled = {...}: {};
+  options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {myconfig, ...}: {
     myconfig.programs.homebrew = {
@@ -62,6 +56,7 @@ delib.module {
     };
   };
 
-  nixos.ifEnabled = {...}: {
-  };
+  home.ifEnabled = {...}: {};
+
+  nixos.ifEnabled = {...}: {};
 }

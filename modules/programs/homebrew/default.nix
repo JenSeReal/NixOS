@@ -1,12 +1,10 @@
 {
   delib,
   lib,
-  inputs,
   ...
 }:
 delib.module {
   name = "programs.homebrew";
-
   options = with delib;
     moduleOptions {
       enable = boolOption false;
@@ -35,7 +33,6 @@ delib.module {
     cfg,
     ...
   }: let
-
     # Normalize casks to ensure they're all attribute sets
     normalizedCasks =
       map (

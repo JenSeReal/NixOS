@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.bash";
-
   options = delib.singleEnableOption false;
 
   home.ifEnabled = {...}: {};

@@ -15,7 +15,6 @@
 in
   delib.module {
     name = "programs.sketchybar";
-
     options = delib.singleEnableOption false;
 
     darwin.ifEnabled = {...}: {

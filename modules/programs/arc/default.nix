@@ -5,7 +5,6 @@
 }:
 delib.module {
   name = "programs.arc";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

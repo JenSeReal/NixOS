@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.activity-monitor";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.finder";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

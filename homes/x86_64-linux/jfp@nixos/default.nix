@@ -8,7 +8,6 @@
 in {
   JenSeReal = {
     desktop = {
-      # environment.sway = enabled;
       environment.hyprland = enabled;
     };
     programs = {

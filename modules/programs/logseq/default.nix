@@ -1,7 +1,6 @@
 {delib, ...}:
 delib.module {
   name = "programs.logseq";
-
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

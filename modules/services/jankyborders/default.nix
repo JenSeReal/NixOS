@@ -8,8 +8,6 @@ delib.module {
 
   options = delib.singleEnableOption false;
 
-  home.ifEnabled = {...}: {};
-
   darwin.ifEnabled = {...}: {
     services.jankyborders = {
       enable = true;
@@ -20,8 +18,5 @@ delib.module {
       active_color = lib.mkDefault "0xffffffff"; # so that stylix can override
       inactive_color = lib.mkDefault "0x00000000"; # so that stylix can override
     };
-  };
-
-  nixos.ifEnabled = {...}: {
   };
 }

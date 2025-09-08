@@ -5,14 +5,13 @@
 }:
 delib.module {
   name = "programs.ragenix";
-
   options = delib.singleEnableOption false;
-
-  home.ifEnabled = {...}: {};
 
   darwin.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [ragenix];
   };
+
+  home.ifEnabled = {...}: {};
 
   nixos.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [ragenix];
