@@ -72,5 +72,37 @@ delib.module {
           resumeCommand = "${swaymsg} 'output * dpms on'";
         }));
     };
+
+    # resumeCommand = "${getExe pkgs.wlopm} --on \*";
+    # services.swayidle = {
+    #   enable = true;
+
+    #   systemdTarget = "sway-session.target";
+    #   events = [
+    #     {
+    #       event = "before-sleep";
+    #       command = "${getExe config.programs.swaylock.package} -fF";
+    #     }
+    #     {
+    #       event = "after-resume";
+    #       command = "${getExe pkgs.wlopm} --on \*";
+    #     }
+    #     {
+    #       event = "lock";
+    #       command = "${getExe config.programs.swaylock.package} -fF";
+    #     }
+    #   ];
+    #   timeouts = [
+    #     {
+    #       timeout = 30;
+    #       command = "${getExe config.programs.swaylock.package} -fF";
+    #     }
+    #     {
+    #       timeout = 60;
+    #       command = "${getExe' pkgs.systemd "systemctl"} suspend -f";
+    #       inherit resumeCommand;
+    #     }
+    #   ];
+    # };
   };
 }

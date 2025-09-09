@@ -9,6 +9,13 @@ delib.module {
 
   options = delib.singleEnableOption false;
 
+  home.ifEnabled = {
+    services.mako = {
+      enable = true;
+      settings.default-timeout = 10000;
+    };
+  };
+
   nixos.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [libnotify mako];
 
