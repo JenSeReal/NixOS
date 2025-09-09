@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "services.mako";
+  name = "services.swayidle";
 
   options = delib.singleEnableOption false;
 

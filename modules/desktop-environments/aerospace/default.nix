@@ -1,11 +1,7 @@
 {delib, ...}:
 delib.module {
   name = "desktop-environments.aerospace";
-
-  options = with delib;
-    moduleOptions {
-      enable = boolOption true;
-    };
+  options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {
     myconfig = {

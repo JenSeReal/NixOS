@@ -1,22 +1,16 @@
 {
-  config,
-  lib,
-  namespace,
+  delib,
   pkgs,
+  lib,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf getExe;
-  inherit (lib.${namespace}) enabled;
+}:
+delib.module {
+  name = "desktop-environments.hyprland";
+  options = delib.singleEnableOption false;
 
-  cfg = config.${namespace}.desktop.environment.hyprland;
-in {
-  options.${namespace}.desktop.environment.hyprland = {
-    enable = mkEnableOption "Whether or not to enable sway window manager.";
-  };
-
-  config = mkIf cfg.enable {
-    ${namespace} = {
-      communication.discord = enabled;
+  nixos.ifEnabled = {
+    myconfig = {
+      communication.discord.enable = true;
       programs = {
         desktop.screen-lockers.hyprlock.enable = true;
       };
@@ -24,11 +18,11 @@ in {
         desktop.idle-managers.hypridle.enable = true;
       };
       desktop = {
-        window-manager.wayland.hyprland = enabled;
+        window-manager.wayland.hyprland.enable = true;
         display-manager.tuigreet = {
           enable = true;
           autoLogin = "jfp";
-          defaultSession = getExe pkgs.hyprland;
+          defaultSession = lib.getExe pkgs.hyprland;
         };
         bars.waybar.enable = true;
         launchers.kickoff.enable = true;
