@@ -12,7 +12,22 @@ delib.module {
     environment.shells = with pkgs; [nushell];
   };
 
-  home.ifEnabled = {...}: {};
+  home.ifEnabled = {...}: {
+    programs.nushell = {
+      enable = true;
+      extraConfig = ''
+        $env.config = {
+          show_banner: false
+          completions: {
+            case_sensitive: false
+            quick: true
+            partial: true
+            algorithm: "prefix"
+          }
+        }
+      '';
+    };
+  };
 
   nixos.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [nushell];

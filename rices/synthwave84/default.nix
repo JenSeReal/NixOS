@@ -1,7 +1,6 @@
 {
   delib,
   pkgs,
-  lib,
   ...
 }: let
   common = {

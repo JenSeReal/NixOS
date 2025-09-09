@@ -12,7 +12,18 @@ delib.module {
     environment.shells = with pkgs; [fish];
   };
 
-  home.ifEnabled = {...}: {};
+  home.ifEnabled = {...}: {
+    programs.fish = {
+      enable = true;
+      shellInit = ''
+        ${
+          if pkgs.stdenv.isDarwin
+          then "set fish_emoji_width 2"
+          else ""
+        }
+      '';
+    };
+  };
 
   nixos.ifEnabled = {...}: {
     programs.fish.enable = true;

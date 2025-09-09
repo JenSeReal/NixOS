@@ -1,21 +1,15 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
+  lib,
+  config,
   ...
 }:
-let
-  inherit (lib) mkIf mkEnableOption getExe;
+delib.module {
+  name = "programs.wezterm";
+  options = delib.singleEnablxeOption false;
 
-  cfg = config.JenSeReal.programs.gui.terminal-emulators.wezterm;
-in
-{
-  options.JenSeReal.programs.gui.terminal-emulators.wezterm = {
-    enable = mkEnableOption "Whether or not to add wezterm.";
-  };
-
-  # TODO: colors are not there yet
-  config = mkIf cfg.enable {
+  home.ifEnabled = {
     programs.wezterm = {
       enable = true;
       # package = inputs.wezterm.packages.${pkgs.system}.default;
@@ -81,16 +75,15 @@ in
         local config = wezterm.config_builder()
 
         ${
-          if pkgs.stdenv.isDarwin then
-            ''
-              -- Fix option key being broken
-              config.send_composed_key_when_left_alt_is_pressed = true
+          if pkgs.stdenv.isDarwin
+          then ''
+            -- Fix option key being broken
+            config.send_composed_key_when_left_alt_is_pressed = true
 
-              -- Use nu by default
-              config.default_prog = { 'zsh', '-c', '${getExe config.programs.nushell.package}' }
-            ''
-          else
-            ""
+            -- Use nu by default
+            config.default_prog = { 'zsh', '-c', '${lib.getExe config.programs.nushell.package}' }
+          ''
+          else ""
         }
         config.color_scheme = 'Synthwave84'
 
@@ -124,5 +117,9 @@ in
         return config
       '';
     };
+  };
+
+  nixos.ifEnabled = {
+    environment.systemPackages = with pkgs; [waybar];
   };
 }

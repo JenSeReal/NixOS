@@ -5,7 +5,32 @@
 }:
 delib.module {
   name = "programs.hyprland";
-  options = delib.singleEnableOption false;
+  options = with delib;
+    moduleOptions {
+      enable = boolOption false;
+      extraConfig = linesOption "";
+    };
+
+  home.ifEnabled = {cfg, ...}: {
+    programs.waybar.systemd.target = "hyprland-session.target";
+
+    wayland.windowManager.hyprland = {
+      enable = true;
+
+      extraConfig = ''
+        env = XDG_DATA_DIRS,'${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}':$XDG_DATA_DIRS
+        env = HYPRLAND_TRACE,1
+
+        ${cfg.extraConfig}
+      '';
+
+      settings = {
+        exec = [''notify-send -i ~/.face -u normal -t 5000 "Hello $(whoami)"''];
+      };
+
+      systemd.variables = ["--all"];
+    };
+  };
 
   nixos.ifEnabled = {
     environment.sessionVariables = {

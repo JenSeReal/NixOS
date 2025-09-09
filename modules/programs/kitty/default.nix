@@ -1,21 +1,18 @@
 {
+  delib,
   pkgs,
-  config,
   lib,
   ...
 }:
+delib.module {
+  name = "programs.kitty";
+  options = delib.singleEnableOption false;
 
-let
-  inherit (lib) mkEnableOption mkIf mkDefault;
-
-  cfg = config.JenSeReal.programs.gui.terminal-emulators.kitty;
-in
-{
-  options.JenSeReal.programs.gui.terminal-emulators.kitty = {
-    enable = mkEnableOption "Whether or not to add kitty.";
+  darwin.ifEnabled = {...}: {
+    environment.systemPackages = with pkgs; [kitty];
   };
 
-  config = mkIf cfg.enable {
+  home.ifEnabled = {...}: {
     xdg.configFile."kitty/current-theme.conf".source = ./themes/synthwave84.conf;
     programs.kitty = {
       enable = true;
@@ -28,9 +25,13 @@ in
 
         include = "./current-theme.conf";
       };
-      font.name = mkDefault "Fira Code";
-      font.package = mkDefault pkgs.fira-code;
-      font.size = mkDefault 12;
+      font.name = lib.mkDefault "Fira Code";
+      font.package = lib.mkDefault pkgs.fira-code;
+      font.size = lib.mkDefault 12;
     };
+  };
+
+  nixos.ifEnabled = {...}: {
+    environment.systemPackages = with pkgs; [kitty];
   };
 }
