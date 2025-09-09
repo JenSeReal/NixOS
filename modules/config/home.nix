@@ -4,19 +4,53 @@
   config,
   pkgs,
   homeManagerUser,
+  lib,
   ...
 }: let
   inherit (pkgs.stdenv) isDarwin;
 in
   delib.module {
     name = "home";
+    options = with delib;
+      moduleOptions {
+        file = optionOfAttrs {};
+        configFile = optionOfAttrs {};
+        extraOptions = optionOfAttrs {};
+      };
 
-    nixos.always = {
+    darwin.always = {myconfig, ...}: {
+      myconfig.home.extraOptions = {
+        home.file = lib.mkAliasDefinitions myconfig.home.file;
+        xdg.enable = true;
+        xdg.configFile = lib.mkAliasDefinitions myconfig.home.configFile;
+      };
+
+      users.${myconfig.constants.username} = lib.mkAliasDefinitions myconfig.home.extraOptions;
+
+      home-manager = {
+        # enables backing up existing files instead of erroring if conflicts exist
+        backupFileExtension = "hm.old";
+
+        useUserPackages = true;
+        useGlobalPkgs = true;
+      };
+    };
+
+    nixos.always = {myconfig, ...}: {
       environment.systemPackages = [pkgs.home-manager];
       home-manager = {
         useUserPackages = true;
         useGlobalPkgs = true;
-        backupFileExtension = "home_manager_backup";
+        backupFileExtension = "hm.old";
+
+        users.${myconfig.constants.username} = lib.mkAliasDefinitions myconfig.home.extraOptions;
+      };
+
+      home.extraOptions = {
+        home.stateVersion = config.system.stateVersion;
+        home.file = lib.mkAliasDefinitions myconfig.home.file;
+        xdg.enable = true;
+        xdg.configFile = lib.mkAliasDefinitions myconfig.home.configFile;
       };
     };
 
