@@ -2,11 +2,6 @@
 delib.module {
   name = "hardware.audio";
 
-  options = with delib;
-    moduleOptions {
-      enable = boolOption true;
-    };
-
   darwin.always = {
     system.defaults = {
       NSGlobalDomain = {
