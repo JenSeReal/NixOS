@@ -1,18 +1,14 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.JenSeReal.hardware.bluetooth;
-in {
-  options.JenSeReal.hardware.bluetooth = {
-    enable = mkEnableOption "Whether or not to enable bluetooth.";
-  };
+}:
+delib.module {
+  name = "hardware.bluetooth";
+  options = delib.singleEnableOption false;
 
-  config = mkIf cfg.enable {
-    JenSeReal.hardware.audio.pipewire.enable = true;
+  nixos.ifEnabled = {
+    myconfig.hardware.audio.pipewire.enable = true;
 
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;

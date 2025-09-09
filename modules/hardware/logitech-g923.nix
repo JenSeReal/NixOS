@@ -1,22 +1,14 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
-  namespace,
+  lib,
   ...
 }:
-let
-  inherit (lib) mkEnableOption mkIf;
+delib.module {
+  name = "hardware.moza-r12";
+  options = delib.singleEnableOption false;
 
-  cfg = config.${namespace}.hardware.peripherals.wheels.logitech.g923;
-in
-{
-  options.${namespace}.hardware.peripherals.wheels.logitech.g923 = {
-    enable = mkEnableOption "Whether or not to enable Logitech G923";
-  };
-
-  config = mkIf cfg.enable {
-
+  nixos.ifEnabled = {
     # hardware.new-lg4ff.enable = true;
 
     boot = {
@@ -43,7 +35,7 @@ in
 
     services.udev.extraRules = "ATTR{idVendor}==\"046d\", ATTR{idProduct}==\"c261\", RUN+=\"${lib.getExe pkgs.usb-modeswitch} -c '/etc/usb_modeswitch.d/046d\:c261'\"";
 
-    services.udev.packages = with pkgs; [ oversteer ];
+    services.udev.packages = with pkgs; [oversteer];
     environment.systemPackages = [
       pkgs.oversteer
       pkgs.usb-modeswitch
