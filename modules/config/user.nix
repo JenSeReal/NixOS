@@ -104,6 +104,24 @@ in
           // cfg.extraOptions;
       };
 
+    home.always = {cfg, ...}: {
+      assertions = [
+        {
+          assertion = cfg.name != null;
+          message = "user.name must be set";
+        }
+        {
+          assertion = cfg.home != null;
+          message = "user.home must be set";
+        }
+      ];
+
+      home = {
+        username = lib.mkDefault cfg.name;
+        homeDirectory = lib.mkDefault cfg.home;
+      };
+    };
+
     darwin.always = {
       myconfig,
       cfg,
