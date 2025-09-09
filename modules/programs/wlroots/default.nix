@@ -1,20 +1,13 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
   ...
 }:
-with lib;
-with lib.JenSeReal;
-let
-  cfg = config.JenSeReal.suites.wlroots;
-in
-{
-  options.JenSeReal.suites.wlroots = {
-    enable = mkEnableOption "Whether or not to enable common wlroots configuration.";
-  };
+delib.module {
+  name = "programs.wlroots";
+  options = delib.singleEnablxeOption false;
 
-  config = mkIf cfg.enable {
+  nixos.ifEnabled = {
     environment.systemPackages = with pkgs; [
       cliphist
       grim

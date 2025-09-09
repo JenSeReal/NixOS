@@ -5,7 +5,7 @@
   ...
 }:
 delib.module {
-  name = "programs.hyprland";
+  name = "programs.sway";
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
