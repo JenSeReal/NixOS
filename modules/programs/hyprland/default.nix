@@ -1,19 +1,13 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
-  namespace,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
+}:
+delib.module {
+  name = "programs.hyprland";
+  options = delib.singleEnableOption false;
 
-  cfg = config.${namespace}.desktop.window-manager.wayland.hyprland;
-in {
-  options.${namespace}.desktop.window-manager.wayland.hyprland = {
-    enable = mkEnableOption "Whether or not to use Hyprland as the desktop environment.";
-  };
-
-  config = mkIf cfg.enable {
+  nixos.ifEnabled = {
     environment.sessionVariables = {
       CLUTTER_BACKEND = "wayland";
       GDK_BACKEND = "wayland";
@@ -26,8 +20,6 @@ in {
       SDL_VIDEODRIVER = "wayland";
       WLR_DRM_NO_ATOMIC = "1";
       WLR_RENDERER = "vulkan";
-      #XDG_CURRENT_DESKTOP = "Hyprland";
-      #XDG_SESSION_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       __GL_GSYNC_ALLOWED = "0";
