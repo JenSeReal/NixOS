@@ -1,45 +1,40 @@
 {
+  delib,
   pkgs,
   config,
   lib,
   ...
 }:
-with lib;
-with lib.JenSeReal; let
-  cfg = config.JenSeReal.services.desktop.idle-managers.swayidle;
+delib.module {
+  name = "services.swayidle";
+  options = delib.singleEnableOption false;
 
-  swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-  pgrep = "${pkgs.procps}/bin/pgrep";
-  pactl = "${pkgs.pulseaudio}/bin/pactl";
-  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-  swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
+  home.ifEnabled = {cfg, ...}: let
+    swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+    pgrep = "${pkgs.procps}/bin/pgrep";
+    pactl = "${pkgs.pulseaudio}/bin/pactl";
+    hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+    swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
 
-  isLocked = "${pgrep} -x ${swaylock}";
-  lockTime = cfg.lockTime * 60;
+    isLocked = "${pgrep} -x ${swaylock}";
+    lockTime = cfg.lockTime * 60;
 
-  afterLockTimeout = {
-    timeout,
-    command,
-    resumeCommand ? null,
-  }: [
-    {
-      timeout = lockTime + timeout;
-      inherit command resumeCommand;
-    }
-    {
-      command = "${isLocked} && ${command}";
-      inherit resumeCommand timeout;
-    }
-  ];
-in {
-  options.JenSeReal.services.desktop.idle-managers.swayidle = with types; {
-    enable = mkEnableOption "Whether to enable swayidle in the desktop environment.";
-    lockTime = mkOpt int 4 "The time in Minutes to lock the screen";
-  };
-
-  config = mkIf cfg.enable {
+    afterLockTimeout = {
+      timeout,
+      command,
+      resumeCommand ? null,
+    }: [
+      {
+        timeout = lockTime + timeout;
+        inherit command resumeCommand;
+      }
+      {
+        command = "${isLocked} && ${command}";
+        inherit resumeCommand timeout;
+      }
+    ];
+  in {
     services.swayidle = {
-      enable = true;
       systemdTarget = "graphical-session.target";
       timeouts =
         # Lock screen
