@@ -22,6 +22,10 @@ delib.module {
       enable = true;
       inherit (cfg) cpuFreqGovernor;
     };
+
+    services.power-profiles-daemon.enable = true;
+    services.auto-cpufreq.enable = true;
+    # hardware.system76.power-daemon = enabled;
   };
 
   nixos.ifDisabled.powerManagement.enable = false;

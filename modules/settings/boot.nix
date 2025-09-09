@@ -1,29 +1,28 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
-  namespace,
+  lib,
   ...
 }:
+delib.module {
+  name = "settings.boot";
 
-let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.${namespace}.system.boot;
-in
-{
-  options.${namespace}.system.boot = {
-    enable = mkEnableOption "Whether or not to enable booting.";
-    plymouth = mkEnableOption "Whether or not to enable plymouth boot splash.";
-    secureBoot = mkEnableOption "Whether or not to enable secure boot.";
-  };
+  options = with delib;
+    moduleOptions {
+      enable = boolOption false;
+      plymouth = boolOption false;
+      secureBoot = bootOption false;
+    };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.efibootmgr
-      pkgs.efitools
-      pkgs.efivar
-      pkgs.fwupd
-    ] ++ lib.optionals cfg.secureBoot [ pkgs.sbctl ];
+  nixos.ifEnabled = {cfg, ...}: {
+    environment.systemPackages =
+      [
+        pkgs.efibootmgr
+        pkgs.efitools
+        pkgs.efivar
+        pkgs.fwupd
+      ]
+      ++ lib.optionals cfg.secureBoot [pkgs.sbctl];
 
     boot = {
       bootspec.enable = true;
@@ -43,7 +42,7 @@ in
         "boot.shell_on_fail"
       ];
 
-      lanzaboote = mkIf cfg.secureBoot {
+      lanzaboote = lib.mkIf cfg.secureBoot {
         enable = true;
         pkiBundle = "/etc/secureboot";
       };
@@ -61,7 +60,7 @@ in
         };
       };
 
-      plymouth = mkIf cfg.secureBoot {
+      plymouth = lib.mkIf cfg.secureBoot {
         enable = true;
         # theme = "catppuccin-macchiato";
         # themePackages = [ pkgs.catppuccin-plymouth ];

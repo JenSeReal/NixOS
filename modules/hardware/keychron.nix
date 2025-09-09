@@ -1,25 +1,16 @@
 {
-  config,
-  lib,
-  namespace,
+  delib,
   pkgs,
   ...
 }:
-let
-  inherit (lib) mkIf mkEnableOption;
+delib.module {
+  name = "hardware.keychron";
+  options = delib.singleEnableOption false;
 
-  cfg = config.${namespace}.system.keyboard.keychron;
-in
-{
-
-  options.${namespace}.system.keyboard.keychron = {
-    enable = mkEnableOption "Options for the keyboard.";
-  };
-
-  config = mkIf cfg.enable {
+  nixos.ifEnabled = {...}: {
     hardware.keyboard.qmk.enable = true;
 
-    environment.systemPackages = with pkgs; [ via ];
+    environment.systemPackages = with pkgs; [via];
     services.udev.packages = with pkgs; [
       via
       qmk-udev-rules
@@ -31,7 +22,7 @@ in
     '';
 
     users.users.jfp = {
-      extraGroups = [ "input" ];
+      extraGroups = ["input"];
     };
   };
 }

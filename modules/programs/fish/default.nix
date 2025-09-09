@@ -7,15 +7,15 @@ delib.module {
   name = "programs.fish";
   options = delib.singleEnableOption false;
 
-  home.ifEnabled = {...}: {};
-
   darwin.ifEnabled = {...}: {
-    programs.fish = {
-      enable = true;
-    };
-    environment.shells = [pkgs.fish];
+    programs.fish.enable = true;
+    environment.shells = with pkgs; [fish];
   };
 
+  home.ifEnabled = {...}: {};
+
   nixos.ifEnabled = {...}: {
+    programs.fish.enable = true;
+    environment.shells = with pkgs; [fish];
   };
 }

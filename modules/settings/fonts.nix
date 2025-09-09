@@ -51,5 +51,11 @@ in
         LOG_ICONS = "true";
       };
       fonts.packages = default ++ cfg.additionalFonts;
+
+      environment.systemPackages = with pkgs; [
+        font-manager
+        fontpreview
+      ];
+      fonts.fontDir.enable = true;
     };
   }
