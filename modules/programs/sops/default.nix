@@ -1,6 +1,8 @@
 {
   delib,
   pkgs,
+  config,
+  inputs,
   ...
 }:
 delib.module {
@@ -11,6 +13,25 @@ delib.module {
       defaultSopsFile = allowNull (pathOption null);
       sshKeyPaths = listOfOption path ["/etc/ssh/ssh_host_ed25519_key"];
     };
+  darwin.ifEnabled = {...}: {};
+
+  home.ifEnabled = {cfg, ...}: {
+    imports = [inputs.sops-nix.homeManagerModules.sops];
+    sops = {
+      inherit (cfg) defaultSopsFile;
+      defaultSopsFormat = "yaml";
+
+      age = {
+        generateKey = true;
+        keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+        sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"] ++ cfg.sshKeyPaths;
+      };
+    };
+
+    home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] ''
+      /run/current-system/sw/bin/systemctl start --user sops-nix
+    '';
+  };
 
   nixos.ifEnabled = {cfg, ...}: {
     environment.systemPackages = with pkgs; [
@@ -29,6 +50,4 @@ delib.module {
       };
     };
   };
-
-  darwin.ifEnabled = {...}: {};
 }
