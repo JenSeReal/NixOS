@@ -35,7 +35,11 @@ in
         extraOptions = attrsOfOption str {};
       };
 
-    nixos.always = {cfg, ...}: let
+    nixos.always = {
+      myconfig,
+      cfg,
+      ...
+    }: let
       propagatedIcon =
         pkgs.runCommandNoCC "propagated-icon"
         {
@@ -49,60 +53,54 @@ in
 
           cp ${cfg.icon} "$target/${cfg.icon.fileName}"
         '';
-    in
-      {
-        myconfig,
-        cfg,
-        ...
-      }: let
-        inherit (myconfig.constants) username;
-      in {
-        environment.systemPackages = [propagatedIcon];
+      inherit (myconfig.constants) username;
+    in {
+      environment.systemPackages = [propagatedIcon];
 
-        myconfig.home = {
-          file = {
-            ".face".source = cfg.icon;
-            ".face.icon".source = cfg.icon;
-            "Desktop/.keep".text = "";
-            "Documents/.keep".text = "";
-            "Downloads/.keep".text = "";
-            "Music/.keep".text = "";
-            "Pictures/.keep".text = "";
-            "Videos/.keep".text = "";
-            "Pictures/${cfg.icon.fileName or (builtins.baseNameOf cfg.icon)}".source = cfg.icon;
-          };
-
-          configFile = {
-            "sddm/faces/.${cfg.name}".source = cfg.icon;
-          };
+      myconfig.home = {
+        file = {
+          ".face".source = cfg.icon;
+          ".face.icon".source = cfg.icon;
+          "Desktop/.keep".text = "";
+          "Documents/.keep".text = "";
+          "Downloads/.keep".text = "";
+          "Music/.keep".text = "";
+          "Pictures/.keep".text = "";
+          "Videos/.keep".text = "";
+          "Pictures/${cfg.icon.fileName or (builtins.baseNameOf cfg.icon)}".source = cfg.icon;
         };
 
-        users.users.${username} =
-          {
-            inherit (cfg) name initialPassword;
-            isNormalUser = true;
-            shell = pkgs.nushell;
-            uid = 1000;
-            group = "users";
-            home = "/home/${username}";
-            extraGroups =
-              [
-                "wheel"
-                "systemd-journal"
-                "mpd"
-                "audio"
-                "video"
-                "input"
-                "plugdev"
-                "lp"
-                "tss"
-                "power"
-                "nix"
-              ]
-              ++ cfg.extraGroups;
-          }
-          // cfg.extraOptions;
+        configFile = {
+          "sddm/faces/.${cfg.name}".source = cfg.icon;
+        };
       };
+
+      users.users.${username} =
+        {
+          inherit (cfg) name initialPassword;
+          isNormalUser = true;
+          shell = pkgs.nushell;
+          uid = 1000;
+          group = "users";
+          home = "/home/${username}";
+          extraGroups =
+            [
+              "wheel"
+              "systemd-journal"
+              "mpd"
+              "audio"
+              "video"
+              "input"
+              "plugdev"
+              "lp"
+              "tss"
+              "power"
+              "nix"
+            ]
+            ++ cfg.extraGroups;
+        }
+        // cfg.extraOptions;
+    };
 
     home.always = {cfg, ...}: {
       assertions = [

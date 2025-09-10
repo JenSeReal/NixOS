@@ -62,9 +62,7 @@ delib.host {
       bat
       btop
       capitaine-cursors
-      codeium
       curl
-      # devenv
       davinci-resolve
       delta
       direnv
@@ -253,7 +251,7 @@ delib.host {
   };
 
   home = {myconfig, ...}: {
-    JenSeReal = {
+    myconfig = {
       desktop = {
         environment.hyprland.enable = true;
       };

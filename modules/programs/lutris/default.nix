@@ -4,6 +4,7 @@
   ...
 }:
 delib.module {
+  name = "programs.lutris";
   options = with delib;
     moduleOptions {
       enable = boolOption false;

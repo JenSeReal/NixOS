@@ -5,7 +5,7 @@
 }:
 delib.module {
   name = "programs.swaylock";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   home.ifEnabled = {
     programs.swaylock = {

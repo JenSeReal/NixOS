@@ -7,7 +7,7 @@
 }:
 delib.module {
   name = "programs.waybar";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   home.ifEnabled = let
     style = builtins.readFile ./styles.css;

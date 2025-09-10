@@ -5,7 +5,7 @@
 }:
 delib.module {
   name = "programs.wlr-randr";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
     environment.systemPackages = with pkgs; [wlr-randr];

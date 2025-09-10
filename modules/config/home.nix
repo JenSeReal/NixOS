@@ -13,9 +13,9 @@ in
     name = "home";
     options = with delib;
       moduleOptions {
-        file = optionOfAttrs {};
-        configFile = optionOfAttrs {};
-        extraOptions = optionOfAttrs {};
+        file = attrsOfOption {};
+        configFile = attrsOfOption {};
+        extraOptions = attrsOfOption {};
       };
 
     darwin.always = {myconfig, ...}: {

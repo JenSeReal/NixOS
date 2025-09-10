@@ -5,7 +5,7 @@
 }:
 delib.module {
   name = "programs.swww";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   home.ifEnabled = {
     services.swww.enable = true;

@@ -5,7 +5,7 @@
 }:
 delib.module {
   name = "programs.wlroots";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
     environment.systemPackages = with pkgs; [

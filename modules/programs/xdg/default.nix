@@ -5,7 +5,7 @@
 }:
 delib.module {
   name = "programs.xdg";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
     xdg.portal = {

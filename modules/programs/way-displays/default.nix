@@ -5,7 +5,7 @@
 }:
 delib.module {
   name = "programs.way-displays";
-  options = delib.singleEnablxeOption false;
+  options = delib.singleEnableOption false;
 
   home.ifEnabled = {
     home.packages = with pkgs; [way-displays];
