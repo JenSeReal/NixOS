@@ -50,8 +50,7 @@ button:hover {
 }
 
 #workspaces button:focus,
-#workspaces button:indeterminate
-{
+#workspaces button:indeterminate {
   border: none;
 }
 
