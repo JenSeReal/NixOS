@@ -37,6 +37,6 @@ delib.module {
       wireplumber.enable = true;
     };
 
-    JenSeReal.user.extraGroups = ["audio"];
+    myconfig.user.extraGroups = ["audio"];
   };
 }

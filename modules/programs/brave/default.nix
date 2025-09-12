@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "programs.carapace";
+  name = "programs.brave";
   options = delib.singleEnableOption false;
 
   darwin.ifEnabled = {...}: {

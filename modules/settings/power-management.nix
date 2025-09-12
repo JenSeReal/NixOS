@@ -10,11 +10,7 @@ delib.module {
     moduleOptions {
       enable = boolOption true;
 
-      cpuFreqGovernor = enumOption ["performance" "ondemand" "powersave"] (
-        if host.powersaveFeatured
-        then "powersave"
-        else "performance"
-      );
+      cpuFreqGovernor = enumOption ["performance" "ondemand" "powersave"] "powersave";
     };
 
   nixos.ifEnabled = {cfg, ...}: {
@@ -23,8 +19,8 @@ delib.module {
       inherit (cfg) cpuFreqGovernor;
     };
 
-    services.power-profiles-daemon.enable = true;
-    services.auto-cpufreq.enable = true;
+    # services.power-profiles-daemon.enable = true;
+    # services.auto-cpufreq.enable = true;
     # hardware.system76.power-daemon = enabled;
   };
 

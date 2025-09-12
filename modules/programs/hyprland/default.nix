@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      extraConfig = linesOption "";
+      extraConfig = strOption "";
     };
 
   home.ifEnabled = {cfg, ...}: {

@@ -2,7 +2,7 @@
 delib.module {
   name = "programs.hyprland";
 
-  home.ifEnable = {
+  home.ifEnabled = {
     wayland.windowManager.hyprland.settings = {
       bindl = [
         ",switch:on:Lid Switch,exec,hyprctl keyword monitor eDP-1,disable"

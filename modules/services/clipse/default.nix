@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "services.clipcat";
+  name = "services.clipse";
   options = delib.singleEnableOption false;
 
   home.ifEnabled = {...}: {

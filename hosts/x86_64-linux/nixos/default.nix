@@ -59,41 +59,41 @@ delib.host {
     };
 
     environment.systemPackages = with pkgs; [
-      bat
-      btop
-      capitaine-cursors
-      curl
-      davinci-resolve
-      delta
-      direnv
-      du-dust
-      eyedropper
-      fd
-      ffmpeg-full
-      fzf
-      gimp-with-plugins
-      gifski
-      nautilus
-      hunspell
-      hunspellDicts.de_DE
-      hunspellDicts.en_US
-      inkscape-with-extensions
-      kdePackages.kdenlive
-      killall
-      lapce
-      libreoffice-qt
-      networkmanagerapplet
-      nix-direnv
-      onlyoffice-bin
-      pciutils
-      ripgrep
-      rm-improved
-      spotify
-      thunderbird
-      # ventoy-bin-full
-      vlc
-      yazi
-      zoxide
+      # bat
+      # btop
+      # capitaine-cursors
+      # curl
+      # davinci-resolve
+      # delta
+      # direnv
+      # du-dust
+      # eyedropper
+      # fd
+      # ffmpeg-full
+      # fzf
+      # gimp-with-plugins
+      # gifski
+      # nautilus
+      # hunspell
+      # hunspellDicts.de_DE
+      # hunspellDicts.en_US
+      # inkscape-with-extensions
+      # kdePackages.kdenlive
+      # killall
+      # lapce
+      # libreoffice-qt
+      # networkmanagerapplet
+      # nix-direnv
+      # onlyoffice-bin
+      # pciutils
+      # ripgrep
+      # rm-improved
+      # spotify
+      # thunderbird
+      # # ventoy-bin-full
+      # vlc
+      # yazi
+      # zoxide
     ];
     services.gvfs.enable = true;
 
@@ -191,25 +191,31 @@ delib.host {
         steam.enable = true;
         bitwarden.enable = true;
         gnupg.enable = true;
-        keyring.enable = true;
         polkit.enable = true;
         sops = {
           enable = true;
           defaultSopsFile = secrets/secrets.yml;
         };
         git.enable = true;
+        nu.enable = true;
+        fish.enable = true;
+        starship.enable = true;
+        carapace.enable = true;
       };
       desktop-environments.hyprland.enable = true;
       hardware = {
-        audio.pipewire.enable = true;
         bluetooth.enable = true;
         opengl.enable = true;
-        peripherals.wheels.moza.r12.enable = true;
+        moza-r12.enable = true;
+        keyboard.enable = true;
+        keychron.enable = true;
       };
       services = {
         fwupd.enable = true;
+        gnome-keyring.enable = true;
+        pipewire.enable = true;
       };
-      system = {
+      settings = {
         boot = {
           enable = true;
           plymouth = true;
@@ -217,16 +223,8 @@ delib.host {
         };
         cursor.enable = true;
         fonts.enable = true;
-        keyboard = {
-          enable = true;
-          keychron.enable = true;
-        };
-        locale.enable = true;
+        localization.enable = true;
         power-management.enable = true;
-        shells.nushell.enable = true;
-        shells.fish.enable = true;
-        shells.addons.starship.enable = true;
-        time.enable = true;
       };
     };
 
@@ -251,40 +249,33 @@ delib.host {
   };
 
   home = {myconfig, ...}: {
-    myconfig = {
-      desktop = {
-        environment.hyprland.enable = true;
-      };
-      programs = {
-        cli = {
-          git.enable = true;
-          ssh = {
-            enable = true;
-            includes = ["${myconfig.home.homeDirectory}/.ssh/hosts/jfp.one"];
-          };
-          direnv.enable = true;
-        };
-
-        shells = {
-          fish.enable = true;
-          nushell.enable = true;
-          addons.starship.enable = true;
-        };
-
-        gui.terminal-emulators.kitty.enable = true;
-        gui.terminal-emulators.wezterm.enable = true;
-        gui.ide.vscode.enable = true;
-        gui.ide.zed.enable = true;
-      };
-      security.sops.enable = true;
-      themes.stylix.enable = true;
-    };
-
     # sops.secrets."ssh/jfp.one" = {
     #   sopsFile = ./secrets/ssh.yml;
     #   path = "${config.home.homeDirectory}/.ssh/hosts/jfp.one";
     # };
 
     nix.extraOptions = "";
+  };
+
+  myconfig = {
+    programs = {
+      hyprland.enable = true;
+      git.enable = true;
+      ssh = {
+        enable = true;
+        # includes = ["${myconfig.home.homeDirectory}/.ssh/hosts/jfp.one"];
+      };
+      direnv.enable = true;
+
+      fish.enable = true;
+      nu.enable = true;
+      starship.enable = true;
+
+      kitty.enable = true;
+      wezterm.enable = true;
+      codium.enable = true;
+      zed.enable = true;
+      sops.enable = true;
+    };
   };
 }

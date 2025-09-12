@@ -7,7 +7,6 @@
 }:
 delib.module {
   name = "services.swayidle";
-  options = delib.singleEnableOption false;
 
   home.ifEnabled = {cfg, ...}: let
     swaylock = "${config.programs.swaylock.package}/bin/swaylock";

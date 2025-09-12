@@ -7,10 +7,10 @@
 delib.module {
   name = "services.hypridle";
 
-  home.ifEnabled = {myconfig, ...}: let
+  home.ifEnabled = let
     inherit (lib) getExe getExe';
-    hyprctl = getExe' myconfig.programs.hyprland.package "hyprctl";
-    hyprlock = getExe myconfig.programs.hyprlock.package;
+    hyprctl = getExe' pkgs.hyprland "hyprctl";
+    hyprlock = getExe pkgs.hyprlock;
     loginCtl = getExe' pkgs.systemd "loginctl";
     systemctl = getExe' pkgs.systemd "systemctl";
     brightnessctl = getExe pkgs.brightnessctl;

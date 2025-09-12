@@ -14,6 +14,6 @@ delib.module {
 
   nixos.ifEnabled = {
     environment.systemPackages = with pkgs; [way-displays];
-    JenSeReal.user.extraGroups = ["input"];
+    myconfig.user.extraGroups = ["input"];
   };
 }

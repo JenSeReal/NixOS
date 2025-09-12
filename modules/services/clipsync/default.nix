@@ -5,7 +5,7 @@
   ...
 }:
 delib.module {
-  name = "services.clipcat";
+  name = "services.clipsync";
   options = with delib;
     moduleOptions {
       enable = boolOption false;

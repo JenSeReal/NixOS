@@ -5,7 +5,7 @@
   ...
 }:
 delib.module {
-  name = "hardware.moza-r12";
+  name = "hardware.logitech-g923";
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {

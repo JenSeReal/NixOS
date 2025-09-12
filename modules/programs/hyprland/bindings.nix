@@ -12,14 +12,14 @@ delib.module {
   options = with delib;
     moduleOptions {
       settings = lib.mkOption {
-        type = (import ./modules/settings.nix {inherit lib pkgs namespace;}).settingsModule;
+        type = (import ./modules/settings.nix {inherit delib lib pkgs namespace;}).settingsModule;
         default = {};
         description = "The settings for bindings";
       };
     };
 
-  home.ifEnable = {cfg, ...}: let
-    hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+  home.ifEnabled = {cfg, ...}: let
+    hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
     scratchpad = lib.getExe inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad;
     playerctl = lib.getExe pkgs.playerctl;
     wpctl = lib.getExe' pkgs.wireplumber "wpctl";

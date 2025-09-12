@@ -2,7 +2,7 @@
 delib.module {
   name = "programs.hyprland";
 
-  home.ifEnable = {
+  home.ifEnabled = {
     wayland.windowManager.hyprland.settings = {
       workspace = [
         "1, monitor:desc:LG Electronics LG ULTRAWIDE 0x00017279, default:true"

@@ -5,8 +5,8 @@
       doCheckByDefault = false;
       # Or more specifically:
       packageOverrides = pkgs: {
-        rsync = pkgs.rsync.overrideAttrs { doCheck = false; };
-        sbcl = pkgs.sbcl.overrideAttrs { doCheck = false; };
+        rsync = pkgs.rsync.overrideAttrs {doCheck = false;};
+        sbcl = pkgs.sbcl.overrideAttrs {doCheck = false;};
       };
     };
   };
@@ -25,10 +25,10 @@ in
       // {
         environment.variables = variables;
       };
-    home.always =
-      common
-      // {
-        xdg.configFile = files;
-        home.sessionVariables = variables;
-      };
+    # home.always =
+    #   common
+    #   // {
+    #     xdg.configFile = files;
+    #     home.sessionVariables = variables;
+    #   };
   }

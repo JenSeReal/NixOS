@@ -2,7 +2,7 @@
 delib.module {
   name = "programs.hyprland";
 
-  home.ifEnable = {
+  home.ifEnabled = {
     wayland.windowManager.hyprland.settings = {
       general.layout = "dwindle";
       env = ["WLR_DRM_NO_ATOMIC,1"];

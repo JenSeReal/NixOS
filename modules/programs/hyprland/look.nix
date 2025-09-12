@@ -2,7 +2,7 @@
 delib.module {
   name = "programs.hyprland";
 
-  home.ifEnable = {
+  home.ifEnabled = {
     wayland.windowManager.hyprland.settings = {
       general = {
         border_size = 2;

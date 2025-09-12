@@ -5,6 +5,7 @@
   pkgs,
   homeManagerUser,
   lib,
+  options,
   ...
 }: let
   inherit (pkgs.stdenv) isDarwin;
@@ -13,19 +14,19 @@ in
     name = "home";
     options = with delib;
       moduleOptions {
-        file = attrsOfOption {};
-        configFile = attrsOfOption {};
-        extraOptions = attrsOfOption {};
+        file = attrsOfOption str {};
+        configFile = attrsOfOption str {};
+        extraOptions = attrsOfOption str {};
       };
 
     darwin.always = {myconfig, ...}: {
       myconfig.home.extraOptions = {
-        home.file = lib.mkAliasDefinitions myconfig.home.file;
+        home.file = lib.mkAliasDefinitions options.home.file;
         xdg.enable = true;
-        xdg.configFile = lib.mkAliasDefinitions myconfig.home.configFile;
+        xdg.configFile = lib.mkAliasDefinitions options.home.configFile;
       };
 
-      users.${myconfig.constants.username} = lib.mkAliasDefinitions myconfig.home.extraOptions;
+      users.${myconfig.constants.username} = lib.mkAliasDefinitions options.home.extraOptions;
 
       home-manager = {
         # enables backing up existing files instead of erroring if conflicts exist
@@ -43,15 +44,15 @@ in
         useGlobalPkgs = true;
         backupFileExtension = "hm.old";
 
-        users.${myconfig.constants.username} = lib.mkAliasDefinitions myconfig.home.extraOptions;
+        # users.${myconfig.constants.username} = lib.mkAliasDefinitions options.home.extraOptions;
       };
 
-      home.extraOptions = {
-        home.stateVersion = config.system.stateVersion;
-        home.file = lib.mkAliasDefinitions myconfig.home.file;
-        xdg.enable = true;
-        xdg.configFile = lib.mkAliasDefinitions myconfig.home.configFile;
-      };
+      # home.stateVersion = config.system.stateVersion;
+      # home.extraOptions = {
+      # home.file = lib.mkAliasDefinitions options.home.file;
+      # xdg.enable = true;
+      # xdg.configFile = lib.mkAliasDefinitions options.home.configFile;
+      # };
     };
 
     home.always = {myconfig, ...}: let

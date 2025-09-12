@@ -2,6 +2,7 @@
   delib,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 delib.module {
@@ -11,9 +12,10 @@ delib.module {
     moduleOptions {
       enable = boolOption false;
       plymouth = boolOption false;
-      secureBoot = bootOption false;
+      secureBoot = boolOption false;
     };
 
+  nixos.always.imports = [inputs.lanzaboote.nixosModules.lanzaboote];
   nixos.ifEnabled = {cfg, ...}: {
     environment.systemPackages =
       [

@@ -9,7 +9,7 @@
     bibata-cursors
     oreo-cursors-plus
     graphite-cursors
-    JenSeReal.layan-cursors
+    layan-cursors
   ];
 in
   delib.module {

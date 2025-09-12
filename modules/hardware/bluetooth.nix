@@ -8,7 +8,7 @@ delib.module {
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
-    myconfig.hardware.audio.pipewire.enable = true;
+    myconfig.services.pipewire.enable = true;
 
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;

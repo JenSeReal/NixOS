@@ -24,16 +24,21 @@ in
     name = "user";
 
     options = with delib;
-      moduleOptions {
+      moduleOptions ({myconfig, ...}: {
         uid = intOption 501;
         name = strOption myconfig.constants.username;
         fullName = strOption myconfig.constants.fullName;
         email = strOption myconfig.constants.email;
         initialPassword = strOption "password";
-        icon = allowNull (packageOption null) defaultIcon;
-        extraGroups = attrsOfOption str {};
+        home = strOption (
+          if pkgs.stdenv.isDarwin
+          then "/Users/${myconfig.constants.username}"
+          else "/home/${myconfig.constants.username}"
+        );
+        icon = allowNull (packageOption defaultIcon);
+        extraGroups = listOfOption str [];
         extraOptions = attrsOfOption str {};
-      };
+      });
 
     nixos.always = {
       myconfig,

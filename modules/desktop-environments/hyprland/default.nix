@@ -9,12 +9,7 @@ delib.module {
   name = "desktop-environments.hyprland";
   options = delib.singleEnableOption false;
 
-  home.ifEnabled = {myconfig, ...}: let
-    mainMod = "SUPER";
-
-    screen-recorder = lib.getExe pkgs.screen-recorder;
-    screenshotter = lib.getExe pkgs.screenshotter;
-  in {
+  home.ifEnabled = {
     # JenSeReal = {
     #   desktop.addons = {
     #     rofi = enabled;
@@ -28,15 +23,22 @@ delib.module {
 
     home.packages = with pkgs; [
       hyprsunset
-      pkgs.${namespace}.screen-recorder
+      pkgs.screen-recorder
     ];
+  };
 
-    myconfig.desktop = {
-      window-managers.hyprland = {
+  myconfig.ifEnabled = {...}: let
+    mainMod = "SUPER";
+
+    screen-recorder = pkgs.screen-recorder;
+    screenshotter = pkgs.screenshotter;
+  in {
+    programs = {
+      hyprland = {
         enable = true;
         settings = {
           defaultPrograms = {
-            terminal = config.programs.wezterm.package;
+            # terminal = config.programs.wezterm.package;
           };
           submaps = [
             {
@@ -44,9 +46,9 @@ delib.module {
               trigger = "${mainMod}, R";
               actions = {
                 bind = [
-                  ", o, exec, pkill -x wl-screenrec || ${screen-recorder} -o -d ${config.home.homeDirectory}/Pictures/Recordings"
-                  ", w, exec, pkill -x wl-screenrec || ${screen-recorder} -w -d ${config.home.homeDirectory}/Pictures/Recordings"
-                  ", a, exec, pkill -x wl-screenrec || ${screen-recorder} -a -d ${config.home.homeDirectory}/Pictures/Recordings"
+                  # ", o, exec, pkill -x wl-screenrec || ${screen-recorder} -o -d ${homeconfig.homeDirectory}/Pictures/Recordings"
+                  # ", w, exec, pkill -x wl-screenrec || ${screen-recorder} -w -d ${homeconfig.homeDirectory}/Pictures/Recordings"
+                  # ", a, exec, pkill -x wl-screenrec || ${screen-recorder} -a -d ${homeconfig.homeDirectory}/Pictures/Recordings"
                 ];
               };
             }
@@ -60,10 +62,10 @@ delib.module {
                   ", o, exec, ${screenshotter} copy output"
                   ", w, exec, ${screenshotter} copy active"
                   ", a, exec, ${screenshotter} copy area"
-                  ", SHIFT s, exec, ${screenshotter} save screen ${config.home.homeDirectory}/Pictures/Screenshots"
-                  ", SHIFT o, exec, ${screenshotter} save output ${config.home.homeDirectory}/Pictures/Screenshots"
-                  ", SHIFT w, exec, ${screenshotter} save active ${config.home.homeDirectory}/Pictures/Screenshots"
-                  ", SHIFT a, exec, ${screenshotter} save area ${config.home.homeDirectory}/Pictures/Screenshots"
+                  # ", SHIFT s, exec, ${screenshotter} save screen ${config.home.homeDirectory}/Pictures/Screenshots"
+                  # ", SHIFT o, exec, ${screenshotter} save output ${config.home.homeDirectory}/Pictures/Screenshots"
+                  # ", SHIFT w, exec, ${screenshotter} save active ${config.home.homeDirectory}/Pictures/Screenshots"
+                  # ", SHIFT a, exec, ${screenshotter} save area ${config.home.homeDirectory}/Pictures/Screenshots"
                 ];
               };
             }
@@ -84,83 +86,64 @@ delib.module {
           ];
         };
       };
-      bars.waybar.enable = true;
-      launchers.kickoff.enable = true;
-      launchers.anyrun.enable = true;
-      notifications.mako.enable = true;
-      layout-manager.kanshi.enable = true;
-      layout-manager.way-displays.enable = true;
-
-      # library.qt.enable = true;
+      waybar.enable = true;
+      kickoff.enable = true;
+      anyrun.enable = true;
+      way-displays.enable = true;
+      firefox.enable = true;
+      kitty.enable = true;
+      hyprlock.enable = true;
     };
-    myconfig.programs.gui.browser.firefox.enable = true;
-    myconfig.programs.gui.terminal-emulators.kitty.enable = true;
-    myconfig.programs = {
-      desktop = {
-        screen-lockers.hyprlock.enable = true;
-      };
+    services = {
+      clipcat.enable = true;
+      clipsync.enable = true;
+      hypridle.enable = true;
+      mako.enable = true;
+      kanshi.enable = true;
     };
-    myconfig.services.desktop = {
-      clipboard-managers = {
-        clipcatd.enable = true;
-        clipsync.enable = true;
-      };
-      idle-managers.hypridle.enable = true;
-    };
+    # library.qt.enable = true;
   };
 
   nixos.ifEnabled = {
     myconfig = {
-      communication.discord.enable = true;
       programs = {
-        desktop.screen-lockers.hyprlock.enable = true;
+        discord.enable = true;
+        hyprlock.enable = true;
+        hyprland.enable = true;
+        waybar.enable = true;
+        kickoff.enable = true;
+        xdg.enable = true;
+        wlogout.enable = true;
+        way-displays.enable = true;
+        wlr-randr.enable = true;
+        wlroots.enable = true;
+        polkit.enable = true;
+        bitwarden.enable = true;
+        firefox.enable = true;
+        nemo.enable = true;
       };
+
       services = {
-        desktop.idle-managers.hypridle.enable = true;
-      };
-      desktop = {
-        window-manager.wayland.hyprland.enable = true;
-        display-manager.tuigreet = {
+        hypridle.enable = true;
+        tuigreet = {
           enable = true;
           autoLogin = "jfp";
           defaultSession = lib.getExe pkgs.hyprland;
         };
-        bars.waybar.enable = true;
-        launchers.kickoff.enable = true;
-        notifications.mako.enable = true;
-        portals.xdg.enable = true;
-        logout-menu.wlogout.enable = true;
-        # screen-locker.swaylock-effects.enable = true;
-        libraries.qt.enable = true;
-        layout-manager = {
-          kanshi.enable = true;
-          way-displays.enable = true;
-          wlr-randr.enable = true;
-        };
+        mako.enable = true;
+        pipewire.enable = true;
+        kanshi.enable = true;
+        gnome-keyring.enable = true;
       };
-      hardware.audio.pipewire.enable = true;
-      suites.wlroots.enable = true;
-      security = {
-        keyring.enable = true;
-        polkit.enable = true;
-        bitwarden.enable = true;
-      };
-      gui = {
-        # browser.firefox.enable = true;
-        file-manager.nemo.enable = true;
-      };
-      # themes.stylix.enable = true;
+      libraries.qt.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
       pciutils
-      kitty
       swayosd
       grim
       slurp
       wl-clipboard
-      mako
-      kanshi
       nwg-displays
     ];
   };

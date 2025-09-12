@@ -80,6 +80,6 @@ delib.module {
     environment.systemPackages = with pkgs; [
       kanshi
     ];
-    user.extraGroups = ["input"];
+    myconfig.user.extraGroups = ["input"];
   };
 }

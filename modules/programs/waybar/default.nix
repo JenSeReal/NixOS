@@ -21,11 +21,12 @@ delib.module {
           position = "bottom";
           spacing = 0;
           modules-left = [
-            "${
-              if config.wayland.windowManager.sway.enable
-              then "sway/workspaces"
-              else "hyprland/workspaces"
-            }"
+            "hyprland/workspaces"
+            # "${
+            #   if config.wayland.windowManager.sway.enable
+            #   then "sway/workspaces"
+            #   else "hyprland/workspaces"
+            # }"
             "custom/arGap"
             "idle_inhibitor"
             "custom/wsGap"

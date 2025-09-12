@@ -4,6 +4,7 @@ delib.module {
 
   options = with delib;
     moduleOptions {
+      enable = boolOption false;
       timeZone = strOption "Europe/Berlin";
 
       defaultLocale = strOption "en_US.UTF-8";

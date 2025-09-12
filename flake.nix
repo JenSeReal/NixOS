@@ -16,10 +16,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # firefox-addons = {
-    #   url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
@@ -42,7 +42,7 @@
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     impermanence.url = "github:nix-community/impermanence";
@@ -87,6 +87,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    anyrun.url = "github:anyrun-org/anyrun";
+    anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
+
     denix = {
       url = "github:yunfachi/denix";
       inputs = {
@@ -108,13 +111,19 @@
           ./modules
           ./rices
           ./overlays
+          ./packages
         ];
 
-        # exclude = [
-        #   ./modules/programs/homebrew/types/caskOption.nix
-        # ];
+        exclude = [
+          # ./modules/programs/homebrew/types/caskOption.nix
+          ./modules/programs/hyprland/modules/settings.nix
+          ./modules/programs/hyprland/modules/submap.nix
+          ./packages/screen-recorder/package.nix
+          ./packages/screenshotter/package.nix
+          ./packages/clipsync/package.nix
+        ];
 
-        extensions = import ./extensions { delib = denix.lib; };
+        extensions = import ./extensions {delib = denix.lib;};
 
         specialArgs = {
           inherit inputs moduleSystem homeManagerUser;

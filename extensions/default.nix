@@ -1,5 +1,4 @@
-{ delib }:
-(with delib.extensions; [
+{delib}: (with delib.extensions; [
   args
   (base.withConfig {
     args.enable = true;
@@ -11,4 +10,5 @@
       "darwin"
     ];
   })
+  (delib.callExtension ./package-module.nix)
 ])

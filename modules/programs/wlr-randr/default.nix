@@ -9,6 +9,6 @@ delib.module {
 
   nixos.ifEnabled = {
     environment.systemPackages = with pkgs; [wlr-randr];
-    JenSeReal.user.extraGroups = ["input"];
+    myconfig.user.extraGroups = ["input"];
   };
 }

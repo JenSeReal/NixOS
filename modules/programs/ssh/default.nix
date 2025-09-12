@@ -1,4 +1,8 @@
-{delib, ...}:
+{
+  delib,
+  pkgs,
+  ...
+}:
 delib.module {
   name = "programs.ssh";
   options = with delib;
@@ -24,5 +28,5 @@ delib.module {
       settings = {git_protocol = "ssh";};
     };
   };
-  nixos.ifEnabled = {...}: {programs.ssh.enable = true;};
+  # nixos.ifEnabled = {environment.systemPackages = with pkgs; [ssh];};
 }
