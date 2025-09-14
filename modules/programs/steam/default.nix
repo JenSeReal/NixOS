@@ -20,17 +20,17 @@ delib.module {
       extraCompatPackages = with pkgs.unstable; [proton-ge-bin.steamcompattool];
     };
     environment.systemPackages = with pkgs; [
-      libgdiplus
-      steamcmd
-      steamtinkerlaunch
+      # libgdiplus
+      # steamcmd
+      # steamtinkerlaunch
       # steam-tui
 
-      wineWowPackages.waylandFull
-      (bottles.override {extraLibraries = pkgs: [libunwind];})
-      gamescope
-      proton-caller
-      protontricks
-      protonup-ng
+      # wineWowPackages.waylandFull
+      # (bottles.override {extraLibraries = pkgs: [libunwind];})
+      # gamescope
+      # proton-caller
+      # protontricks
+      # protonup-ng
       protonup-qt
     ];
   };

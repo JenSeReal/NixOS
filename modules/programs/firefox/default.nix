@@ -17,21 +17,21 @@ delib.module {
 
   darwin.ifEnabled = {...}: {
     environment.systemPackages = with pkgs; [
-      firefox-bin
+      firefox
     ];
   };
 
   home.ifEnabled = {...}: {
     programs.firefox = with pkgs; {
       enable = true;
-      package = firefox-bin;
+      package = firefox;
     };
   };
 
   nixos.ifEnabled = {...}: {
     # programs.firefox.enable = true;
     environment.systemPackages = with pkgs; [
-      firefox-bin
+      firefox
     ];
   };
 }

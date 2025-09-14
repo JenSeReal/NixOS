@@ -5,10 +5,13 @@
 }:
 delib.module {
   name = "programs.direnv";
-  options = delib.singleEnableOption false;
+  options = with delib;
+    moduleOptions {
+      enable = boolOption false;
+    };
 
   home.ifEnabled = {
-    home.packages = with pkgs.unstable; [devenv];
+    home.packages = with pkgs; [devenv];
 
     programs.direnv = {
       enable = true;
@@ -18,7 +21,7 @@ delib.module {
   };
 
   darwin.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs.unstable; [
+    environment.systemPackages = with pkgs; [
       devenv
       direnv
       nix-direnv
@@ -26,7 +29,7 @@ delib.module {
   };
 
   nixos.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs.unstable; [
+    environment.systemPackages = with pkgs; [
       devenv
       direnv
       nix-direnv

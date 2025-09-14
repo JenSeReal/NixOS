@@ -11,15 +11,14 @@
       man.enable = lib.mkDefault true;
     };
 
-    environment = {
-      systemPackages = with pkgs; [
-        cachix
-        git
-        nix-prefetch-git
-      ];
-    };
+    environment.systemPackages = with pkgs; [
+      cachix
+      git
+      nix-prefetch-git
+    ];
 
     nix = {
+      package = pkgs.lixPackageSets.stable.lix;
       checkConfig = true;
 
       distributedBuilds = true;
@@ -44,10 +43,9 @@
         experimental-features = [
           "nix-command"
           "flakes"
-          "ca-derivations"
-          "auto-allocate-uids"
-          "pipe-operators"
-          "dynamic-derivations"
+          # "ca-derivations"
+          # "pipe-operators"
+          # "dynamic-derivations"
         ];
         fallback = true;
         http-connections = 50;
@@ -110,24 +108,24 @@ in
           };
         };
         nix = {
-          daemonCPUSchedPolicy = "batch";
-          daemonIOSchedClass = "idle";
-          daemonIOSchedPriority = 7;
+          # daemonCPUSchedPolicy = "batch";
+          # daemonIOSchedClass = "idle";
+          # daemonIOSchedPriority = 7;
 
           gc = {
             dates = "Sun *-*-* 03:00";
           };
 
-          optimise = {
-            automatic = true;
-            dates = ["04:00"];
-          };
+          # optimise = {
+          #   automatic = true;
+          #   dates = ["04:00"];
+          # };
 
           settings = {
-            auto-allocate-uids = true;
+            # auto-allocate-uids = true;
             connect-timeout = 5;
-            experimental-features = ["cgroups"];
-            use-cgroups = true;
+            # experimental-features = ["cgroups" "auto-allocate-uids"];
+            # use-cgroups = true;
 
             substituters = [
               "https://anyrun.cachix.org"

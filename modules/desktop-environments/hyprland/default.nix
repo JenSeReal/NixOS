@@ -21,10 +21,10 @@ delib.module {
     #   };
     # };
 
-    home.packages = with pkgs; [
-      hyprsunset
-      pkgs.screen-recorder
-    ];
+    # home.packages = with pkgs; [
+    #   hyprsunset
+    #   pkgs.screen-recorder
+    # ];
   };
 
   myconfig.ifEnabled = {...}: let
@@ -88,10 +88,9 @@ delib.module {
       };
       waybar.enable = true;
       kickoff.enable = true;
-      anyrun.enable = true;
+      # anyrun.enable = true;
       way-displays.enable = true;
-      firefox.enable = true;
-      kitty.enable = true;
+      # firefox.enable = true;
       hyprlock.enable = true;
     };
     services = {
@@ -118,8 +117,8 @@ delib.module {
         wlr-randr.enable = true;
         wlroots.enable = true;
         polkit.enable = true;
-        bitwarden.enable = true;
-        firefox.enable = true;
+        # bitwarden.enable = true;
+        # firefox.enable = true;
         nemo.enable = true;
       };
 
@@ -135,7 +134,7 @@ delib.module {
         kanshi.enable = true;
         gnome-keyring.enable = true;
       };
-      libraries.qt.enable = true;
+      # libraries.qt.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
@@ -144,7 +143,7 @@ delib.module {
       grim
       slurp
       wl-clipboard
-      nwg-displays
+      # nwg-displays
     ];
   };
 }

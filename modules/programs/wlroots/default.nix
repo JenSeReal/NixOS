@@ -9,21 +9,21 @@ delib.module {
 
   nixos.ifEnabled = {
     environment.systemPackages = with pkgs; [
-      cliphist
-      grim
-      slurp
-      swayimg
-      wdisplays
-      wf-recorder
-      wl-clipboard
-      wlr-randr
-      brightnessctl
-      glib
-      gtk3.out
-      gtk4
-      playerctl
-      libsForQt5.qt5.qtwayland
-      qt6.qtwayland
+      # cliphist
+      # grim
+      # slurp
+      # swayimg
+      # wdisplays
+      # wf-recorder
+      # wl-clipboard
+      # wlr-randr
+      # brightnessctl
+      # glib
+      # gtk3.out
+      # gtk4
+      # playerctl
+      # libsForQt5.qt5.qtwayland
+      # qt6.qtwayland
     ];
 
     # JenSeReal = {

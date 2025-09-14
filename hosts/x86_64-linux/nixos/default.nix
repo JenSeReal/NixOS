@@ -18,39 +18,38 @@ delib.host {
     ];
 
     hardware.framework.amd-7040.preventWakeOnAC = true;
-    hardware.enableAllFirmware = true;
+    # hardware.enableAllFirmware = true;
 
     #boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
 
-    environment.sessionVariables = {
-      GSK_RENDERER = "gl";
-      PROTON_ENABLE_WAYLAND = "1";
-    };
+    # environment.sessionVariables = {
+    #   GSK_RENDERER = "gl";
+    #   PROTON_ENABLE_WAYLAND = "1";
+    # };
 
-    networking.hostName = "nixos";
+    # networking.hostName = "nixos";
     networking.networkmanager.enable = true;
 
-    users.defaultUserShell = pkgs.nushell;
+    # users.defaultUserShell = pkgs.nushell;
 
-    users.users."jfp" = {
-      isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-      packages = with pkgs; [
-        firefox
-        freshfetch
-      ];
-    };
+    # users.users."jfp" = {
+    #   isNormalUser = true;
+    #   extraGroups = [
+    #     "networkmanager"
+    #     "wheel"
+    #   ];
+    #   packages = with pkgs; [
+    #     freshfetch
+    #   ];
+    # };
 
-    services = {
-      libinput.enable = true;
-      fprintd.enable = true;
-      printing.enable = true;
-    };
+    # services = {
+    #   libinput.enable = true;
+    #   fprintd.enable = true;
+    #   printing.enable = true;
+    # };
 
-    services.pulseaudio.enable = lib.mkForce false;
+    # services.pulseaudio.enable = lib.mkForce false;
 
     services.btrfs.autoScrub = {
       enable = true;
@@ -95,10 +94,10 @@ delib.host {
       # yazi
       # zoxide
     ];
-    services.gvfs.enable = true;
+    # services.gvfs.enable = true;
 
-    programs.nix-ld.enable = true;
-    programs.nix-ld.libraries = [];
+    # programs.nix-ld.enable = true;
+    # programs.nix-ld.libraries = [];
 
     programs.neovim = {
       enable = true;
@@ -185,48 +184,48 @@ delib.host {
     #   };
     # };
 
-    myconfig = {
-      programs = {
-        lutris.enable = true;
-        steam.enable = true;
-        bitwarden.enable = true;
-        gnupg.enable = true;
-        polkit.enable = true;
-        sops = {
-          enable = true;
-          defaultSopsFile = secrets/secrets.yml;
-        };
-        git.enable = true;
-        nu.enable = true;
-        fish.enable = true;
-        starship.enable = true;
-        carapace.enable = true;
-      };
-      desktop-environments.hyprland.enable = true;
-      hardware = {
-        bluetooth.enable = true;
-        opengl.enable = true;
-        moza-r12.enable = true;
-        keyboard.enable = true;
-        keychron.enable = true;
-      };
-      services = {
-        fwupd.enable = true;
-        gnome-keyring.enable = true;
-        pipewire.enable = true;
-      };
-      settings = {
-        boot = {
-          enable = true;
-          plymouth = true;
-          secureBoot = true;
-        };
-        cursor.enable = true;
-        fonts.enable = true;
-        localization.enable = true;
-        power-management.enable = true;
-      };
-    };
+    # myconfig = {
+    #   programs = {
+    #     # lutris.enable = true;
+    #     steam.enable = true;
+    #     bitwarden.enable = true;
+    #     gnupg.enable = true;
+    #     polkit.enable = true;
+    #     sops = {
+    #       enable = true;
+    #       defaultSopsFile = secrets/secrets.yml;
+    #     };
+    #     git.enable = true;
+    #     nu.enable = true;
+    #     fish.enable = true;
+    #     starship.enable = true;
+    #     carapace.enable = true;
+    #   };
+    #   desktop-environments.hyprland.enable = true;
+    #   hardware = {
+    #     bluetooth.enable = true;
+    #     opengl.enable = true;
+    #     moza-r12.enable = true;
+    #     keyboard.enable = true;
+    #     keychron.enable = true;
+    #   };
+    #   services = {
+    #     fwupd.enable = true;
+    #     gnome-keyring.enable = true;
+    #     pipewire.enable = true;
+    #   };
+    #   settings = {
+    #     boot = {
+    #       enable = true;
+    #       plymouth = true;
+    #       secureBoot = true;
+    #     };
+    #     cursor.enable = true;
+    #     fonts.enable = true;
+    #     localization.enable = true;
+    #     power-management.enable = true;
+    #   };
+    # };
 
     # sops.secrets = {
     #   "wifi.env" = {
@@ -258,24 +257,31 @@ delib.host {
   };
 
   myconfig = {
-    programs = {
-      hyprland.enable = true;
-      git.enable = true;
-      ssh = {
+    settings = {
+      boot = {
         enable = true;
-        # includes = ["${myconfig.home.homeDirectory}/.ssh/hosts/jfp.one"];
+        plymouth = true;
+        secureBoot = true;
       };
-      direnv.enable = true;
-
-      fish.enable = true;
-      nu.enable = true;
-      starship.enable = true;
-
-      kitty.enable = true;
-      wezterm.enable = true;
-      codium.enable = true;
-      zed.enable = true;
-      sops.enable = true;
     };
+    # programs = {
+    #   hyprland.enable = true;
+    #   git.enable = true;
+    #   ssh = {
+    #     enable = true;
+    #     # includes = ["${myconfig.home.homeDirectory}/.ssh/hosts/jfp.one"];
+    #   };
+    #   direnv.enable = true;
+
+    #   fish.enable = true;
+    #   nu.enable = true;
+    #   starship.enable = true;
+
+    #   # kitty.enable = true;
+    #   wezterm.enable = true;
+    #   codium.enable = true;
+    #   zed.enable = true;
+    #   sops.enable = true;
+    # };
   };
 }

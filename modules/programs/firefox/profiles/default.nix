@@ -7,11 +7,7 @@
 delib.module {
   name = "programs.firefox";
 
-  home.ifEnabled = {
-    cfg,
-    myconfig,
-    ...
-  }: {
+  home.ifEnabled = {cfg, ...}: {
     programs.firefox.profiles.default = {
       inherit (cfg) extraConfig;
       # inherit (myconfig.constants) username;

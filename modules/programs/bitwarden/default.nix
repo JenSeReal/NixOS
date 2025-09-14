@@ -8,6 +8,10 @@ delib.module {
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs; [bitwarden];
+    environment.systemPackages = with pkgs; [bitwarden-desktop];
+  };
+
+  darwin.ifEnabled = {...}: {
+    environment.systemPackages = with pkgs; [bitwarden-desktop];
   };
 }

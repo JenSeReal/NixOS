@@ -35,7 +35,7 @@ delib.module {
       wl-clipboard
       mako
       kanshi
-      nwg-displays
+      # nwg-displays
     ];
   };
 }
