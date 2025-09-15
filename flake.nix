@@ -1,137 +1,54 @@
 {
-  description = "JenSeReals flake repository";
+  description = "Modular configuration of NixOS, Home Manager, and Nix-Darwin with Denix";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-
-    # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-wsl = {
-      url = "github:nix-community/nixos-wsl";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    fw-ectool = {
-      url = "github:tlvince/ectool.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    impermanence.url = "github:nix-community/impermanence";
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ragenix.url = "github:yaxitech/ragenix";
-
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-
-    devenv = {
-      url = "github:cachix/devenv";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    hyprland-contrib = {
-      url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    stylix = {
-      url = "github:danth/stylix/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    anyrun.url = "github:anyrun-org/anyrun";
-    anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
-
     denix = {
       url = "github:yunfachi/denix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        nix-darwin.follows = "nix-darwin";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nix-darwin.follows = "nix-darwin";
     };
   };
 
-  outputs = {denix, ...} @ inputs: let
-    mkConfigurations = moduleSystem:
-      denix.lib.configurations rec {
-        inherit moduleSystem;
-        homeManagerUser = "jfp";
+  outputs =
+    { denix, ... }@inputs:
+    let
+      mkConfigurations =
+        moduleSystem:
+        denix.lib.configurations {
+          inherit moduleSystem;
+          homeManagerUser = "jfp";
 
-        paths = [
-          ./hosts
-          ./modules
-          ./rices
-          ./overlays
-          ./packages
-        ];
+          paths = [
+            ./hosts
+            ./modules
+            ./rices
+          ];
 
-        exclude = [
-          # ./modules/programs/homebrew/types/caskOption.nix
-          ./modules/programs/hyprland/modules/settings.nix
-          ./modules/programs/hyprland/modules/submap.nix
-          ./packages/screen-recorder/package.nix
-          ./packages/screenshotter/package.nix
-          ./packages/clipsync/package.nix
-        ];
+          extensions = with denix.lib.extensions; [
+            args
+            (base.withConfig {
+              args.enable = true;
+            })
+          ];
 
-        extensions = import ./extensions {delib = denix.lib;};
-
-        specialArgs = {
-          inherit inputs moduleSystem homeManagerUser;
+          specialArgs = {
+            inherit inputs;
+          };
         };
-      };
-  in {
-    nixosConfigurations = mkConfigurations "nixos";
-    homeConfigurations = mkConfigurations "home";
-    darwinConfigurations = mkConfigurations "darwin";
-  };
+    in
+    {
+      nixosConfigurations = mkConfigurations "nixos";
+      homeConfigurations = mkConfigurations "home";
+      darwinConfigurations = mkConfigurations "darwin";
+    };
 }
