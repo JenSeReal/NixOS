@@ -4,4 +4,8 @@ delib.host {
 
   rice = "synthwave86";
   type = "laptop";
+
+  myconfig = {
+    desktop-environments.hyprland.enable = true;
+  };
 }

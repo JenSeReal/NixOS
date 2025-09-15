@@ -34,6 +34,10 @@
             ./rices
           ];
 
+          exclude = [
+            ./modules/programs/hyprland/modules
+          ];
+
           extensions = with denix.lib.extensions; [
             args
             (base.withConfig {
