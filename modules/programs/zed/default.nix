@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.zed-editor;
+      package = packageOption pkgs.unstable.zed-editor;
     };
 
   darwin.ifEnabled = {cfg, ...}: {

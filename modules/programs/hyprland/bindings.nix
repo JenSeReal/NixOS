@@ -3,7 +3,6 @@
   pkgs,
   lib,
   config,
-  inputs,
   ...
 }:
 delib.module {
@@ -20,7 +19,7 @@ delib.module {
 
   home.ifEnabled = {cfg, ...}: let
     hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
-    #scratchpad = lib.getExe inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad;
+    scratchpad = lib.getExe pkgs.hyprlandContrib.scratchpad;
     playerctl = lib.getExe pkgs.playerctl;
     wpctl = lib.getExe' pkgs.wireplumber "wpctl";
     clipcat-menu = lib.getExe' pkgs.clipcat "clipcat-menu";
@@ -118,9 +117,9 @@ delib.module {
             "${cfg.settings.modifyer.mainModCtrl}, left, workspace, -1"
 
             # special workspaces
-            # "${cfg.settings.modifyer.mainMod}, minus, exec, ${scratchpad}"
-            # "${cfg.settings.modifyer.mainModShift}, minus, exec, [float; center; focus] ${lib.getExe cfg.settings.defaultPrograms.terminal} start ${scratchpad} -g -m ${lib.getExe pkgs.unstable.skim}"
-            # "${cfg.settings.modifyer.mainModCtrl}, minus, exec, ${scratchpad} -t"
+            "${cfg.settings.modifyer.mainMod}, minus, exec, ${scratchpad}"
+            "${cfg.settings.modifyer.mainModShift}, minus, exec, [float; center; focus] ${lib.getExe cfg.settings.defaultPrograms.terminal} start ${scratchpad} -g -m ${lib.getExe pkgs.unstable.skim}"
+            "${cfg.settings.modifyer.mainModCtrl}, minus, exec, ${scratchpad} -t"
           ]
           ++ (builtins.concatLists (
             builtins.genList (
