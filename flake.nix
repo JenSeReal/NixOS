@@ -45,10 +45,12 @@
           ./modules
           ./rices
           ./overlays
+          ./packages
         ];
 
         exclude = [
           ./modules/programs/hyprland/modules
+          ./packages/clipsync/package.nix
         ];
 
         extensions = import ./extensions {delib = denix.lib;};

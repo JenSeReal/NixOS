@@ -1,0 +1,194 @@
+* {
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: FontAwesome;
+  font-size: 12px;
+}
+
+window#waybar {
+  color: @text-color;
+  /* text color */
+  margin: 0px;
+  padding: 0px;
+  background: transparent;
+}
+
+button {
+  /* Use box-shadow instead of border so the text isn't offset */
+  /* Avoid rounded borders under each button name */
+  border: none;
+  border-radius: 0px;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+  background: inherit;
+}
+
+#workspaces button {
+  padding: 0px 5px;
+  background-color: @base-color;
+  border: none;
+  color: @overlay-color;
+}
+
+#workspaces button label {
+  font-size: 16px;
+}
+
+#workspaces button:hover {
+  color: @rosewater-color;
+  /* rosewater color */
+  box-shadow: inherit;
+  text-shadow: inherit;
+  border: none;
+}
+
+#workspaces button.active {
+  color: @text-color;
+  /* text color */
+  border: none;
+}
+
+#workspaces button:focus,
+#workspaces button:indeterminate {
+  border: none;
+}
+
+#custom-arGap {
+  font-size: 29px;
+  color: @base-color;
+  background-color: @red-color;
+}
+
+#idle_inhibitor {
+  font-size: 29px;
+  color: @base-color;
+  background-color: @red-color;
+}
+
+#custom-wsGap {
+  font-size: 29px;
+  color: @red-color;
+}
+
+#custom-mgl {
+  font-size: 29px;
+  color: @green-color;
+}
+
+#custom-playerctl {
+  background-color: @pink-color;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: @base-color;
+  font-size: 29px;
+}
+
+#custom-mgr {
+  font-size: 29px;
+  color: @green-color;
+}
+
+#window {
+  background-color: @pink-color;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0px;
+}
+
+#workspaces:first-child button {
+  padding-left: 10px;
+}
+
+#workspaces button.focused {
+  color: @rosewater-color;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0px;
+}
+
+#clock,
+#battery,
+#backlight,
+#network,
+#pulseaudio,
+#tray {
+  padding: 0px 10px;
+  color: @base-color;
+  font-size: 29px;
+}
+
+#custom-paGap {
+  color: @cyan-color;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 29px;
+}
+
+#clock {
+  font-size: 16px;
+}
+
+#pulseaudio {
+  background-color: @cyan-color;
+}
+
+#custom-blGap {
+  font-size: 29px;
+  background-color: @cyan-light-color;
+  color: @cyan-color;
+}
+
+#backlight {
+  background-color: @cyan-light-color;
+  color: @base-color;
+}
+
+#custom-baGap {
+  font-size: 29px;
+  color: @cyan-light-color;
+  background-color: @cyan-dark-color;
+}
+
+#battery {
+  background-color: @cyan-dark-color;
+}
+
+#custom-netGap {
+  color: @cyan-dark-color;
+  background-color: @cyan-light-color;
+  font-size: 29px;
+}
+
+#network {
+  background-color: @cyan-light-color;
+}
+
+#tray {
+  background-color: @cyan-color;
+}
+
+#custom-trayGap {
+  font-size: 29px;
+  background-color: @cyan-color;
+  color: @cyan-light-color;
+}
+
+#custom-clGap {
+  font-size: 29px;
+  color: @cyan-color;
+  background-color: @green-color;
+}
+
+#custom-trayGap {
+  font-size: 29px;
+  background-color: @cyan-color;
+}
+
+#clock {
+  background-color: @green-color;
+  color: @base-color;
+}
