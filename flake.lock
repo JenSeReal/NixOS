@@ -28,6 +28,28 @@
         "type": "github"
       }
     },
+    "firefox-addons": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1757822625,
+        "narHash": "sha256-w+V97GrUZK5Lt50DOzhmFGPf3coxfj4TTNHa0rHswuE=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "5a1d5f5453eef0ea2510d9860d2f803911df6776",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "pkgs/firefox-addons",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -84,6 +106,26 @@
         "owner": "nix-community",
         "ref": "release-25.05",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "hyprland-contrib": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757928521,
+        "narHash": "sha256-+wZhFb5+MOmKbYZBsc+jeLRlHgoPlFf3lXBRX0YY0Kc=",
+        "owner": "hyprwm",
+        "repo": "contrib",
+        "rev": "e7aaa6725c5597041330f371451116f1b2d1f88b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "contrib",
         "type": "github"
       }
     },
@@ -178,7 +220,9 @@
     "root": {
       "inputs": {
         "denix": "denix",
+        "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
+        "hyprland-contrib": "hyprland-contrib",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_2"
       }

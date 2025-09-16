@@ -20,6 +20,7 @@ in
           default = {};
         };
         defaultPrograms = mkOption {
+        # TODO: allow null.. all the packages are built..
           type = types.submodule {
             options = {
               terminal = packageOption pkgs.wezterm;

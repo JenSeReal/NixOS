@@ -17,6 +17,15 @@
       inputs.home-manager.follows = "home-manager";
       inputs.nix-darwin.follows = "nix-darwin";
     };
+
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -32,18 +41,14 @@
             ./hosts
             ./modules
             ./rices
+            ./overlays
           ];
 
           exclude = [
             ./modules/programs/hyprland/modules
           ];
 
-          extensions = with denix.lib.extensions; [
-            args
-            (base.withConfig {
-              args.enable = true;
-            })
-          ];
+          extensions = import ./extensions {delib = denix.lib;};
 
           specialArgs = {
             inherit inputs;

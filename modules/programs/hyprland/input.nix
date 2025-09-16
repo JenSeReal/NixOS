@@ -2,7 +2,7 @@
 delib.module {
   name = "programs.hyprland";
 
-  home.ifEnabled = {
+  home.ifEnabled = {myconfig, ...}: {
     wayland.windowManager.hyprland.settings = {
       master = {
         new_status = "master";
@@ -26,9 +26,9 @@ delib.module {
       input = {
         follow_mouse = 1;
 
-        kb_layout = "de";
-        kb_variant = "nodeadkeys";
-        kb_options = "caps:escape";
+        kb_layout = myconfig.keyboard.layout;
+        kb_variant = myconfig.keyboard.variant;
+        kb_options = myconfig.keyboard.options;
         numlock_by_default = true;
 
         touchpad = {
