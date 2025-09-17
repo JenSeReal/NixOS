@@ -8,6 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
+      package = packageOption pkgs.hyprland;
       extraConfig = strOption "";
     };
 
@@ -15,7 +16,7 @@ delib.module {
     programs.waybar.systemd.target = "hyprland-session.target";
 
     wayland.windowManager.hyprland = {
-      enable = true;
+      inherit (cfg) enable package;
 
       extraConfig = ''
         env = XDG_DATA_DIRS,'${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}':$XDG_DATA_DIRS

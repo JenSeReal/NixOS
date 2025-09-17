@@ -1,9 +1,17 @@
-{delib, ...}:
+{
+  delib,
+  pkgs,
+  ...
+}:
 delib.host {
   name = "jens-pc";
 
-  rice = "synthwave86";
+  rice = "synthwave84";
   type = "laptop";
+
+  nixos = {
+    users.defaultUserShell = pkgs.nushell;
+  };
 
   myconfig = {
     desktop-environments.hyprland.enable = true;

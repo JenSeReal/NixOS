@@ -1,8 +1,6 @@
 {
   delib,
-  pkgs,
   lib,
-  config,
   ...
 }:
 delib.module {
@@ -27,7 +25,7 @@ delib.module {
     # ];
   };
 
-  myconfig.ifEnabled = {...}: let
+  myconfig.ifEnabled = {myconfig, ...}: let
     mainMod = "SUPER";
     # screen-recorder = pkgs.screen-recorder;
     # screenshotter = pkgs.screenshotter;
@@ -92,6 +90,7 @@ delib.module {
       # way-displays.enable = true;
       firefox.enable = true;
       # hyprlock.enable = true;
+      wl-clipboard.enable = true;
     };
     services = {
       clipcat.enable = true;
@@ -99,6 +98,11 @@ delib.module {
       hypridle.enable = true;
       mako.enable = true;
       kanshi.enable = true;
+      greetd = {
+        enable = true;
+        autoLogin = myconfig.constants.username;
+        defaultSession = lib.getExe myconfig.programs.hyprland.package;
+      };
     };
     # library.qt.enable = true;
   };
@@ -110,28 +114,16 @@ delib.module {
     #    hyprlock.enable = true;
     #    hyprland.enable = true;
     #    waybar.enable = true;
-    #    kickoff.enable = true;
     #    xdg.enable = true;
     #    wlogout.enable = true;
-    #    way-displays.enable = true;
     #    wlr-randr.enable = true;
     #    wlroots.enable = true;
     #    polkit.enable = true;
     #    # bitwarden.enable = true;
-    #    # firefox.enable = true;
     #    nemo.enable = true;
     #  };
 
     # services = {
-    #   hypridle.enable = true;
-    #   tuigreet = {
-    #     enable = true;
-    #     autoLogin = "jfp";
-    #     defaultSession = lib.getExe pkgs.hyprland;
-    #   };
-    #  mako.enable = true;
-    #   pipewire.enable = true;
-    #   kanshi.enable = true;
     #   gnome-keyring.enable = true;
     # };
     # libraries.qt.enable = true;
@@ -142,7 +134,6 @@ delib.module {
   #swayosd
   #grim
   #slurp
-  #wl-clipboard
   # nwg-displays
   #];
   # };
