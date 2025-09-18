@@ -15,7 +15,6 @@ delib.rice {
       image = ./P13_Background1.png;
       polarity = "dark";
       homeManagerIntegration.autoImport = false;
-      # homeManagerIntegration.followSystem = false;
     };
   };
 
@@ -27,6 +26,7 @@ delib.rice {
       polarity = "dark";
       image = ./P13_Background1.png;
       base16Scheme = ./base16Scheme.yaml;
+      targets.firefox.profileNames = ["default"];
     };
   };
 }

@@ -1,32 +1,36 @@
 {
   delib,
   pkgs,
-  config,
   lib,
   ...
 }:
 delib.module {
   name = "programs.waybar";
-  options = delib.singleEnableOption false;
+  options = with delib;
+    moduleOptions {
+      enable = boolOption false;
+      package = packageOption pkgs.waybar;
+    };
 
-  home.ifEnabled = let
-    style = builtins.readFile ./styles.css;
-    synthwave84 = builtins.readFile ./synthwave84.css;
-  in {
+  home.ifEnabled = {
+    myconfig,
+    cfg,
+    ...
+  }: {
     programs.waybar = {
       enable = true;
+      package = cfg.package;
       settings = {
         mainBar = {
           layer = "top";
           position = "bottom";
           spacing = 0;
           modules-left = [
-            "hyprland/workspaces"
-            # "${
-            #   if config.wayland.windowManager.sway.enable
-            #   then "sway/workspaces"
-            #   else "hyprland/workspaces"
-            # }"
+            "${
+              if myconfig.programs.hyprland.enable
+              then "hyprland/workspaces"
+              else "sway/workspaces"
+            }"
             "custom/arGap"
             "idle_inhibitor"
             "custom/wsGap"
@@ -208,15 +212,10 @@ delib.module {
           };
         };
       };
-      style = ''
-        ${style}
-
-        ${synthwave84}
-      '';
     };
   };
 
-  nixos.ifEnabled = {
-    environment.systemPackages = with pkgs; [waybar];
+  nixos.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
   };
 }

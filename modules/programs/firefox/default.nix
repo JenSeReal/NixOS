@@ -8,6 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
+      package = packageOption pkgs.firefox-bin;
       extraConfig = strOption "";
       settings = attrsOption {};
       gpuAcceleration = boolOption false;
@@ -15,23 +16,23 @@ delib.module {
       userChrome = strOption "";
     };
 
-  darwin.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs; [
-      firefox
+  darwin.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [
+      cfg.package
     ];
   };
 
-  home.ifEnabled = {...}: {
-    programs.firefox = with pkgs; {
+  home.ifEnabled = {cfg, ...}: {
+    programs.firefox = {
       enable = true;
-      package = firefox;
+      package = cfg.package;
     };
   };
 
-  nixos.ifEnabled = {...}: {
-    # programs.firefox.enable = true;
-    environment.systemPackages = with pkgs; [
-      firefox
-    ];
+  nixos.ifEnabled = {cfg, ...}: {
+    programs.firefox = {
+      enable = true;
+      package = cfg.package;
+    };
   };
 }

@@ -1,6 +1,7 @@
 {
   delib,
   lib,
+  pkgs,
   ...
 }:
 delib.module {
@@ -29,6 +30,8 @@ delib.module {
     mainMod = "SUPER";
     # screen-recorder = pkgs.screen-recorder;
     # screenshotter = pkgs.screenshotter;
+    hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
+    hyprlock = lib.getExe pkgs.hyprlock;
   in {
     audio.enable = true;
     programs = {
@@ -36,7 +39,10 @@ delib.module {
         enable = true;
         settings = {
           defaultPrograms = {
-            # terminal = config.programs.wezterm.package;
+            terminal = myconfig.programs.wezterm.package;
+            browser = myconfig.programs.firefox.package;
+            launcher = myconfig.programs.yofi.package;
+            explorer = myconfig.programs.nemo.package;
           };
           submaps = [
             {
@@ -76,8 +82,8 @@ delib.module {
                   ", p, exec, systemctl poweroff"
                   ", r, exec, systemctl reboot"
                   ", s, exec, systemctl suspend"
-                  ", l, exec, swaylock"
-                  ", e, exec, hyprctl dispatch exit"
+                  ", l, exec, ${hyprlock}"
+                  ", e, exec, ${hyprctl} dispatch exit"
                 ];
               };
             }
@@ -89,7 +95,9 @@ delib.module {
       # anyrun.enable = true;
       # way-displays.enable = true;
       firefox.enable = true;
-      # hyprlock.enable = true;
+      hyprlock.enable = true;
+      yofi.enable = true;
+      nemo.enable = true;
       wl-clipboard.enable = true;
     };
     services = {
@@ -120,7 +128,7 @@ delib.module {
     #    wlroots.enable = true;
     #    polkit.enable = true;
     #    # bitwarden.enable = true;
-    #    nemo.enable = true;
+    #
     #  };
 
     # services = {

@@ -60,7 +60,7 @@
         extensions = import ./extensions {delib = denix.lib;};
 
         specialArgs = {
-          inherit inputs;
+          inherit inputs moduleSystem;
         };
       };
   in {

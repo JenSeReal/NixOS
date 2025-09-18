@@ -1,7 +1,6 @@
 {
   delib,
   lib,
-  pkgs,
   ...
 }: let
   inherit (lib) types mkOption;
@@ -20,15 +19,14 @@ in
           default = {};
         };
         defaultPrograms = mkOption {
-        # TODO: allow null.. all the packages are built..
+          # TODO: allow null.. all the packages are built..
           type = types.submodule {
             options = {
-              terminal = packageOption pkgs.wezterm;
-              browser = packageOption pkgs.firefox;
-              launcher = packageOption pkgs.yofi;
-              secondaryLauncher = packageOption pkgs.anyrun;
-              explorer = packageOption pkgs.nemo;
-              screenLocker = packageOption pkgs.hyprlock;
+              terminal = allowNull (packageOption null);
+              browser = allowNull (packageOption null);
+              launcher = allowNull (packageOption null);
+              secondaryLauncher = allowNull (packageOption null);
+              explorer = allowNull (packageOption null);
             };
           };
           default = {};

@@ -106,19 +106,6 @@ delib.module {
           "extensions.formautofill.creditCards.enabled" = false;
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
 
-          "font.name.monospace.x-western" =
-            if pkgs.stdenv.hostPlatform.isDarwin
-            then "Monaspace Krypton"
-            else "MonaspaceKrypton";
-          "font.name.sans-serif.x-western" =
-            if pkgs.stdenv.hostPlatform.isDarwin
-            then "Monaspace Neon"
-            else "MonaspaceNeon";
-          "font.name.serif.x-western" =
-            if pkgs.stdenv.hostPlatform.isDarwin
-            then "Monaspace Neon"
-            else "MonaspaceNeon";
-
           "general.autoScroll" = false;
           "general.smoothScroll.msdPhysics.enabled" = true;
           "geo.enabled" = false;

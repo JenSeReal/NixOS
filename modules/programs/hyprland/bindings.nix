@@ -2,7 +2,6 @@
   delib,
   pkgs,
   lib,
-  config,
   ...
 }:
 delib.module {
@@ -17,18 +16,24 @@ delib.module {
       };
     };
 
-  home.ifEnabled = {cfg, ...}: let
+  home.ifEnabled = {
+    cfg,
+    myconfig,
+    ...
+  }: let
     hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
     scratchpad = lib.getExe pkgs.hyprlandContrib.scratchpad;
     playerctl = lib.getExe pkgs.playerctl;
     wpctl = lib.getExe' pkgs.wireplumber "wpctl";
     clipcat-menu = lib.getExe' pkgs.clipcat "clipcat-menu";
+    killall = lib.getExe pkgs.killall;
+    hyprlock = lib.getExe pkgs.hyprlock;
 
     reload_script = pkgs.writeShellScript "reload.sh" ''
-      killall .waybar-wrapped
-      ${lib.getExe config.programs.waybar.package} &
+      ${killall} .waybar-wrapped
+      ${lib.getExe myconfig.programs.waybar.package} &
 
-      hyprctl reload
+      ${hyprctl} reload
 
       systemctl --user restart kanshi.service
 
@@ -84,13 +89,6 @@ delib.module {
       settings = {
         bind =
           [
-            "${cfg.settings.modifyer.mainMod}, RETURN, exec, ${lib.getExe cfg.settings.defaultPrograms.terminal}"
-            "${cfg.settings.modifyer.mainMod}, B, exec, ${lib.getExe cfg.settings.defaultPrograms.browser}"
-            "${cfg.settings.modifyer.mainMod}, D, exec, ${lib.getExe cfg.settings.defaultPrograms.launcher}"
-            "${cfg.settings.modifyer.mainModShift}, D, exec, ${lib.getExe cfg.settings.defaultPrograms.secondaryLauncher}"
-            "${cfg.settings.modifyer.mainMod}, E, exec, ${lib.getExe cfg.settings.defaultPrograms.explorer}"
-            "${cfg.settings.modifyer.mainMod}, C, exec, [float; center; focus] ${lib.getExe cfg.settings.defaultPrograms.terminal} start ${clipcat-menu}"
-
             "${cfg.settings.modifyer.mainModShift}, Q, killactive,"
             "${cfg.settings.modifyer.mainModShift}, C, exec, ${reload_script.outPath}"
             "${cfg.settings.modifyer.mainMod}, M, exit,"
@@ -98,7 +96,7 @@ delib.module {
             "${cfg.settings.modifyer.mainMod}, P, pseudo,"
             "${cfg.settings.modifyer.mainMod}, J, togglesplit,"
             "${cfg.settings.modifyer.mainMod}, F, fullscreen,"
-            "${cfg.settings.modifyer.mainMod}, F1, exec, ${lib.getExe cfg.settings.defaultPrograms.screenLocker}"
+            "${cfg.settings.modifyer.mainMod}, F1, exec, ${hyprlock}"
 
             "${cfg.settings.modifyer.mainMod}, left, movefocus, l"
             "${cfg.settings.modifyer.mainMod}, right, movefocus, r"
@@ -135,7 +133,25 @@ delib.module {
               ]
             )
             10
-          ));
+          ))
+          ++ lib.optionals (cfg.settings.defaultPrograms.terminal != null) [
+            "${cfg.settings.modifyer.mainMod}, RETURN, exec, ${lib.getExe cfg.settings.defaultPrograms.terminal}"
+          ]
+          ++ lib.optionals (cfg.settings.defaultPrograms.browser != null) [
+            "${cfg.settings.modifyer.mainMod}, B, exec, ${lib.getExe cfg.settings.defaultPrograms.browser}"
+          ]
+          ++ lib.optionals (cfg.settings.defaultPrograms.launcher != null) [
+            "${cfg.settings.modifyer.mainMod}, D, exec, ${lib.getExe cfg.settings.defaultPrograms.launcher}"
+          ]
+          ++ lib.optionals (cfg.settings.defaultPrograms.secondaryLauncher != null) [
+            "${cfg.settings.modifyer.mainModShift}, D, exec, ${lib.getExe cfg.settings.defaultPrograms.secondaryLauncher}"
+          ]
+          ++ lib.optionals (cfg.settings.defaultPrograms.explorer != null) [
+            "${cfg.settings.modifyer.mainMod}, E, exec, ${lib.getExe cfg.settings.defaultPrograms.explorer}"
+          ]
+          ++ lib.optionals (cfg.settings.defaultPrograms.terminal != null && clipcat-menu != null) [
+            "${cfg.settings.modifyer.mainMod}, C, exec, [float; center; focus] ${lib.getExe cfg.settings.defaultPrograms.terminal} start ${clipcat-menu}"
+          ];
         bindm = [
           "${cfg.settings.modifyer.mainMod}, mouse:272, movewindow"
           "${cfg.settings.modifyer.mainMod}, mouse:273, resizewindow"
