@@ -6,7 +6,11 @@
 }:
 delib.module {
   name = "programs.nh";
-  options = delib.singleEnableOption false;
+  options = with delib;
+    moduleOptions {
+      enable = boolOption true;
+      package = packageOption pkgs.unstable.nh;
+    };
 
   home.ifEnabled = {...}: {
     programs.nh = {

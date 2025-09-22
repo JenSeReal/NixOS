@@ -16,7 +16,7 @@ delib.module {
         mesa
         libva
         amdvlk
-        fwEctool
+        fw-ectool
       ];
     };
   };

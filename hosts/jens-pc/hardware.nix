@@ -2,6 +2,7 @@
   delib,
   pkgs,
   inputs,
+  config,
   ...
 }:
 delib.host {
@@ -32,10 +33,13 @@ delib.host {
     ];
     boot.kernelParams = ["microcode.amd_sha_check=off"];
     hardware.enableAllFirmware = true;
+    boot.extraModulePackages = with config.boot.kernelPackages; [framework-laptop-kmod];
 
     environment.systemPackages = with pkgs; [
       curl
       git
+      framework-tool
+      fw-ectool
     ];
 
     programs.neovim = {

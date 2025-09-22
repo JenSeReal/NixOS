@@ -26,7 +26,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     ucodenix.url = "github:e-tho/ucodenix";
-    fw-ectool.url = "github:tlvince/ectool.nix";
 
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
@@ -40,9 +39,50 @@
       url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
 
-  outputs = {denix, ...} @ inputs: let
+  outputs = {
+    denix,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    lib = nixpkgs.lib;
+
+    packageNixFiles = lib.pipe ./packages [
+      builtins.readDir
+      (lib.filterAttrs (
+        name: type:
+          type
+          == "directory"
+          && builtins.pathExists (./packages + "/${name}/package.nix")
+      ))
+      (lib.mapAttrsToList (name: _: ./packages + "/${name}/package.nix"))
+    ];
+    moduleSubdirs = let
+      findModuleDirs = dir:
+        lib.concatMap (
+          name: let
+            path = dir + "/${name}";
+            type = builtins.readFileType path;
+          in
+            if type == "directory"
+            then
+              (
+                if name == "modules" || name == "types"
+                then [path]
+                else []
+              )
+              ++ findModuleDirs path
+            else []
+        ) (builtins.attrNames (builtins.readDir dir));
+    in
+      findModuleDirs ./modules;
     mkConfigurations = moduleSystem:
       denix.lib.configurations {
         inherit moduleSystem;
@@ -56,10 +96,7 @@
           ./packages
         ];
 
-        exclude = [
-          ./modules/programs/hyprland/modules
-          ./packages/clipsync/package.nix
-        ];
+        exclude = packageNixFiles ++ moduleSubdirs;
 
         extensions = import ./extensions {delib = denix.lib;};
 

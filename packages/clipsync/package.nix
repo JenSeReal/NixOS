@@ -5,6 +5,7 @@
   wl-clipboard,
   xclip,
   clipnotify,
+  ...
 }:
 python3Packages.buildPythonApplication {
   pname = "clipsync";
