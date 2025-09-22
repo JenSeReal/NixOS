@@ -24,6 +24,10 @@
       inputs.nix-darwin.follows = "nix-darwin";
     };
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    ucodenix.url = "github:e-tho/ucodenix";
+    fw-ectool.url = "github:tlvince/ectool.nix";
+
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";

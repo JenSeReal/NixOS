@@ -1,6 +1,7 @@
 {
   delib,
   pkgs,
+  inputs,
   ...
 }:
 delib.host {
@@ -11,7 +12,13 @@ delib.host {
   home.home.stateVersion = "25.05";
 
   nixos = {
-    imports = [./hardware-configuration.nix];
+    imports = [
+      inputs.ucodenix.nixosModules.default
+      inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+      ./hardware-configuration.nix
+    ];
+
+    services.ucodenix.enable = true;
 
     # Bootloader settings
     boot.initrd.systemd.enable = true;
@@ -23,30 +30,8 @@ delib.host {
       "ntfs"
       "fat32"
     ];
+    boot.kernelParams = ["microcode.amd_sha_check=off"];
     hardware.enableAllFirmware = true;
-
-    networking.hostName = "jens-pc";
-    networking.networkmanager.enable = true;
-
-    time.timeZone = "Europe/Berlin";
-
-    i18n.defaultLocale = "en_US.UTF-8";
-
-    i18n.extraLocaleSettings = {
-      LC_ADDRESS = "de_DE.UTF-8";
-      LC_IDENTIFICATION = "de_DE.UTF-8";
-      LC_MEASUREMENT = "de_DE.UTF-8";
-      LC_MONETARY = "de_DE.UTF-8";
-      LC_NAME = "de_DE.UTF-8";
-      LC_NUMERIC = "de_DE.UTF-8";
-      LC_PAPER = "de_DE.UTF-8";
-      LC_TELEPHONE = "de_DE.UTF-8";
-      LC_TIME = "de_DE.UTF-8";
-    };
-
-    services.libinput.enable = true;
-
-    nixpkgs.config.allowUnfree = true;
 
     environment.systemPackages = with pkgs; [
       curl

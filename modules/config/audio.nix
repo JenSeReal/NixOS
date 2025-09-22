@@ -18,7 +18,7 @@ delib.module {
   };
 
   nixos.ifEnabled = {
-    environment.systemPackages = with pkgs; [pavucontrol];
+    environment.systemPackages = with pkgs; [pulsemixer];
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
@@ -36,6 +36,6 @@ delib.module {
         "bluez5.roles" = ["hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
       };
     };
-    # myconfig.user.extraGroups = ["audio"];
+    myconfig.user.extraGroups = ["audio"];
   };
 }

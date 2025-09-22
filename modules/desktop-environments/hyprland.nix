@@ -98,6 +98,8 @@ delib.module {
       hyprlock.enable = true;
       yofi.enable = true;
       nemo.enable = true;
+      pavucontrol.enable = true;
+      vlc.enable = true;
       wl-clipboard.enable = true;
     };
     services = {
@@ -111,6 +113,7 @@ delib.module {
         autoLogin = myconfig.constants.username;
         defaultSession = lib.getExe myconfig.programs.hyprland.package;
       };
+      gnome-keyring.enable = true;
     };
     # library.qt.enable = true;
   };
@@ -132,7 +135,7 @@ delib.module {
     #  };
 
     # services = {
-    #   gnome-keyring.enable = true;
+    #
     # };
     # libraries.qt.enable = true;
   };

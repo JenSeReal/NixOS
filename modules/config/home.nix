@@ -29,7 +29,6 @@ in
       users.${myconfig.constants.username} = lib.mkAliasDefinitions options.home.extraOptions;
 
       home-manager = {
-        # enables backing up existing files instead of erroring if conflicts exist
         backupFileExtension = "hm.old";
 
         useUserPackages = true;
@@ -37,7 +36,7 @@ in
       };
     };
 
-    nixos.always = {myconfig, ...}: {
+    nixos.always = {...}: {
       environment.systemPackages = [pkgs.home-manager];
       home-manager = {
         useUserPackages = true;

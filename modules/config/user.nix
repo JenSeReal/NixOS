@@ -1,33 +1,35 @@
-{ delib, ... }:
+{delib, ...}:
 delib.module {
   name = "user";
-
-  nixos.always =
-    { myconfig, ... }:
-    let
-      inherit (myconfig.constants) username;
-    in
-    {
-      users = {
-        groups.${username} = { };
-
-        users.${username} = {
-          isNormalUser = true;
-          initialPassword = username;
-          extraGroups = [ "wheel" ];
-        };
-      };
+  options = with delib;
+    moduleOptions {
+      extraGroups = listOfOption str [];
     };
 
-  darwin.always =
-    { myconfig, ... }:
-    let
-      inherit (myconfig.constants) username;
-    in
-    {
-      users.users.${username} = {
-        name = username;
-        home = "/Users/${username}";
+  nixos.always = {
+    myconfig,
+    cfg,
+    ...
+  }: let
+    inherit (myconfig.constants) username;
+  in {
+    users = {
+      groups.${username} = {};
+
+      users.${username} = {
+        isNormalUser = true;
+        initialPassword = username;
+        extraGroups = ["wheel"] ++ cfg.extraGroups;
       };
     };
+  };
+
+  darwin.always = {myconfig, ...}: let
+    inherit (myconfig.constants) username;
+  in {
+    users.users.${username} = {
+      name = username;
+      home = "/Users/${username}";
+    };
+  };
 }

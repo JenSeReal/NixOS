@@ -36,10 +36,11 @@ delib.module {
         options = "--delete-older-than 2d";
       };
 
-      optimise.automatic = true;
+      # optimise.automatic = true;
 
       settings = {
         # NixOS-specific settings
+        auto-optimise-store = true;
         auto-allocate-uids = true;
         connect-timeout = 5;
         use-cgroups = true;
