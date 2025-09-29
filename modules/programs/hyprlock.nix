@@ -1,6 +1,7 @@
 {
   delib,
   pkgs,
+  lib,
   ...
 }:
 delib.module {
@@ -11,8 +12,25 @@ delib.module {
       package = packageOption pkgs.hyprlock;
     };
 
-  home.ifEnabled = {...}: {
-    programs.hyprlock.enable = true;
+  home.ifEnabled = {cfg, ...}: {
+    programs.hyprlock = {
+      enable = true;
+      package = cfg.package;
+
+      settings = {
+        general = {
+          grace = 5;
+          hide_cursor = true;
+          ignore_empty_input = true;
+          text_trim = true;
+        };
+        background = {
+          path = lib.mkForce "screenshot";
+          blur_passes = 2;
+        };
+        auth."fingerprint:enabled" = true;
+      };
+    };
   };
 
   nixos.ifEnabled = {cfg, ...}: {

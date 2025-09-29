@@ -26,6 +26,10 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     ucodenix.url = "github:e-tho/ucodenix";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland-contrib = {
       url = "github:hyprwm/contrib";

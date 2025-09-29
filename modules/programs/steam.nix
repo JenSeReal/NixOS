@@ -14,22 +14,18 @@ delib.module {
       localNetworkGameTransfers.openFirewall = true;
       protontricks.enable = true;
       remotePlay.openFirewall = true;
-
+      gamescopeSession.enable = true;
       extraCompatPackages = [pkgs.proton-ge-bin];
     };
-    environment.systemPackages = with pkgs; [
-      # libgdiplus
-      # steamcmd
-      # steam-tui
 
-      # wineWowPackages.waylandFull
-      # (bottles.override {extraLibraries = pkgs: [libunwind];})
-      # gamescope
-      # proton-caller
-      # protontricks
-      # protonup-ng
+    programs.gamemode.enable = true;
+    environment.systemPackages = with pkgs; [
       steamtinkerlaunch
       protonup-qt
+      wineWowPackages.waylandFull
+      winetricks
+      lutris
+      heroic
     ];
   };
 

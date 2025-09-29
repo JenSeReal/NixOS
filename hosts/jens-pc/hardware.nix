@@ -12,6 +12,23 @@ delib.host {
 
   home.home.stateVersion = "25.05";
 
+  myconfig = {
+    boot = {
+      enable = true;
+      plymouth = true;
+      secureBoot = true;
+    };
+    desktop-environments.hyprland.enable = true;
+    hardware = {
+      bluetooth.enable = true;
+      fingerprint.enable = true;
+      graphics.enable = true;
+      touchpad.enable = true;
+    };
+    services.fwupd.enable = true;
+    power-management.enable = true;
+  };
+
   nixos = {
     imports = [
       inputs.ucodenix.nixosModules.default
@@ -20,19 +37,8 @@ delib.host {
     ];
 
     services.ucodenix.enable = true;
-
-    # Bootloader settings
-    boot.initrd.systemd.enable = true;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.systemd-boot.enable = true;
-    boot.supportedFilesystems = [
-      "btrfs"
-      "ntfs"
-      "fat32"
-    ];
     boot.kernelParams = ["microcode.amd_sha_check=off"];
-    hardware.enableAllFirmware = true;
+
     boot.extraModulePackages = with config.boot.kernelPackages; [framework-laptop-kmod];
 
     environment.systemPackages = with pkgs; [
