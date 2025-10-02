@@ -5,7 +5,7 @@
   ...
 }:
 delib.overlayModule {
-  name = "firefox-addons";
+  name = "oversteer";
   overlay = final: prev: {
     oversteer = pkgs.unstable.oversteer.overrideAttrs (oldAttrs: {
       postInstall =

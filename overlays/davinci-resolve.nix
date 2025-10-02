@@ -1,6 +1,6 @@
 {delib, ...}:
 delib.overlayModule {
-  name = "firefox-addons";
+  name = "davinci-resolve";
   overlay = final: prev: {
     davinci-resolve = prev.davinci-resolve.override (old: {
       buildFHSEnv = a: (old.buildFHSEnv (
