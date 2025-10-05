@@ -21,7 +21,6 @@ delib.host {
     };
     programs = {
       bat.enable = true;
-      # bottles.enable = true;
       btop.enable = true;
       carapace.enable = true;
       sudo.enable = true;

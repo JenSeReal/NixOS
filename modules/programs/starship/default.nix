@@ -2,18 +2,22 @@
   delib,
   pkgs,
   ...
-}: let
-  common = {environment.systemPackages = with pkgs; [starship];};
-in
-  delib.module {
-    name = "programs.starship";
-    options = delib.singleEnableOption false;
-
-    darwin.ifEnabled = common // {};
-
-    home.ifEnabled = {...}: {
-      programs.starship.enable = true;
+}:
+delib.module {
+  name = "programs.starship";
+  options = with delib;
+    moduleOptions {
+      enable = boolOption false;
+      package = packageOption pkgs.starship;
     };
 
-    nixos.ifEnabled = common // {};
-  }
+  darwin.ifEnabled = {cfg, ...}: {environment.systemPackages = [cfg.package];};
+  nixos.ifEnabled = {cfg, ...}: {environment.systemPackages = [cfg.package];};
+
+  home.ifEnabled = {cfg, ...}: {
+    programs.starship = {
+      enable = true;
+      package = cfg.package;
+    };
+  };
+}
