@@ -26,6 +26,7 @@ delib.module {
       winetricks
       lutris
       heroic
+      mangohud
     ];
   };
 

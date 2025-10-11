@@ -13,7 +13,7 @@ delib.module {
       sshKeyPaths = listOfOption path ["/etc/ssh/ssh_host_ed25519_key"];
     };
 
-  darwin.always = {cfg, ...}: {
+  darwin.always = {...}: {
     imports = [inputs.sops-nix.darwinModules.sops];
   };
 
