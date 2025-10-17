@@ -30,9 +30,9 @@ delib.module {
   myconfig.ifEnabled = {myconfig, ...}: let
     mainMod = "SUPER";
     screen-recorder = pkgs.screen-recorder;
-    screenshotter = pkgs.screenshotter;
     hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
     hyprlock = lib.getExe pkgs.hyprlock;
+    hyprshot = lib.getExe pkgs.hyprshot;
   in {
     audio.enable = true;
     programs = {
@@ -63,14 +63,14 @@ delib.module {
               trigger = "${mainMod}, S";
               actions = {
                 bind = [
-                  ", s, exec, ${screenshotter} copy screen"
-                  ", o, exec, ${screenshotter} copy output"
-                  ", w, exec, ${screenshotter} copy active"
-                  ", a, exec, ${screenshotter} copy area"
-                  ", SHIFT s, exec, ${screenshotter} save screen ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
-                  ", SHIFT o, exec, ${screenshotter} save output ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
-                  ", SHIFT w, exec, ${screenshotter} save active ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
-                  ", SHIFT a, exec, ${screenshotter} save area ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
+                  ", s, exec, ${hyprshot} -m output --clipboard-only --freeze"
+                  ", o, exec, ${hyprshot} -m output -m active --clipboard-only --freeze"
+                  ", w, exec, ${hyprshot} -m window -m active --clipboard-only --freeze"
+                  ", a, exec, ${hyprshot} -m region --clipboard-only --freeze"
+                  "SHIFT, s, exec, ${hyprshot} -m output --freeze --output-folder ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
+                  "SHIFT, o, exec, ${hyprshot} -m output -m active --freeze --output-folder ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
+                  "SHIFT, w, exec, ${hyprshot} -m window -m active --freeze --output-folder ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
+                  "SHIFT, a, exec, ${hyprshot} -m region --freeze --output-folder ${homeconfig.home.homeDirectory}/Pictures/Screenshots"
                 ];
               };
             }

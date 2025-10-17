@@ -1,6 +1,5 @@
 {
   lib,
-  stdenv,
   fetchFromGitHub,
   rustPlatform,
   pkg-config,
@@ -26,16 +25,12 @@
 
     cargoHash = cargoHash;
 
-    # Only build the Windows bridge crate
     buildAndTestSubdir = "datalink-shm-bridge";
 
-    # Use release profile for the bridge
     buildType = "release";
 
-    # Windows-specific build flags
     CARGO_BUILD_TARGET = "x86_64-pc-windows-gnu";
 
-    # Don't run tests for cross-compiled binary
     doCheck = false;
 
     installPhase = ''
@@ -63,24 +58,12 @@ in
     ];
 
     # The bridge exe needs to be available during build as it gets embedded via include_bytes!
-    # When cargo builds with --target flag, OUT_DIR changes to include the target triple
-    # OUT_DIR: target/x86_64-unknown-linux-gnu/release/build/Datalink-<hash>/out
-    # Going up 4 dirs: out -> Datalink-<hash> -> build -> release -> x86_64-unknown-linux-gnu
-    # Then append: x86_64-pc-windows-gnu/release/datalink-shm-bridge.exe
-    # Final: target/x86_64-unknown-linux-gnu/x86_64-pc-windows-gnu/release/datalink-shm-bridge.exe
     preBuild = ''
-      # Create location for when building WITH --target flag (what actually happens)
       mkdir -p target/x86_64-unknown-linux-gnu/x86_64-pc-windows-gnu/release
       cp ${windowsBridge}/bin/datalink-shm-bridge.exe target/x86_64-unknown-linux-gnu/x86_64-pc-windows-gnu/release/
-
-      echo "=== Debug: File placed at ==="
-      find target -name "*.exe" 2>/dev/null || true
     '';
 
-    # Build with release profile
     buildType = "release";
-
-    # Standard cargo test
     checkType = "release";
 
     meta = with lib; {

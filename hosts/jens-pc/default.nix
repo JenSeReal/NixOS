@@ -17,6 +17,10 @@ delib.host {
       viAlias = true;
       vimAlias = true;
     };
+
+    environment.systemPackages = [
+      pkgs.screenshotter
+    ];
   };
 
   myconfig = {
