@@ -115,6 +115,7 @@ delib.module {
         defaultSession = lib.getExe myconfig.programs.hyprland.package;
       };
       gnome-keyring.enable = true;
+      nm-applet.enable = true;
     };
     # library.qt.enable = true;
   };
