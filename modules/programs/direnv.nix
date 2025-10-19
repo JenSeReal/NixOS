@@ -15,7 +15,10 @@ delib.module {
     programs.direnv = {
       enable = true;
       package = cfg.package;
-      nix-direnv.enable = true;
+      # nix-direnv = {
+      #   enable = true;
+      #   package = pkgs.nix-direnv;
+      # };
       silent = true;
     };
   };

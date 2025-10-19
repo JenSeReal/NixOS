@@ -60,7 +60,7 @@ delib.module {
         richardwillis.vscode-spotless-gradle
         mathiasfrohlich.kotlin
         myriad-dreamin.tinymist
-        hashicorp.terraform
+        # hashicorp.terraform
         mgtrrz.terraform-completer
         grafana.grafana-alloy
         notblank00.hexeditor

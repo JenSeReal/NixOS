@@ -9,16 +9,17 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = pkgs.unstable.vscodium;
+      package = packageOption pkgs.unstable.vscodium;
     };
 
   darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
 
-  home.ifEnabled = {cfg, ...}: {
+  home.always = {
     imports = [inputs.vscode-server.homeModules.default];
-
+  };
+  home.ifEnabled = {cfg, ...}: {
     services.vscode-server.enable = true;
     programs.vscode = {
       enable = true;

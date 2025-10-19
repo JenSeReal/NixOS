@@ -35,8 +35,8 @@ delib.host {
       carapace.enable = true;
       codium.enable = true;
       DataLink.enable = true;
-      direnv.enable = true;
-      devenv.enable = true;
+      #direnv.enable = true;
+      #devenv.enable = true;
       git.enable = true;
       sudo.enable = true;
       fish.enable = true;
