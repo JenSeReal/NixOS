@@ -15,10 +15,14 @@ delib.module {
   home.always = {
     imports = [inputs.nvf.homeManagerModules.default];
   };
-  home.ifEnabled = {cfg, ...}: {
+  home.ifEnabled = {...}: {
+    programs.neovide = {
+      enable = true;
+      package = pkgs.neovide;
+    };
+
     programs.nvf = {
       enable = true;
-      package = cfg.package;
       settings = {
         vim.viAlias = true;
         vim.vimAlias = true;
@@ -30,16 +34,16 @@ delib.module {
   };
 
   darwin.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
+    environment.systemPackages = with pkgs; [cfg.package neovide];
   };
 
   nixos.always = {
     imports = [inputs.nvf.nixosModules.default];
   };
-  nixos.ifEnabled = {cfg, ...}: {
+  nixos.ifEnabled = {...}: {
+    environment.systemPackages = with pkgs; [neovide];
     programs.nvf = {
       enable = true;
-      package = cfg.package;
       settings = {
         vim.viAlias = true;
         vim.vimAlias = true;
@@ -48,12 +52,5 @@ delib.module {
         };
       };
     };
-    # programs.neovim = {
-    #   enable = true;
-    #   package = cfg.package;
-    #   defaultEditor = true;
-    #   viAlias = true;
-    #   vimAlias = true;
-    # };
   };
 }
