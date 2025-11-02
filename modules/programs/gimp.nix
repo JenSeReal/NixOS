@@ -4,18 +4,14 @@
   ...
 }:
 delib.module {
-  name = "programs.spotify";
+  name = "programs.gimp";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.spotify;
+      package = packageOption pkgs.gimp-with-plugins;
     };
 
   nixos.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
-  };
-
-  darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
 }

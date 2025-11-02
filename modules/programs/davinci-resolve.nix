@@ -4,18 +4,14 @@
   ...
 }:
 delib.module {
-  name = "programs.spotify";
+  name = "programs.davinci-resolve";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.spotify;
+      package = packageOption pkgs.davinci-resolve;
     };
 
   nixos.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
-  };
-
-  darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
 }

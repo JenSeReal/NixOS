@@ -32,6 +32,7 @@ delib.host {
     programs = {
       bat.enable = true;
       btop.enable = true;
+      curl.enable = true;
       carapace.enable = true;
       codium.enable = true;
       DataLink.enable = true;

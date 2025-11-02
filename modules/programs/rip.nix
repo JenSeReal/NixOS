@@ -4,18 +4,14 @@
   ...
 }:
 delib.module {
-  name = "programs.spotify";
+  name = "programs.rip";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.spotify;
+      package = packageOption pkgs.unstable.rip2;
     };
 
   nixos.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
-  };
-
-  darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
 }

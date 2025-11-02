@@ -9,10 +9,7 @@ delib.module {
 
   nixos.ifEnabled = {...}: {
     myconfig = {
-      programs.boxflat = {
-        enable = true;
-        package = pkgs.unstable.boxflat;
-      };
+      programs.boxflat.enable = true;
 
       user.extraGroups = ["input"];
     };

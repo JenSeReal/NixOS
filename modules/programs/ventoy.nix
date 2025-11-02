@@ -4,18 +4,14 @@
   ...
 }:
 delib.module {
-  name = "programs.spotify";
+  name = "programs.ventoy";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.spotify;
+      package = packageOption pkgs.ventoy-bin-full;
     };
 
   nixos.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
-  };
-
-  darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
 }

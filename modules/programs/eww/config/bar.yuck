@@ -1,0 +1,14 @@
+(defwidget bar []
+  (box :class "bar"
+    (box :class "left"
+      (label :class "text" "")
+      (label :class "text" "Cyberpunk Bar")
+      (label :class "text" ""))
+    (box :class "center"
+      (label :class "text" "")
+      (label :class "text" "Center Section")
+      (label :class "text" ""))
+    (box :class "right"
+      (label :class "text" "")
+      (label :class "text" "Right Section")
+      (label :class "text" ""))))

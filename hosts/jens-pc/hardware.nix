@@ -26,7 +26,11 @@ delib.host rec {
       graphics.enable = true;
       touchpad.enable = true;
     };
-    services.fwupd.enable = true;
+    services = {
+      btrfs.enable = true;
+      fwupd.enable = true;
+    };
+
     power-management.enable = true;
   };
 }

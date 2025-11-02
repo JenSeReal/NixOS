@@ -4,25 +4,21 @@
   ...
 }:
 delib.module {
-  name = "programs.fzf";
+  name = "programs.delta";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
       package = packageOption pkgs.delta;
     };
 
+  nixos.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
+  };
+
   home.ifEnabled = {cfg, ...}: {
-    programs.fzf = {
+    programs.delta = {
       enable = true;
       package = cfg.package;
     };
-  };
-
-  darwin.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
-  };
-
-  nixos.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = [cfg.package];
   };
 }

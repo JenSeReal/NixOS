@@ -5,17 +5,24 @@
 }:
 delib.module {
   name = "programs.zoxide";
-  options = delib.singleEnableOption false;
+  options = with delib;
+    moduleOptions {
+      enable = boolOption false;
+      package = packageOption pkgs.zoxide;
+    };
 
-  home.ifEnabled = {...}: {
-    programs.zoxide.enable = true;
+  home.ifEnabled = {cfg, ...}: {
+    programs.zoxide = {
+      enable = true;
+      package = cfg.package;
+    };
   };
 
-  darwin.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs; [zoxide];
+  darwin.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
   };
 
-  nixos.ifEnabled = {...}: {
-    environment.systemPackages = with pkgs; [zoxide];
+  nixos.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
   };
 }

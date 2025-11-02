@@ -8,6 +8,10 @@ delib.module {
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {...}: {
+    # environment.sessionVariables = {
+    #   GSK_RENDERER = "gl";
+    #   PROTON_ENABLE_WAYLAND = "1";
+    # };
     programs.steam = {
       enable = true;
       extest.enable = true;

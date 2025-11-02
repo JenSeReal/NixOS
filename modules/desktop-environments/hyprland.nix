@@ -97,6 +97,7 @@ delib.module {
       # way-displays.enable = true;
       firefox.enable = true;
       hyprlock.enable = true;
+      gnupg.enable = true;
       yofi.enable = true;
       nemo.enable = true;
       pavucontrol.enable = true;
@@ -116,6 +117,7 @@ delib.module {
       };
       gnome-keyring.enable = true;
       nm-applet.enable = true;
+      polkit.enable = true;
     };
     # library.qt.enable = true;
   };
