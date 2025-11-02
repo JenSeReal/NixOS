@@ -1,14 +1,18 @@
 {
-  description = "JenSeReals flake repository";
+  description = "Modular configuration of NixOS, Home Manager, and Nix-Darwin with Denix";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
-    flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur = {
@@ -16,72 +20,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
+    denix = {
+      url = "github:yunfachi/denix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nix-darwin.follows = "nix-darwin";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-wsl = {
-      url = "github:nix-community/nixos-wsl";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    fw-ectool = {
-      url = "github:tlvince/ectool.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
+    ucodenix.url = "github:e-tho/ucodenix";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    impermanence.url = "github:nix-community/impermanence";
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ragenix.url = "github:yaxitech/ragenix";
-
-    darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-
-    snowfall-lib = {
-      url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    snowfall-frost = {
-      url = "github:snowfallorg/frost";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake = {
-      url = "github:snowfallorg/flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -89,107 +38,96 @@
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    anyrun.url = "github:anyrun-org/anyrun";
-    anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
-
-    typst-live.url = "github:ItsEthra/typst-live";
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    nvf.url = "github:notashelf/nvf";
     stylix = {
       url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    simshmbridge.url = "github:spacefreak18/simshmbridge?rev=5ba1ad8946d27af221089359ceaa528160553e63&dir=tools/distro/nix";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = {self, ...} @ inputs: let
-    inherit inputs;
+  outputs = {
+    denix,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    lib = nixpkgs.lib;
 
-    lib = inputs.snowfall-lib.mkLib {
-      inherit inputs;
-      src = ./.;
+    packageNixFiles = lib.pipe ./packages [
+      builtins.readDir
+      (lib.filterAttrs (
+        name: type:
+          type
+          == "directory"
+          && builtins.pathExists (./packages + "/${name}/package.nix")
+      ))
+      (lib.mapAttrsToList (name: _: ./packages + "/${name}/package.nix"))
+    ];
+    moduleSubdirs = let
+      findModuleDirs = dir:
+        lib.concatMap (
+          name: let
+            path = dir + "/${name}";
+            type = builtins.readFileType path;
+          in
+            if type == "directory"
+            then
+              (
+                if name == "modules" || name == "types"
+                then [path]
+                else []
+              )
+              ++ findModuleDirs path
+            else []
+        ) (builtins.attrNames (builtins.readDir dir));
+    in
+      findModuleDirs ./modules;
+    mkConfigurations = moduleSystem:
+      denix.lib.configurations {
+        inherit moduleSystem;
+        homeManagerUser = "jfp";
 
-      snowfall = {
-        meta = {
-          name = "JenSeReal";
-          title = "JenSeReal";
-        };
+        paths = [
+          ./hosts
+          ./modules
+          ./rices
+          ./overlays
+          ./packages
+        ];
 
-        namespace = "JenSeReal";
-      };
-    };
-  in
-    lib.mkFlake {
-      outputs-builder = channels: {
-        formatter = channels.nixpkgs.alejandra;
-      };
+        exclude = packageNixFiles ++ moduleSubdirs;
 
-      channels-config = {
-        allowUnfree = true;
-        permittedInsecurePackages = [];
-      };
+        extensions = import ./extensions {delib = denix.lib;};
 
-      overlays = with inputs; [
-        flake.overlays.default
-        nur.overlays.default
-        snowfall-frost.overlays.default
-        rust-overlay.overlays.default
-        nix-vscode-extensions.overlays.default
-      ];
-
-      systems = {
-        modules = {
-          darwin = with inputs; [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            nixvim.nixDarwinModules.nixvim
-            stylix.darwinModules.stylix
-            mac-app-util.darwinModules.default
-            ragenix.darwinModules.default
-          ];
-
-          home = with inputs; [
-            anyrun.homeManagerModules.anyrun-with-all-plugins
-            nixvim.homeManagerModules.nixvim
-            sops-nix.homeManagerModules.sops
-            ragenix.homeManagerModules.default
-            vscode-server.homeModules.default
-            stylix.homeManagerModules.stylix
-          ];
-
-          nixos = with inputs; [
-            home-manager.nixosModules.home-manager
-            vscode-server.nixosModules.default
-            lanzaboote.nixosModules.lanzaboote
-            sops-nix.nixosModules.sops
-            ragenix.nixosModules.default
-            stylix.nixosModules.stylix
-          ];
+        specialArgs = {
+          inherit inputs moduleSystem;
         };
       };
-
-      templates = {
-        default = {
-          path = ./templates/default;
-          description = "A very basic flake for dev environments";
-        };
-      };
-
-      defaultTemplate = self.templates.default;
-    };
+  in {
+    nixosConfigurations = mkConfigurations "nixos";
+    homeConfigurations = mkConfigurations "home";
+    darwinConfigurations = mkConfigurations "darwin";
+  };
 }

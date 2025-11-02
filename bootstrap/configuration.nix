@@ -42,39 +42,18 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      firefox
-      freshfetch
-    ];
   };
 
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "$DEFAULT_USER";
-
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
-  services.xserver = {
-    xkb.layout = "$XKB_LAYOUT";
-    xkb.variant = "$XKB_VARIANT";
-    xkb.options = "$XKB_OPTIONS";
+  services = {
+    xserver = {
+      xkb.layout = "$XKB_LAYOUT";
+      xkb.variant = "$XKB_VARIANT";
+      xkb.options = "$XKB_OPTIONS";
+    };
     libinput.enable = true;
   };
 
   console.keyMap = "$CONSOLE_KEYBOARD_LAYOUT";
-
-  services.printing.enable = true;
-
-  sound.enable = true;
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = "nix-command flakes";
@@ -86,12 +65,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    btop
     curl
     git
-    direnv
-    nix-direnv
-    tpm2-tss
   ];
 
   programs.neovim = {
