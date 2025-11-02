@@ -30,6 +30,7 @@ delib.host {
       direnv.enable = true;
       devenv.enable = true;
       git.enable = true;
+      helix.enable = true;
       sudo.enable = true;
       fish.enable = true;
       neovim.enable = true;

@@ -1,6 +1,7 @@
 {
   delib,
   pkgs,
+  inputs,
   ...
 }:
 delib.module {
@@ -8,16 +9,23 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.neovim;
+      package = packageOption pkgs.unstable.neovim;
     };
 
+  home.always = {
+    imports = [inputs.nvf.homeManagerModules.default];
+  };
   home.ifEnabled = {cfg, ...}: {
-    programs.neovim = {
+    programs.nvf = {
       enable = true;
       package = cfg.package;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
+      settings = {
+        vim.viAlias = true;
+        vim.vimAlias = true;
+        vim.lsp = {
+          enable = true;
+        };
+      };
     };
   };
 
@@ -25,13 +33,27 @@ delib.module {
     environment.systemPackages = [cfg.package];
   };
 
+  nixos.always = {
+    imports = [inputs.nvf.nixosModules.default];
+  };
   nixos.ifEnabled = {cfg, ...}: {
-    programs.neovim = {
+    programs.nvf = {
       enable = true;
       package = cfg.package;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
+      settings = {
+        vim.viAlias = true;
+        vim.vimAlias = true;
+        vim.lsp = {
+          enable = true;
+        };
+      };
     };
+    # programs.neovim = {
+    #   enable = true;
+    #   package = cfg.package;
+    #   defaultEditor = true;
+    #   viAlias = true;
+    #   vimAlias = true;
+    # };
   };
 }

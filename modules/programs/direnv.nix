@@ -33,7 +33,7 @@ delib.module {
   nixos.ifEnabled = {cfg, ...}: {
     environment.systemPackages = with pkgs; [
       cfg.package
-      nix-direnv
+      # nix-direnv
     ];
   };
 }
