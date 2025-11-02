@@ -16,11 +16,6 @@ delib.module {
     imports = [inputs.nvf.homeManagerModules.default];
   };
   home.ifEnabled = {...}: {
-    programs.neovide = {
-      enable = true;
-      package = pkgs.neovide;
-    };
-
     programs.nvf = {
       enable = true;
       settings = {
