@@ -34,6 +34,7 @@ delib.host {
       sudo.enable = true;
       fish.enable = true;
       neovim.enable = true;
+      neovide.enable = true;
       nh.enable = true;
       nix-ld.enable = true;
       nu.enable = true;
