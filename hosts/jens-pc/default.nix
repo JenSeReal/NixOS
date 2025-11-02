@@ -11,16 +11,6 @@ delib.host {
 
   nixos = {
     users.defaultUserShell = pkgs.nushell;
-    programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-    };
-
-    environment.systemPackages = [
-      pkgs.screenshotter
-    ];
   };
 
   myconfig = {
@@ -42,7 +32,7 @@ delib.host {
       git.enable = true;
       sudo.enable = true;
       fish.enable = true;
-      # neovim.enable = true;
+      neovim.enable = true;
       nh.enable = true;
       nix-ld.enable = true;
       nu.enable = true;

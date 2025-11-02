@@ -1,8 +1,4 @@
-{
-  delib,
-  pkgs,
-  ...
-}:
+{delib, ...}:
 delib.module {
   name = "hardware.moza-r12";
   options = delib.singleEnableOption false;
