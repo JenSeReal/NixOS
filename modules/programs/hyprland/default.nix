@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.hyprland;
+      package = packageOption pkgs.unstable.hyprland;
       extraConfig = strOption "";
     };
 
