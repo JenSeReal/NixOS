@@ -13,7 +13,7 @@ delib.module {
       nixd
       alejandra
       direnv
-      devenv
+      unstable.devenv
       hexyl
       rust-analyzer
       opentofu
