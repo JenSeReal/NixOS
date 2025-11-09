@@ -27,6 +27,8 @@ delib.module {
 
       settings = {
         exec = [''notify-send -i ~/.face -u normal -t 5000 "Hello $(whoami)"''];
+        "ecosystem:no_update_news" = true;
+        "ecosystem:no_donation_nag" = true;
       };
 
       systemd.variables = ["--all"];
@@ -34,6 +36,8 @@ delib.module {
   };
 
   nixos.ifEnabled = {
+    security.pam.services.hyprland.enableGnomeKeyring = true;
+
     environment.sessionVariables = {
       CLUTTER_BACKEND = "wayland";
       GDK_BACKEND = "wayland";

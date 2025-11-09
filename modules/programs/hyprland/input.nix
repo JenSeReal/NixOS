@@ -15,13 +15,18 @@ delib.module {
       };
 
       gestures = {
-        workspace_swipe = true;
-        workspace_swipe_fingers = 4;
         workspace_swipe_invert = true;
         workspace_swipe_distance = 120;
         workspace_swipe_min_speed_to_force = 10;
         workspace_swipe_cancel_ratio = 0.3;
       };
+
+      gesture = [
+        "3, horizontal, workspace"
+        "4, left, dispatcher, movewindow, mon:-1"
+        "4, right, dispatcher, movewindow, mon:+1"
+        "4, pinch, fullscreen"
+      ];
 
       input = {
         follow_mouse = 1;
