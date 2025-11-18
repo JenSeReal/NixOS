@@ -19,13 +19,12 @@ delib.module {
       protontricks.enable = true;
       remotePlay.openFirewall = true;
       gamescopeSession.enable = true;
-      extraCompatPackages = [pkgs.proton-ge-bin];
+      extraCompatPackages = [pkgs.unstable.proton-ge-bin pkgs.unstable.steamtinkerlaunch];
     };
 
     programs.gamemode.enable = true;
     environment.systemPackages = with pkgs; [
-      steamtinkerlaunch
-      protonup-qt
+      unstable.steamtinkerlaunch
       wineWowPackages.waylandFull
       winetricks
       lutris
