@@ -29,17 +29,21 @@ delib.module {
   };
 
   home.ifEnabled = {cfg, ...}: {
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
+    };
+
     programs.git = {
       enable = true;
       package = pkgs.gitFull;
-      inherit (cfg) userName userEmail includes;
+      inherit (cfg) includes;
       lfs.enable = true;
-      delta.enable = true;
       signing = {
         key = cfg.signingKey;
         inherit (cfg) signByDefault;
       };
-      extraConfig = {
+      settings = {
         init = {
           defaultBranch = "main";
         };
@@ -63,6 +67,10 @@ delib.module {
         };
         gpg = {
           format = "ssh";
+        };
+        user = {
+          email = cfg.userEmail;
+          name = cfg.userName;
         };
       };
       ignores = [

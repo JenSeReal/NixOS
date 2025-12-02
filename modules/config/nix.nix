@@ -55,8 +55,6 @@ delib.module {
         builders-use-substitutes = true;
         experimental-features = [
           "auto-allocate-uids"
-          "ca-derivations"
-          "dynamic-derivations"
           "flakes"
           "nix-command"
           # "pipe-operators"
@@ -172,8 +170,6 @@ delib.module {
       builders-use-substitutes = true;
       experimental-features = [
         "auto-allocate-uids"
-        "ca-derivations"
-        "dynamic-derivations"
         "flakes"
         "nix-command"
         "pipe-operators"

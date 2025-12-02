@@ -17,14 +17,14 @@ delib.module {
       hexyl
       rust-analyzer
       opentofu
-      opentofu-ls
+      tofu-ls
       (runCommand "terraform" {} ''
         mkdir -p "$out"/bin
         ln -s ${lib.getExe opentofu} "$out"/bin/terraform
       '')
       (runCommand "terraform-ls" {} ''
         mkdir -p "$out"/bin
-        ln -s ${lib.getExe opentofu-ls} "$out"/bin/terraform-ls
+        ln -s ${lib.getExe tofu-ls} "$out"/bin/terraform-ls
       '')
       yaml-language-server
       treefmt

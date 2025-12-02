@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   python3Packages,
   fetchFromGitHub,
   wl-clipboard,
@@ -10,6 +11,11 @@
 python3Packages.buildPythonApplication {
   pname = "clipsync";
   version = "1.0.0";
+
+  pyproject = true;
+  build-system = with pkgs.python3Packages; [
+    setuptools
+  ];
 
   src = fetchFromGitHub {
     owner = "alexankitty";

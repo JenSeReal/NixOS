@@ -41,7 +41,7 @@ in
 
     nixos.always = {cfg, ...}: let
       propagatedIcon =
-        pkgs.runCommandNoCC "propagated-icon"
+        pkgs.runCommand "propagated-icon"
         {
           passthru = {
             inherit (cfg.icon) fileName;
