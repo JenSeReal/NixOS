@@ -22,7 +22,7 @@ delib.module {
           translate
           websearch
 
-          inputs.anyrun-nixos-options.packages.${pkgs.system}.default
+          inputs.anyrun-nixos-options.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
         width = {
           fraction = 0.3;
