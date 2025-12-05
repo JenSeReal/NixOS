@@ -7,6 +7,6 @@
 delib.overlayModule {
   name = "hyprland-contrib";
   overlay = final: prev: {
-    hyprlandContrib = inputs.hyprland-contrib.packages.${pkgs.system};
+    hyprlandContrib = inputs.hyprland-contrib.packages.${pkgs.stdenv.hostPlatform.system};
   };
 }

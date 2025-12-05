@@ -9,7 +9,7 @@ delib.overlayModule {
     inherit (final) config;
     unstable = import inputs.nixpkgs-unstable {
       inherit config;
-      system = prev.system;
+      system = prev.stdenv.hostPlatform.system;
     };
   in {
     inherit unstable;

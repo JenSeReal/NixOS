@@ -15,7 +15,6 @@ delib.module {
       extraPackages = with pkgs; [
         mesa
         libva
-        amdvlk
         fw-ectool
       ];
     };

@@ -9,10 +9,10 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.greetd.greetd;
+      package = packageOption pkgs.greetd;
       autoLogin = allowNull (strOption null);
       defaultSession = strOption "";
-      command = packageOption pkgs.greetd.tuigreet;
+      command = packageOption pkgs.tuigreet;
     };
 
   nixos.ifEnabled = {cfg, ...}: {

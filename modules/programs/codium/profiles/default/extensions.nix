@@ -8,7 +8,7 @@ delib.module {
   name = "programs.codium";
 
   home.ifEnabled = {...}: let
-    marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
+    marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace;
   in {
     programs.vscode.profiles.default.extensions = with marketplace;
       [

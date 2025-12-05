@@ -9,7 +9,7 @@ delib.overlayModule {
     inherit (final) config;
     master = import inputs.nixpkgs-master {
       inherit config;
-      system = prev.system;
+      system = prev.stdenv.hostPlatform.system;
     };
   in {
     inherit master;

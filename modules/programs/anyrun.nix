@@ -12,7 +12,7 @@ delib.module {
     programs.anyrun = {
       enable = true;
       config = {
-        plugins = with inputs.anyrun.packages.${pkgs.system}; [
+        plugins = with inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}; [
           applications
           dictionary
           rink
@@ -22,7 +22,7 @@ delib.module {
           translate
           websearch
 
-          inputs.anyrun-nixos-options.packages.${pkgs.system}.default
+          inputs.anyrun-nixos-options.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
         width = {
           fraction = 0.3;

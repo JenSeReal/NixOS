@@ -10,7 +10,7 @@ delib.module {
 
   home.ifEnabled = {
     wayland.windowManager.hyprland.settings.exec-once = [
-      "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1"
+      "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
       "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
       "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
       "${lib.getExe config.programs.waybar.package}"
