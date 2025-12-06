@@ -129,5 +129,28 @@
     nixosConfigurations = mkConfigurations "nixos";
     homeConfigurations = mkConfigurations "home";
     darwinConfigurations = mkConfigurations "darwin";
+
+    # Export modules for other flakes to use
+    nixosModules.default = {
+      imports = [
+        ./modules
+        ./overlays
+      ];
+    };
+
+    # Optionally export home-manager modules
+    homeModules.default = {
+      imports = [
+        ./modules
+      ];
+    };
+
+    # Optionally export darwin modules
+    darwinModules.default = {
+      imports = [
+        ./modules
+        ./overlays
+      ];
+    };
   };
 }
