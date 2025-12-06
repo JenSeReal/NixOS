@@ -125,32 +125,46 @@
           inherit inputs moduleSystem;
         };
       };
+
+    findModules = dir:
+      lib.concatMap (
+        name: let
+          path = dir + "/${name}";
+          type = builtins.readFileType path;
+        in
+          if type == "directory"
+          then findModules path
+          else if
+            type
+            == "regular"
+            && lib.hasSuffix
+            ".nix"
+            name
+            && name != "default.nix"
+          then [path]
+          else []
+      ) (builtins.attrNames (builtins.readDir dir));
   in {
     nixosConfigurations = mkConfigurations "nixos";
     homeConfigurations = mkConfigurations "home";
     darwinConfigurations = mkConfigurations "darwin";
 
-    # Export modules for other flakes to use
-    nixosModules.default = {
-      imports = [
-        ./modules
-        ./overlays
-      ];
+    nixosModules.default = {...}: {
+      imports =
+        findModules ./modules
+        ++ findModules
+        ./overlays;
     };
 
-    # Optionally export home-manager modules
-    homeModules.default = {
-      imports = [
-        ./modules
-      ];
+    homeModules.default = {...}: {
+      imports = findModules ./modules;
     };
 
-    # Optionally export darwin modules
-    darwinModules.default = {
-      imports = [
-        ./modules
-        ./overlays
-      ];
+    darwinModules.default = {...}: {
+      imports =
+        findModules ./modules
+        ++ findModules
+        ./overlays;
     };
   };
 }
