@@ -1,7 +1,4 @@
-{
-  delib,
-  ...
-}:
+{delib, ...}:
 delib.module {
   name = "features.k8s-tools";
   options = with delib;
@@ -9,7 +6,7 @@ delib.module {
       enable = boolOption false;
     };
 
-  nixos.ifEnabled = {cfg, ...}: {
+  nixos.ifEnabled = {...}: {
     myconfig = {
       programs = {
         kubectl.enable = true;

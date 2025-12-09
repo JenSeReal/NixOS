@@ -24,6 +24,7 @@ delib.module {
       kubelogin = boolOption true;
       kubeloginOidc = boolOption true;
       kustomize = boolOption true;
+      kustomizeSops = boolOption true;
     };
 
   nixos.ifEnabled = {cfg, ...}: let
@@ -43,8 +44,9 @@ delib.module {
       (lib.optional cfg.kubelogin kubelogin)
       (lib.optional cfg.kubeloginOidc kubelogin-oidc)
       (lib.optional cfg.kustomize kustomize)
+      (lib.optional cfg.kustomizeSops kustomize-sops)
     ];
   in {
-    environment.systemPackages = [cfg.package] ++ (builtins.filter (p: p != []) (plugins ++ tools));
+    environment.systemPackages = [cfg.package] ++ (pkgs.lib.flatten (plugins ++ tools));
   };
 }

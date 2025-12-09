@@ -15,31 +15,23 @@ delib.host {
 
   myconfig = {
     features.desktop-environments.hyprland.enable = true;
+    features.shell-tools.enable = true;
     hardware = {
       keychron.enable = true;
       moza-r12.enable = true;
     };
     programs = {
-      bat.enable = true;
-      btop.enable = true;
       bitwarden.enable = true;
-      curl.enable = true;
-      carapace.enable = true;
       codium.enable = true;
       DataLink.enable = true;
-      direnv.enable = true;
-      devenv.enable = true;
-      git.enable = true;
       helix.enable = true;
       sudo.enable = true;
       fish.enable = true;
-      neovim.enable = true;
       neovide.enable = true;
       nh.enable = true;
       nix-ld.enable = true;
       nu.enable = true;
       quickemu.enable = true;
-      starship.enable = true;
       steam.enable = true;
       vesktop.enable = true;
       wezterm.enable = true;
