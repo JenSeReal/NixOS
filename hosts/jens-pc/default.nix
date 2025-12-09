@@ -14,7 +14,7 @@ delib.host {
   };
 
   myconfig = {
-    desktop-environments.hyprland.enable = true;
+    features.desktop-environments.hyprland.enable = true;
     hardware = {
       keychron.enable = true;
       moza-r12.enable = true;

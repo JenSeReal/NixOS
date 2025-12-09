@@ -14,9 +14,11 @@ delib.module {
       userEmail = strOption "jens@plueddemann.de";
       signByDefault = boolOption true;
       signingKey = strOption "${homeconfig.home.homeDirectory}/.ssh/id_ed25519";
+      enablePreCommit = boolOption true;
+      enableGitui = boolOption true;
     };
 
-  darwin.ifEnabled = {...}: {
+  darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = with pkgs; [
       bfg-repo-cleaner
       git
@@ -25,7 +27,8 @@ delib.module {
       git-lfs
       gitleaks
       gitlint
-    ];
+    ] ++ (if cfg.enablePreCommit then [pre-commit] else [])
+      ++ (if cfg.enableGitui then [gitui] else []);
   };
 
   home.ifEnabled = {cfg, ...}: {
@@ -107,9 +110,10 @@ delib.module {
     };
 
     programs.gh.enable = true;
+    programs.gitui.enable = cfg.enableGitui;
   };
 
-  nixos.ifEnabled = {...}: {
+  nixos.ifEnabled = {cfg, ...}: {
     environment.systemPackages = with pkgs; [
       bfg-repo-cleaner
       git
@@ -118,6 +122,7 @@ delib.module {
       git-lfs
       gitleaks
       gitlint
-    ];
+    ] ++ (if cfg.enablePreCommit then [pre-commit] else [])
+      ++ (if cfg.enableGitui then [gitui] else []);
   };
 }

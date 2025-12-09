@@ -6,7 +6,7 @@
   ...
 }:
 delib.module {
-  name = "desktop-environments.hyprland";
+  name = "features.desktop-environments.hyprland";
   options = delib.singleEnableOption false;
 
   home.ifEnabled = {

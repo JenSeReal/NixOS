@@ -18,7 +18,6 @@ delib.host rec {
       plymouth = true;
       secureBoot = true;
     };
-    desktop-environments.hyprland.enable = true;
     hardware = {
       bluetooth.enable = true;
       fingerprint.enable = true;
