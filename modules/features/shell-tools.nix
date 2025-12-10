@@ -41,7 +41,7 @@ delib.module {
 
       # Shell enhancements
       atuin.enable = true; # shell history
-      thefuck.enable = true; # command correction
+      pay-respects.enable = true; # command correction
       carapace.enable = true; # shell completions
       zellij.enable = true; # terminal multiplexer
 
