@@ -20,9 +20,9 @@ delib.module {
           show_banner: false
           completions: {
             case_sensitive: false
-            quick: true
+            quick: false
             partial: true
-            algorithm: "prefix"
+            algorithm: "fuzzy"
           }
         }
       '';

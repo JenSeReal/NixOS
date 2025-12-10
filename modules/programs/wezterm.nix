@@ -2,7 +2,6 @@
   delib,
   pkgs,
   lib,
-  config,
   ...
 }:
 delib.module {
@@ -18,9 +17,6 @@ delib.module {
       enable = true;
       package = cfg.package;
       extraConfig = ''
-        -- This will hold the configuration.
-        local config = wezterm.config_builder()
-
         ${
           if pkgs.stdenv.isDarwin
           then ''
@@ -28,7 +24,7 @@ delib.module {
             config.send_composed_key_when_left_alt_is_pressed = true
 
             -- Use nu by default
-            config.default_prog = { 'zsh', '-c', '${lib.getExe config.programs.nushell.package}' }
+            config.default_prog = { 'zsh', '-c', '${lib.getExe pkgs.nushell}' }
           ''
           else ""
         }
