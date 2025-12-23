@@ -18,5 +18,9 @@ delib.module {
         fw-ectool
       ];
     };
+
+    environment.systemPackages = with pkgs; [
+      rocmPackages.rocm-smi
+    ];
   };
 }

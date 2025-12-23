@@ -33,6 +33,7 @@ delib.host {
       nu.enable = true;
       quickemu.enable = true;
       steam.enable = true;
+      screen-recorder.enable = true;
       vesktop.enable = true;
       wezterm.enable = true;
       zed.enable = true;
