@@ -12,8 +12,8 @@
   src = fetchFromGitHub {
     owner = "LukasLichten";
     repo = "Datalink";
-    rev = "0a7ff08f9fe14809dbf11ab405194248f2e051c5";
-    hash = "sha256-NnhD69PncWwv3bLurqJUPEEyQfWIxALkxl1icEukSVM=";
+    rev = "4231d40791d26ac6636dd82dfa4bc3bfa855ad6a";
+    sha256 = "sha256-UAMVZRUTjZUG8EKhLX0VEkgFhcIgLjEWvp3ayF+2MKs=";
   };
 
   cargoHash = "sha256-OQL9ePfNWbR8wmAip0qjr1xhpejzcK1Y9sbCA3GjaaM=";
