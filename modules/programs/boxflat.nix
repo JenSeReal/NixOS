@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.boxflat;
+      package = packageOption pkgs.unstable.boxflat;
     };
 
   nixos.ifEnabled = {cfg, ...}: {
