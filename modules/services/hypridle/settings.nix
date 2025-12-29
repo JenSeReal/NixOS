@@ -11,7 +11,7 @@ delib.module {
     inherit (lib) getExe getExe';
     hyprctl = getExe' pkgs.hyprland "hyprctl";
     hyprlock = getExe pkgs.hyprlock;
-    loginCtl = getExe' pkgs.systemd "loginctl";
+    loginctl = getExe' pkgs.systemd "loginctl";
     systemctl = getExe' pkgs.systemd "systemctl";
     brightnessctl = getExe pkgs.brightnessctl;
     pactl = "${getExe' pkgs.pulseaudio "pactl"}";
@@ -21,13 +21,13 @@ delib.module {
         after_sleep_cmd = "${hyprctl} dispatch dpms on";
         before_sleep_cmd = "loginctl lock-session";
         ignore_dbus_inhibit = false;
-        lock_cmd = "pgrep hyprlock || ${hyprlock}";
+        lock_cmd = "pgrep hyprlock || ${hyprlock} --grace 5";
       };
 
       listener = [
         {
           timeout = 30;
-          on-timeout = "${loginCtl} lock-session";
+          on-timeout = "${loginctl} lock-session";
         }
         {
           timeout = 60;

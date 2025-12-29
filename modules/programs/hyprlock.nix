@@ -19,7 +19,6 @@ delib.module {
 
       settings = {
         general = {
-          grace = 5;
           hide_cursor = true;
           ignore_empty_input = true;
           text_trim = true;

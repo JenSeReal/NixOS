@@ -10,13 +10,13 @@ delib.module {
     programs = {
       # Better alternatives to classic tools
       bat.enable = true; # better cat
-      eza.enable = true; # better ls
       lsd.enable = true; # alternative ls
       fd.enable = true; # better find
       ripgrep.enable = true; # better grep
       rip.enable = true; # better rm (safe delete)
       zoxide.enable = true; # better cd
       dust.enable = true; # better du
+      dua.enable = true; # better du
       pdu.enable = true; # parallel du
       delta.enable = true; # better diff
       difftastic.enable = true; # syntax-aware diff

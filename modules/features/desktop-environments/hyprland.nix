@@ -83,7 +83,7 @@ delib.module {
                   ", p, exec, systemctl poweroff"
                   ", r, exec, systemctl reboot"
                   ", s, exec, systemctl suspend"
-                  ", l, exec, ${hyprlock}"
+                  ", l, exec, ${hyprlock} --grace 5"
                   ", e, exec, ${hyprctl} dispatch exit"
                 ];
               };
