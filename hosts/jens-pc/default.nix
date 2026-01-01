@@ -35,6 +35,7 @@ delib.host {
       steam.enable = true;
       screen-recorder.enable = true;
       vesktop.enable = true;
+      virt-manager.enable = true;
       wezterm.enable = true;
       zed.enable = true;
     };
