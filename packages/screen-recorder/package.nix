@@ -4,9 +4,11 @@
   makeWrapper,
   wl-screenrec,
   slurp,
+  pipewire,
   pulseaudio,
   hyprland,
   jq,
+  libnotify,
   ...
 }:
 stdenv.mkDerivation {
@@ -32,6 +34,7 @@ stdenv.mkDerivation {
         echo "  -w, --window     Record the currently active window (Hyprland only)"
         echo "  -o, --output     Record the active output (default)"
         echo "  -d, --directory  Output directory (default: ./recordings/)"
+        echo "  -m, --mic        Include microphone audio along with desktop audio"
         echo "  -h, --help       Show this help message"
       }
 
@@ -40,12 +43,25 @@ stdenv.mkDerivation {
       OUTPUT_DIR="./recordings"
       TIMESTAMP=$(date +%Y-%m-%d/%H%M%S)
       OUTPUT_FILE="$OUTPUT_DIR/$TIMESTAMP.mp4"
+      INCLUDE_MIC=false
+      VIRTUAL_SINK_NAME="screen-recorder-combined"
+
+      # Video encoding settings
+      VIDEO_CODEC="av1"
+      VIDEO_BITRATE="2 MB"
+      LOW_POWER="off"
+
+      # Audio encoding settings
+      AUDIO_BACKEND="pulse"
+      AUDIO_CODEC="opus"
+      AUDIO_DEVICE=""
       AUDIO_ARGS=()
 
       check_running_recording() {
         if pgrep -x wl-screenrec >/dev/null; then
           echo "Recording already in progress. Stopping it..."
           pkill -x wl-screenrec
+          notify-send -u normal -t 1000 "Screen Recording" "Recording stopped"
           echo "Recording stopped. Exiting."
           exit 0
         fi
@@ -72,6 +88,10 @@ stdenv.mkDerivation {
               OUTPUT_FILE="$OUTPUT_DIR/$TIMESTAMP.mp4"
               shift 2
               ;;
+            -m|--mic)
+              INCLUDE_MIC=true
+              shift
+              ;;
             -h|--help)
               print_usage
               exit 0
@@ -85,18 +105,56 @@ stdenv.mkDerivation {
         done
       }
 
-      prepare_audio() {
+      cleanup_audio() {
         if command -v pactl >/dev/null; then
-          local default_audio
-          default_audio=$(pactl get-default-source 2>/dev/null || true)
-          if [ -n "$default_audio" ]; then
-            AUDIO_ARGS=(--audio "--audio-device=$default_audio")
+          echo "Cleaning up audio modules..."
+          # Find and unload all modules with our virtual sink name
+          local module_ids
+          module_ids=$(pactl list short modules | grep "$VIRTUAL_SINK_NAME" | awk '{print $1}')
+
+          if [ -n "$module_ids" ]; then
+            echo "$module_ids" | while read -r module_id; do
+              pactl unload-module "$module_id" 2>/dev/null || true
+            done
+            echo "Removed all '$VIRTUAL_SINK_NAME' modules."
+          fi
+        fi
+      }
+
+      prepare_audio() {
+        if [ "$INCLUDE_MIC" = true ]; then
+          # PipeWire has PulseAudio compatibility, so pactl works
+          if ! command -v pactl >/dev/null; then
+            echo "Warning: pactl not found. Recording desktop audio only."
+            AUDIO_DEVICE="@DEFAULT_AUDIO_SINK@.monitor"
           else
-            echo "Warning: Could not determine default audio source. Recording without audio."
+            echo "Setting up combined audio (desktop + microphone)..."
+
+            # Create a virtual null sink to combine audio sources
+            pactl load-module module-null-sink sink_name="$VIRTUAL_SINK_NAME" sink_properties=device.description="Screen-Recorder-Combined"
+
+            # Create loopback from default desktop audio output to virtual sink
+            pactl load-module module-loopback source="@DEFAULT_AUDIO_SINK@.monitor" sink="$VIRTUAL_SINK_NAME" latency_msec=1
+
+            # Create loopback from default microphone to virtual sink
+            pactl load-module module-loopback source="@DEFAULT_AUDIO_SOURCE@" sink="$VIRTUAL_SINK_NAME" latency_msec=1
+
+            # Record from the combined virtual sink's monitor
+            AUDIO_DEVICE="''${VIRTUAL_SINK_NAME}.monitor"
+
+            # Set up cleanup on exit
+            trap cleanup_audio EXIT INT TERM
+
+            echo "Combined audio setup complete (desktop + microphone)"
           fi
         else
-          echo "Warning: pactl not found. Recording without audio."
+          # Capture system audio (desktop audio) only
+          # PulseAudio compatibility layer in PipeWire handles @DEFAULT_AUDIO_SINK@
+          AUDIO_DEVICE="@DEFAULT_AUDIO_SINK@.monitor"
         fi
+
+        # Build audio args array using centralized settings
+        AUDIO_ARGS=(--audio --audio-backend "$AUDIO_BACKEND" --audio-device "$AUDIO_DEVICE" --audio-codec "$AUDIO_CODEC")
       }
 
       start_recording_area() {
@@ -106,7 +164,14 @@ stdenv.mkDerivation {
         [ -z "$geometry" ] && echo "Selection cancelled" && exit 1
 
         echo "Starting recording (area)..."
-        exec -a screen-recorder wl-screenrec --low-power=off --codec=hevc -g "$geometry" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
+        notify-send -u normal -t 1000 "Screen Recording" "Recording started (area)"
+        wl-screenrec \
+          --codec "$VIDEO_CODEC" \
+          --low-power "$LOW_POWER" \
+          -b "$VIDEO_BITRATE" \
+          -g "$geometry" \
+          "''${AUDIO_ARGS[@]}" \
+          -f "$OUTPUT_FILE"
       }
 
       start_recording_window() {
@@ -131,7 +196,14 @@ stdenv.mkDerivation {
         geometry="$x,$y ''${width}x''${height}"
 
         echo "Starting recording (window)..."
-        exec wl-screenrec --low-power=off --codec=hevc -g "$geometry" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
+        notify-send -u normal -t 1000 "Screen Recording" "Recording started (window)"
+        wl-screenrec \
+          --codec "$VIDEO_CODEC" \
+          --low-power "$LOW_POWER" \
+          -b "$VIDEO_BITRATE" \
+          -g "$geometry" \
+          "''${AUDIO_ARGS[@]}" \
+          -f "$OUTPUT_FILE"
       }
 
       start_recording_output() {
@@ -144,7 +216,14 @@ stdenv.mkDerivation {
 
         if [ -n "$monitor" ]; then
           echo "Starting recording (output: $monitor)..."
-          exec wl-screenrec --low-power=off --codec=hevc -o "$monitor" "''${AUDIO_ARGS[@]}" -f "$OUTPUT_FILE"
+          notify-send -u normal -t 1000 "Screen Recording" "Recording started (output: $monitor)"
+          wl-screenrec \
+            --codec "$VIDEO_CODEC" \
+            --low-power "$LOW_POWER" \
+            -b "$VIDEO_BITRATE" \
+            -o "$monitor" \
+            "''${AUDIO_ARGS[@]}" \
+            -f "$OUTPUT_FILE"
         else
           echo "Error: No focused monitor detected."
           exit 1
@@ -190,9 +269,11 @@ stdenv.mkDerivation {
       lib.makeBinPath [
         wl-screenrec
         slurp
+        pipewire
         pulseaudio
         hyprland
         jq
+        libnotify
       ]
     }
   '';

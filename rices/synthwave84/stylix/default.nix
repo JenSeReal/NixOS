@@ -75,6 +75,7 @@ delib.rice {
       image = ./P13_Background1.png;
       base16Scheme = ./base16Scheme.yaml;
       targets.firefox.profileNames = ["default"];
+      targets.wezterm.enable = false;
 
       cursor = {
         package = pkgs.layan-cursors;

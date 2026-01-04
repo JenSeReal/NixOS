@@ -66,11 +66,27 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     denix,
     nixpkgs,
+    deploy-rs,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -104,6 +120,7 @@
         ) (builtins.attrNames (builtins.readDir dir));
     in
       findModuleDirs ./modules;
+
     mkConfigurations = moduleSystem:
       denix.lib.configurations {
         inherit moduleSystem;
@@ -144,6 +161,31 @@
           then [path]
           else []
       ) (builtins.attrNames (builtins.readDir dir));
+
+    # Helper to extract deploy-rs nodes from nixosConfigurations
+    extractDeployNodes = configurations:
+      lib.foldl' (acc: name: let
+        cfg = configurations.${name}.config.myconfig.deploy or null;
+      in
+        if cfg != null && cfg.enable
+        then
+          acc
+          // {
+            ${name} = {
+              hostname = cfg.hostname;
+              profiles.system = {
+                sshUser = cfg.sshUser;
+                sshOpts =
+                  if cfg.sshPort != 22
+                  then ["-p" (toString cfg.sshPort)]
+                  else [];
+                user = cfg.deployUser;
+                path = deploy-rs.lib.${cfg.system}.activate.nixos configurations.${name};
+              };
+            };
+          }
+        else acc) {}
+      (builtins.attrNames configurations);
   in {
     nixosConfigurations = mkConfigurations "nixos";
     homeConfigurations = mkConfigurations "home";
@@ -166,5 +208,12 @@
         ++ findModules
         ./overlays;
     };
+
+    # deploy-rs configuration
+    # Automatically extracts deploy configuration from all hosts with myconfig.deploy.enable = true
+    deploy.nodes = extractDeployNodes inputs.self.nixosConfigurations;
+
+    # This is highly advised, and will prevent many possible mistakes
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;
   };
 }

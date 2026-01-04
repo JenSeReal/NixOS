@@ -29,7 +29,7 @@ delib.module {
 
   myconfig.ifEnabled = {myconfig, ...}: let
     mainMod = "SUPER";
-    screen-recorder = pkgs.screen-recorder;
+    screen-recorder = lib.getExe pkgs.screen-recorder;
     hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
     hyprlock = lib.getExe pkgs.hyprlock;
     hyprshot = lib.getExe pkgs.hyprshot;
@@ -51,9 +51,9 @@ delib.module {
               trigger = "${mainMod}, R";
               actions = {
                 bind = [
-                  ", o, exec, pkill -x wl-screenrec || ${screen-recorder} -o -d ${homeconfig.home.homeDirectory}/Pictures/Recordings"
-                  ", w, exec, pkill -x wl-screenrec || ${screen-recorder} -w -d ${homeconfig.home.homeDirectory}/Pictures/Recordings"
-                  ", a, exec, pkill -x wl-screenrec || ${screen-recorder} -a -d ${homeconfig.home.homeDirectory}/Pictures/Recordings"
+                  ", o, exec, ${screen-recorder} -o -m -d ${homeconfig.home.homeDirectory}/Recordings"
+                  ", w, exec, ${screen-recorder} -w -m -d ${homeconfig.home.homeDirectory}/Recordings"
+                  ", a, exec, ${screen-recorder} -a -m -d ${homeconfig.home.homeDirectory}/Recordings"
                 ];
               };
             }
@@ -142,14 +142,15 @@ delib.module {
     #
     # };
     # libraries.qt.enable = true;
+    #
+    environment.systemPackages = with pkgs; [
+      #pciutils
+      #swayosd
+      #grim
+      #slurp
+      # nwg-displays
+    ];
   };
 
-  # environment.systemPackages = with pkgs; [
-  #pciutils
-  #swayosd
-  #grim
-  #slurp
-  # nwg-displays
-  #];
   # };
 }

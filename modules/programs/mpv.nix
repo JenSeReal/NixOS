@@ -4,11 +4,11 @@
   ...
 }:
 delib.module {
-  name = "programs.ffmpeg";
+  name = "programs.mpv";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.ffmpeg-full;
+      package = packageOption pkgs.mpv;
     };
 
   nixos.ifEnabled = {cfg, ...}: {
