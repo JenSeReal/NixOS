@@ -1,8 +1,8 @@
 {delib, ...}:
-delib.module {
-  name = "programs.waybar";
+delib.rice {
+  name = "synthwave84";
 
-  home.ifEnabled = {...}: let
+  home = {...}: let
     style = builtins.readFile ./styles.css;
     synthwave84 = builtins.readFile ./synthwave84.css;
   in {

@@ -16,7 +16,9 @@ delib.module {
     programs.wezterm = {
       enable = true;
       package = cfg.package;
+
       extraConfig = ''
+        local config = wezterm.config_builder()
         ${
           if pkgs.stdenv.isDarwin
           then ''

@@ -1,8 +1,8 @@
 {delib, ...}:
-delib.module {
-  name = "programs.wezterm";
+delib.rice {
+  name = "synthwave84";
 
-  home.ifEnabled = {
+  home = {
     programs.wezterm = {
       colorSchemes = {
         Synthwave84 = {

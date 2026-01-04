@@ -1,18 +1,9 @@
-# plymouth = lib.mkIf cfg.secureBoot {
-#   enable = true;
-#   # theme = "catppuccin-macchiato";
-#   # themePackages = [ pkgs.catppuccin-plymouth ];
-# };
-{
-  delib,
-  lib,
-  ...
-}:
-delib.module {
-  name = "boot";
+{delib, ...}:
+delib.rice {
+  name = "synthwave84";
 
-  nixos.ifEnabled = {cfg, ...}: {
-    boot.plymouth = lib.mkIf cfg.secureBoot {
+  nixos = {
+    boot.plymouth = {
       # theme = "catppuccin-macchiato";
       # themePackages = [ pkgs.catppuccin-plymouth ];
     };

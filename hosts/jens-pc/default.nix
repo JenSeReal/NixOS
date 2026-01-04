@@ -27,13 +27,14 @@ delib.host {
       helix.enable = true;
       sudo.enable = true;
       fish.enable = true;
+      ffmpeg.enable = true;
+      mpv.enable = true;
       neovide.enable = true;
       nh.enable = true;
       nix-ld.enable = true;
       nu.enable = true;
       quickemu.enable = true;
       steam.enable = true;
-      screen-recorder.enable = true;
       vesktop.enable = true;
       virt-manager.enable = true;
       wezterm.enable = true;

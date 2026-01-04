@@ -11,4 +11,5 @@
     ];
   })
   (delib.callExtension ./package-module.nix)
+  (delib.callExtension ./deploy.nix)
 ])
