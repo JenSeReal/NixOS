@@ -17,6 +17,10 @@ delib.host {
     features.desktop-environments.hyprland.enable = true;
     features.shell-tools.enable = true;
     hardware = {
+      amd-gpu = {
+        enable = true;
+        enableNvtop = true;
+      };
       keychron.enable = true;
       moza-r12.enable = true;
     };
@@ -38,7 +42,7 @@ delib.host {
       vesktop.enable = true;
       virt-manager.enable = true;
       wezterm.enable = true;
-      zed.enable = true;
+      zed.enable = false;
     };
   };
 }

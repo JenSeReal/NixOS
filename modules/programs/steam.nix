@@ -22,7 +22,6 @@ delib.module {
       extraCompatPackages = [pkgs.unstable.proton-ge-bin pkgs.unstable.steamtinkerlaunch];
     };
 
-    programs.gamemode.enable = true;
     environment.systemPackages = with pkgs; [
       unstable.steamtinkerlaunch
       wineWowPackages.waylandFull

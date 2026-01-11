@@ -29,6 +29,30 @@ delib.module {
     killall = lib.getExe pkgs.killall;
     hyprlock = lib.getExe pkgs.hyprlock;
 
+    gamemode_script = pkgs.writeShellScript "gamemode.sh" ''
+      #!/usr/bin/env sh
+      HYPRGAMEMODE=$(${hyprctl} getoption animations:enabled | ${lib.getExe pkgs.gawk} 'NR==1{print $2}')
+      if [ "$HYPRGAMEMODE" = 1 ] ; then
+          ${hyprctl} --batch "\
+              keyword animations:enabled 0;\
+              keyword animation borderangle,0; \
+              keyword decoration:shadow:enabled 0;\
+              keyword decoration:blur:enabled 0;\
+              keyword decoration:fullscreen_opacity 1;\
+              keyword general:gaps_in 0;\
+              keyword general:gaps_out 0;\
+              keyword general:border_size 1;\
+              keyword decoration:rounding 0"
+          ${hyprctl} notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
+          exit
+      else
+          ${hyprctl} notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
+          ${hyprctl} reload
+          exit 0
+      fi
+      exit 1
+    '';
+
     reload_script = pkgs.writeShellScript "reload.sh" ''
       ${killall} .waybar-wrapped
       ${lib.getExe myconfig.programs.waybar.package} &
@@ -96,6 +120,7 @@ delib.module {
             "${cfg.settings.modifyer.mainMod}, P, pseudo,"
             "${cfg.settings.modifyer.mainMod}, J, togglesplit,"
             "${cfg.settings.modifyer.mainMod}, F, fullscreen,"
+            "${cfg.settings.modifyer.mainMod}, G, exec, ${gamemode_script}"
             "${cfg.settings.modifyer.mainMod}, F1, exec, ${hyprlock}"
 
             "${cfg.settings.modifyer.mainMod}, left, movefocus, l"

@@ -36,6 +36,7 @@ delib.module {
   in {
     audio.enable = true;
     programs = {
+      gamemode.enable = true;
       hyprland = {
         enable = true;
         settings = {
@@ -113,7 +114,7 @@ delib.module {
       greetd = {
         enable = true;
         autoLogin = myconfig.constants.username;
-        defaultSession = lib.getExe myconfig.programs.hyprland.package;
+        defaultSession = lib.getExe' myconfig.programs.hyprland.package "start-hyprland";
       };
       gnome-keyring.enable = true;
       nm-applet.enable = true;
