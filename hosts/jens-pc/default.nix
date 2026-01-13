@@ -1,6 +1,7 @@
 {
   delib,
   pkgs,
+  inputs,
   ...
 }:
 delib.host {
@@ -10,6 +11,8 @@ delib.host {
   type = "laptop";
 
   nixos = {
+    imports = [inputs.nixos-hardware.nixosModules.framework-13-7040-amd];
+
     users.defaultUserShell = pkgs.nushell;
   };
 
@@ -20,6 +23,7 @@ delib.host {
       amd-gpu = {
         enable = true;
         enableNvtop = true;
+        enableRocmSupport = true;
       };
       keychron.enable = true;
       moza-r12.enable = true;
@@ -28,6 +32,7 @@ delib.host {
       bitwarden.enable = true;
       codium.enable = true;
       DataLink.enable = true;
+      gamemode.enable = true;
       helix.enable = true;
       sudo.enable = true;
       fish.enable = true;

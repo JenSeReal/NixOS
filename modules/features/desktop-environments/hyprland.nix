@@ -36,7 +36,6 @@ delib.module {
   in {
     audio.enable = true;
     programs = {
-      gamemode.enable = true;
       hyprland = {
         enable = true;
         settings = {
