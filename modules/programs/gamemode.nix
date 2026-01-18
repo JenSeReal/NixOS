@@ -23,23 +23,33 @@ delib.module {
     };
 
   nixos.ifEnabled = {cfg, ...}: let
-    hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
-    notify-send = lib.getExe' pkgs.libnotify "notify-send";
-    ls = lib.getExe' pkgs.coreutils "ls";
-    echo = lib.getExe' pkgs.coreutils "echo";
-    tee = lib.getExe' pkgs.coreutils "tee";
-    pgrep = lib.getExe' pkgs.procps "pgrep";
-    awk = lib.getExe pkgs.gawk;
-    xargs = lib.getExe' pkgs.findutils "xargs";
-    renice = lib.getExe' pkgs.util-linux "renice";
+    programs = lib.makeBinPath (
+      with pkgs; [
+        hyprland
+        coreutils
+        libnotify
+        gawk
+        procps
+        util-linux
+        findutils
+        systemd
+      ]
+    );
 
     defaultStartScript = ''
-      export HYPRLAND_INSTANCE_SIGNATURE=$(command ${ls} -t $XDG_RUNTIME_DIR/hypr | head -n 1)
+      export PATH=$PATH:${programs}
 
       LOG_FILE="$XDG_RUNTIME_DIR/gamemode-start.log"
-      ${echo} "=== Gamemode Start: $(date) ===" > "$LOG_FILE"
+      echo "=== Gamemode Start: $(date) ===" > "$LOG_FILE"
+      echo "XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" >> "$LOG_FILE"
 
-      ${hyprctl} --batch '${
+      export HYPRLAND_INSTANCE_SIGNATURE=$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -n 1)
+
+      echo "HYPRLAND_INSTANCE_SIGNATURE=$HYPRLAND_INSTANCE_SIGNATURE" >> "$LOG_FILE"
+
+      if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+        echo "Setting Hyprland optimizations..." >> "$LOG_FILE"
+        hyprctl --batch '${
         lib.concatStringsSep " " [
           "keyword animations:enabled 0;"
           "keyword decoration:shadow:enabled 0;"
@@ -50,32 +60,34 @@ delib.module {
           "keyword misc:vfr 0;"
           "keyword misc:vrr 0"
         ]
-      }'
+      }' 2>&1 | tee -a "$LOG_FILE" || echo "✗ Hyprctl failed" >> "$LOG_FILE"
+      else
+        echo "⚠ Hyprland instance not detected, skipping compositor optimizations" >> "$LOG_FILE"
+      fi
 
-      ${echo} "Setting AMD GPU to high performance..." >> "$LOG_FILE"
-      ${echo} performance | ${tee} /sys/class/drm/card*/device/power_dpm_force_performance_level 2>&1 | ${tee} -a "$LOG_FILE" || ${echo} "✗ GPU performance mode failed" >> "$LOG_FILE"
-
-      {
-        GAME_PIDS=$(${pgrep} -af 'steam_.*game|proton|wine-preloader|wine64-preloader|lutris|heroic|gamemoderun' | ${awk} '{print $1}')
-        if [ -n "$GAME_PIDS" ]; then
-          ${echo} "$GAME_PIDS" | ${xargs} -r ${renice} -n -10 -p
-          ${echo} "Boosted priority for PIDs: $GAME_PIDS" >> "$LOG_FILE"
-        else
-          ${echo} "No game processes found to boost" >> "$LOG_FILE"
-        fi
-      } 2>&1 | ${tee} -a "$LOG_FILE" || true
-
-      ${echo} "=== Gamemode Start Complete ===" >> "$LOG_FILE"
-      ${notify-send} -a 'Gamemode' 'Optimizations activated' -u 'low'
+      echo "=== Gamemode Start Complete ===" >> "$LOG_FILE"
+      echo "GameMode will handle GPU performance and process priorities" >> "$LOG_FILE"
+      notify-send -a 'Gamemode' 'Optimizations activated' -u 'low'
     '';
 
     defaultEndScript = ''
-      export HYPRLAND_INSTANCE_SIGNATURE=$(command ${ls} -t $XDG_RUNTIME_DIR/hypr | head -n 1)
+      export PATH=$PATH:${programs}
+
+      # Ensure XDG_RUNTIME_DIR is set (gamemode might not have it in environment)
+      if [ -z "$XDG_RUNTIME_DIR" ]; then
+        export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+      fi
+
+      export HYPRLAND_INSTANCE_SIGNATURE=$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -n 1)
 
       LOG_FILE="$XDG_RUNTIME_DIR/gamemode-end.log"
-      ${echo} "=== Gamemode End: $(date) ===" > "$LOG_FILE"
+      echo "=== Gamemode End: $(date) ===" > "$LOG_FILE"
+      echo "XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" >> "$LOG_FILE"
+      echo "HYPRLAND_INSTANCE_SIGNATURE=$HYPRLAND_INSTANCE_SIGNATURE" >> "$LOG_FILE"
 
-      ${hyprctl} --batch '${
+      if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+        echo "Restoring Hyprland settings..." >> "$LOG_FILE"
+        hyprctl --batch '${
         lib.concatStringsSep " " [
           "keyword animations:enabled 1;"
           "keyword decoration:shadow:enabled 1;"
@@ -86,23 +98,14 @@ delib.module {
           "keyword misc:vfr 1;"
           "keyword misc:vrr 2"
         ]
-      }'
+      }' 2>&1 | tee -a "$LOG_FILE" || echo "✗ Hyprctl failed" >> "$LOG_FILE"
+      else
+        echo "⚠ Hyprland instance not detected, skipping compositor restore" >> "$LOG_FILE"
+      fi
 
-      ${echo} "Restoring AMD GPU to auto mode..." >> "$LOG_FILE"
-      ${echo} auto | ${tee} /sys/class/drm/card*/device/power_dpm_force_performance_level 2>&1 | ${tee} -a "$LOG_FILE" || ${echo} "✗ GPU auto mode restore failed" >> "$LOG_FILE"
-
-      {
-        GAME_PIDS=$(${pgrep} -af 'steam_.*game|proton|wine-preloader|wine64-preloader|lutris|heroic|gamemoderun' | ${awk} '{print $1}')
-        if [ -n "$GAME_PIDS" ]; then
-          ${echo} "$GAME_PIDS" | ${xargs} -r ${renice} -n 0 -p
-          ${echo} "Restored priority for PIDs: $GAME_PIDS" >> "$LOG_FILE"
-        else
-          ${echo} "No game processes found to restore" >> "$LOG_FILE"
-        fi
-      } 2>&1 | ${tee} -a "$LOG_FILE" || true
-
-      ${echo} "=== Gamemode End Complete ===" >> "$LOG_FILE"
-      ${notify-send} -a 'Gamemode' 'Optimizations deactivated' -u 'low'
+      echo "=== Gamemode End Complete ===" >> "$LOG_FILE"
+      echo "GameMode will handle GPU and process priority restoration" >> "$LOG_FILE"
+      notify-send -a 'Gamemode' 'Optimizations deactivated' -u 'low'
     '';
 
     startScript =
@@ -121,8 +124,21 @@ delib.module {
 
       settings = {
         general = {
-          softrealtime = "auto";
-          renice = 15;
+          renice = 10;
+          ioprio = 0;
+          inhibit_screensaver = 1;
+          disable_splitlock = 1;
+        };
+
+        cpu = {
+          park_cores = "no"; # Don't park cores
+          pin_cores = "yes"; # Pin game to optimal cores (auto-detected)
+        };
+
+        gpu = {
+          apply_gpu_optimisations = "accept-responsibility";
+          gpu_device = 1;
+          amd_performance_level = "auto";
         };
 
         custom = {
@@ -132,11 +148,34 @@ delib.module {
       };
     };
 
+    # Add user to video and gamemode groups
+    myconfig.user.extraGroups = ["video" "gamemode"];
+
+    # Security wrapper for gamemode with necessary capabilities
     security.wrappers.gamemode = {
       owner = "root";
       group = "root";
       source = "${lib.getExe' pkgs.gamemode "gamemoderun"}";
       capabilities = "cap_sys_ptrace,cap_sys_nice+pie";
+    };
+
+    # Polkit rules to allow users group to use gamemode helpers
+    security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+        if ((action.id == "com.feralinteractive.GameMode.governor-helper" ||
+             action.id == "com.feralinteractive.GameMode.procsys-helper" ||
+             action.id == "com.feralinteractive.GameMode.gpu-helper") &&
+            subject.isInGroup("users")) {
+          return polkit.Result.YES;
+        }
+      });
+    '';
+
+    # tmpfiles rule for Intel RAPL power monitoring permissions
+    systemd.tmpfiles.settings."10-gamemode-powercap" = {
+      "/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/intel-rapl:0:0/energy_uj".z = {
+        mode = "0644";
+      };
     };
 
     # https://www.phoronix.com/news/Fedora-39-VM-Max-Map-Count

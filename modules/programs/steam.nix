@@ -19,16 +19,31 @@ delib.module {
       protontricks.enable = true;
       remotePlay.openFirewall = true;
       gamescopeSession.enable = true;
-      extraCompatPackages = [pkgs.unstable.proton-ge-bin pkgs.unstable.steamtinkerlaunch];
+      extraCompatPackages = with pkgs; [
+        unstable.proton-ge-bin
+        unstable.steamtinkerlaunch
+      ];
+    };
+
+    # Gamescope configuration
+    programs.gamescope = {
+      enable = true;
+      package = pkgs.gamescope;
+      args = [
+        "--rt"              # Real-time scheduling for better performance
+        "--expose-wayland"  # Enable Wayland client support
+      ];
+      # Note: capSysNice is disabled because it causes crashes when running within Steam
+      # with error "failed to inherit capabilities: Operation not permitted"
     };
 
     environment.systemPackages = with pkgs; [
-      unstable.steamtinkerlaunch
       wineWowPackages.waylandFull
       winetricks
       lutris
       heroic
       mangohud
+      unstable.steamtinkerlaunch
     ];
   };
 

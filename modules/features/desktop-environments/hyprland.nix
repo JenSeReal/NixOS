@@ -113,7 +113,7 @@ delib.module {
       greetd = {
         enable = true;
         autoLogin = myconfig.constants.username;
-        defaultSession = lib.getExe' myconfig.programs.hyprland.package "start-hyprland";
+        defaultSession = lib.getExe' myconfig.programs.hyprland.package "Hyprland";
       };
       gnome-keyring.enable = true;
       nm-applet.enable = true;

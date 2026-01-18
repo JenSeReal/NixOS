@@ -21,8 +21,9 @@ delib.module {
         "size 1100 600, class:^(wdisplays)$"
         "float, class:^(blueman-manager)$"
         "float, class:^(nm-connection-editor)$"
+        "float, class:^(pavucontrol)$"
         "float, initialClass:^(steam)$,title:^(Friends List|Steam Settings)(.*)$"
-        "float, title:^(Steam Tinker Launch).*$"
+        "float, class:^(yad)$,title:^(SteamTinkerLaunch).*$"
 
         "float, title:^(Picture-in-Picture)$"
         "pin, title:^(Picture-in-Picture)$"
@@ -46,15 +47,16 @@ delib.module {
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
 
-        "workspace 1, class:^(firefox|Firefox)$"
-        "workspace 2, class:^(code|Code|VSCodium)$"
-        "workspace 2, class:^(Zed|zed|dev.zed.Zed)$"
-        "workspace 2, class:^(acs\\.exe|ac2\\.exe|AssettoCorsa)$"
-        "workspace 2, class:^(gamescope)$,title:^(Assetto Corsa Rally)$"
-        "workspace 3, class:^(boxflat)$"
-        "workspace 9, class:^(discord|WebCord|vesktop)$"
-        "workspace 10, class:^(steam)$"
-        "workspace 10, title:^(Steam Tinker Launch).*$"
+        "workspace 1 silent, class:^(firefox|Firefox)$"
+        "workspace 2 silent, class:^(code|Code|VSCodium)$"
+        "workspace 2 silent, class:^(Zed|zed|dev.zed.Zed)$"
+        "workspace 4 silent, class:^(acs\\.exe|ac2\\.exe|AssettoCorsa)$"
+        "workspace 4 silent, class:^(gamescope)$,title:^(Assetto Corsa Rally).*$"
+        "workspace 4 silent, class:^(gamescope)$,title:^(AC2).*$"
+        "workspace 3 silent, class:^(boxflat)$"
+        "workspace 9 silent, class:^(discord|WebCord|vesktop)$"
+        "workspace 10 silent, class:^(steam)$"
+        "workspace 10 silent, class:^(yad)$,title:^(SteamTinkerLaunch).*$"
       ];
     };
   };
