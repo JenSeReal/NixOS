@@ -1,9 +1,42 @@
-{delib, ...}:
+{
+  delib,
+  lib,
+  ...
+}:
 delib.module {
   name = "features.shell-tools";
-  options = with delib;
+  options = with delib; let
+    inherit (lib) mkOption types;
+  in
     moduleOptions {
       enable = boolOption false;
+
+      # Shell alias configuration
+      aliases = {
+        # Modern tool replacements
+        cd = boolOption true; # zoxide instead of cd
+        ls = boolOption true; # lsd instead of ls
+        cat = boolOption true; # bat instead of cat
+        grep = boolOption true; # ripgrep instead of grep
+        find = boolOption true; # fd instead of find
+        rm = boolOption true; # rip instead of rm
+        cp = boolOption true; # xcp instead of cp
+        du = boolOption true; # dust instead of du
+        ps = boolOption true; # procs instead of ps
+        diff = boolOption true; # delta/difftastic instead of diff
+        sed = boolOption true; # sd instead of sed
+
+        # Additional helpful aliases
+        extra = mkOption {
+          type = types.attrsOf types.str;
+          default = {};
+          description = "Additional custom shell aliases";
+          example = {
+            update = "sudo nixos-rebuild switch --flake .";
+            ".." = "cd ..";
+          };
+        };
+      };
     };
 
   myconfig.ifEnabled = {...}: {
@@ -52,5 +85,130 @@ delib.module {
       neovim.enable = true; # text editor
       starship.enable = true; # shell prompt
     };
+  };
+
+  home.ifEnabled = {cfg, ...}: let
+    # Helper to conditionally add aliases
+    mkAlias = condition: aliases:
+      if condition
+      then aliases
+      else {};
+  in {
+    programs.zsh.shellAliases =
+      mkAlias cfg.aliases.cd {
+        cd = "z";
+      }
+      // mkAlias cfg.aliases.ls {
+        ls = "lsd";
+        ll = "lsd -l";
+        la = "lsd -la";
+        lt = "lsd --tree";
+      }
+      // mkAlias cfg.aliases.cat {
+        cat = "bat";
+      }
+      // mkAlias cfg.aliases.grep {
+        grep = "rg";
+      }
+      // mkAlias cfg.aliases.find {
+        find = "fd";
+      }
+      // mkAlias cfg.aliases.rm {
+        rm = "rip";
+      }
+      // mkAlias cfg.aliases.cp {
+        cp = "xcp";
+      }
+      // mkAlias cfg.aliases.du {
+        du = "dust";
+      }
+      // mkAlias cfg.aliases.ps {
+        ps = "procs";
+      }
+      // mkAlias cfg.aliases.diff {
+        diff = "delta";
+      }
+      // mkAlias cfg.aliases.sed {
+        sed = "sd";
+      }
+      // cfg.aliases.extra;
+
+    programs.bash.shellAliases =
+      mkAlias cfg.aliases.cd {
+        cd = "z";
+      }
+      // mkAlias cfg.aliases.ls {
+        ls = "lsd";
+        ll = "lsd -l";
+        la = "lsd -la";
+        lt = "lsd --tree";
+      }
+      // mkAlias cfg.aliases.cat {
+        cat = "bat";
+      }
+      // mkAlias cfg.aliases.grep {
+        grep = "rg";
+      }
+      // mkAlias cfg.aliases.find {
+        find = "fd";
+      }
+      // mkAlias cfg.aliases.rm {
+        rm = "rip";
+      }
+      // mkAlias cfg.aliases.cp {
+        cp = "xcp";
+      }
+      // mkAlias cfg.aliases.du {
+        du = "dust";
+      }
+      // mkAlias cfg.aliases.ps {
+        ps = "procs";
+      }
+      // mkAlias cfg.aliases.diff {
+        diff = "delta";
+      }
+      // mkAlias cfg.aliases.sed {
+        sed = "sd";
+      }
+      // cfg.aliases.extra;
+
+    programs.fish.shellAliases =
+      mkAlias cfg.aliases.cd {
+        cd = "z";
+      }
+      // mkAlias cfg.aliases.ls {
+        # ls = "lsd";
+        # ll = "lsd -l";
+        # la = "lsd -la";
+        # lt = "lsd --tree";
+      }
+      // mkAlias cfg.aliases.cat {
+        cat = "bat";
+      }
+      // mkAlias cfg.aliases.grep {
+        grep = "rg";
+      }
+      // mkAlias cfg.aliases.find {
+        find = "fd";
+      }
+      // mkAlias cfg.aliases.rm {
+        rm = "rip";
+      }
+      // mkAlias cfg.aliases.cp {
+        cp = "xcp";
+      }
+      // mkAlias cfg.aliases.du {
+        du = "dust";
+      }
+      // mkAlias cfg.aliases.ps {
+        ps = "procs";
+      }
+      // mkAlias cfg.aliases.diff {
+        diff = "delta";
+      }
+      // mkAlias cfg.aliases.sed {
+        sed = "sd";
+      }
+      // cfg.aliases.extra;
   };
 }

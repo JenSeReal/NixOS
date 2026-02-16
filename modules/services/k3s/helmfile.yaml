@@ -1,0 +1,58 @@
+# Helmfile for K3s Bootstrap
+# This file manages the initial cluster setup with Cilium CNI and Flux CD
+# Renovate will automatically track and update versions in this file
+---
+repositories:
+# Cilium CNI
+- name: cilium
+  url: https://helm.cilium.io/
+# Flux CD
+- name: fluxcd-community
+  url: https://fluxcd-community.github.io/helm-charts
+releases:
+# Cilium - Must be installed first (CNI provider)
+- name: cilium
+  namespace: kube-system
+  chart: cilium/cilium
+  version: 1.19.0 # Renovate will update this
+  values:
+  - values/cilium.yaml
+  # Wait for Cilium to be ready before proceeding
+  wait: true
+  timeout: 600
+# Flux CD - GitOps toolkit for managing cluster resources
+- name: flux2
+  namespace: flux-system
+  createNamespace: true
+  chart: fluxcd-community/flux2
+  version: 2.17.2 # Renovate will update this
+  values:
+  - values/flux.yaml
+  # Flux depends on CNI being ready
+  needs:
+  - kube-system/cilium
+  wait: true
+  timeout: 300
+
+# You can add more releases here as needed:
+#
+# Example: cert-manager for TLS certificates
+# - name: cert-manager
+#   namespace: cert-manager
+#   createNamespace: true
+#   chart: jetstack/cert-manager
+#   version: 1.14.2
+#   set:
+#     - name: installCRDs
+#       value: true
+#   needs:
+#     - kube-system/cilium
+#
+# Example: ingress-nginx for ingress
+# - name: ingress-nginx
+#   namespace: ingress-nginx
+#   createNamespace: true
+#   chart: ingress-nginx/ingress-nginx
+#   version: 4.9.1
+#   needs:
+#     - kube-system/cilium
