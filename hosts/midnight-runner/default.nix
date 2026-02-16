@@ -98,13 +98,26 @@ delib.deploy {
   };
 
   myconfig = {
-    features.shell-tools.enable = true;
+    features = {
+      shell-tools.enable = true;
+      k8s-tools.enable = true;
+    };
     programs = {
       helix.enable = true;
       sudo.enable = true;
       fish.enable = true;
       nh.enable = true;
       nu.enable = true;
+    };
+    services.k3s = {
+      enable = true;
+      cilium.replaceKubeProxy = true;
+      helmfile = {
+        enable = true;
+        # Uses default helmfile from modules/services/k3s/helmfile.yaml
+        # You can override by setting manifestPath to a custom location
+        completedIf = "kubectl get pod -n flux-system -l app.kubernetes.io/name=source-controller";
+      };
     };
   };
 }

@@ -1,0 +1,55 @@
+# Cilium CNI Values
+# Documentation: https://docs.cilium.io/en/stable/helm-reference/
+
+# Replace kube-proxy with Cilium eBPF implementation
+kubeProxyReplacement: true
+
+# K3s API server configuration
+k8sServiceHost: 127.0.0.1
+k8sServicePort: 6443
+
+# Operator configuration (single-node cluster)
+operator:
+  replicas: 1
+
+# Hubble for network observability
+hubble:
+  enabled: true
+
+  relay:
+    enabled: true
+    replicas: 1
+
+  ui:
+    enabled: true
+    replicas: 1
+    ingress:
+      enabled: false  # Enable if you have ingress controller
+
+# IPAM configuration
+ipam:
+  mode: kubernetes
+  operator:
+    clusterPoolIPv4PodCIDRList:
+      - 10.42.0.0/16  # Must match K3s --cluster-cidr
+
+# BGP Control Plane (optional - for advanced networking)
+bgpControlPlane:
+  enabled: false
+
+# Enable IPv6 if needed
+ipv6:
+  enabled: false
+
+# Cluster mesh (for multi-cluster)
+clustermesh:
+  useAPIServer: false
+
+# Monitoring
+prometheus:
+  enabled: false  # Enable if you have Prometheus
+
+# Security
+encryption:
+  enabled: false  # Enable for WireGuard encryption
+  type: wireguard

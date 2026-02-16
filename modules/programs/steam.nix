@@ -21,8 +21,14 @@ delib.module {
       gamescopeSession.enable = true;
       extraCompatPackages = with pkgs; [
         unstable.proton-ge-bin
-        unstable.steamtinkerlaunch
       ];
+      package = pkgs.steam.override {
+        extraPkgs = pkgs:
+          with pkgs; [
+            # Add any missing libraries here
+            ncurses
+          ];
+      };
     };
 
     # Gamescope configuration
@@ -30,8 +36,8 @@ delib.module {
       enable = true;
       package = pkgs.gamescope;
       args = [
-        "--rt"              # Real-time scheduling for better performance
-        "--expose-wayland"  # Enable Wayland client support
+        "--rt" # Real-time scheduling for better performance
+        "--expose-wayland" # Enable Wayland client support
       ];
       # Note: capSysNice is disabled because it causes crashes when running within Steam
       # with error "failed to inherit capabilities: Operation not permitted"
@@ -43,7 +49,6 @@ delib.module {
       lutris
       heroic
       mangohud
-      unstable.steamtinkerlaunch
     ];
   };
 
