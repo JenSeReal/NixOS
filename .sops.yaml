@@ -1,7 +1,7 @@
 ---
 keys:
 - &host_jens-pc age1q843znejc7nq0jamw80wtx4pkxn27xzp7cd55qcnmgy0kkt36sqqumtmt9
-- &host_midnight-runner age1REPLACEME # TODO: Replace with output from ssh-to-age command
+- &host_midnight-runner age1k7qp72hl0zfc4z7cg4xue7evstnq33c9855s6p4u3rfsyk353q8qvcze5y
 - &user_jfp age1y55epapn8p7yark3wjjfqyqnl842lyn5xxlr7m7cdfchua5ctfgs8rnv0d
 creation_rules:
 - path_regex: hosts/jens-pc/secrets/[^/]+\.(y[a]*ml|json|env|ini)$
@@ -18,3 +18,4 @@ creation_rules:
   key_groups:
   - age:
     - *host_jens-pc
+    - *host_midnight-runner

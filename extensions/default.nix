@@ -6,7 +6,6 @@
   (overlays.withConfig {
     defaultTargets = [
       "nixos"
-      "home"
       "darwin"
     ];
   })
