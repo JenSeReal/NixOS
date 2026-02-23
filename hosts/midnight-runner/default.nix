@@ -19,8 +19,14 @@ delib.deploy {
   nixos = {
     imports = [
       inputs.disko.nixosModules.disko
+      inputs.sops-nix.nixosModules.sops
       (modulesPath + "/profiles/qemu-guest.nix")
     ];
+
+    sops = {
+      defaultSopsFile = ./secrets/secrets.yml;
+      age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    };
 
     nixpkgs.hostPlatform = "x86_64-linux";
     system.stateVersion = "25.05";

@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.unstable.btop-rocm;
+      package = packageOption pkgs.unstable.btop;
     };
 
   home.ifEnabled = {cfg, ...}: {

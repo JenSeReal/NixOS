@@ -14,4 +14,11 @@ delib.module {
   nixos.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
+
+  darwin.ifEnabled = {
+    myconfig.programs.homebrew = {
+      enable = true;
+      additionalCasks = ["gimp"];
+    };
+  };
 }

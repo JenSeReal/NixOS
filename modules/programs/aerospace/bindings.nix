@@ -7,15 +7,15 @@ in
     home.ifEnabled = {...}: {
       programs.aerospace.userSettings.mode = {
         main.binding = {
-          "${mod}-h" = ["focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left" "move-mouse window-lazy-center"];
-          "${mod}-j" = ["focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors down" "move-mouse window-lazy-center"];
-          "${mod}-k" = ["focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors up" "move-mouse window-lazy-center"];
-          "${mod}-l" = ["focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right" "move-mouse window-lazy-center"];
+          "${mod}-h" = ["focus --boundaries workspace --boundaries-action wrap-around-the-workspace left" "move-mouse window-lazy-center"];
+          "${mod}-j" = ["focus --boundaries workspace --boundaries-action wrap-around-the-workspace down" "move-mouse window-lazy-center"];
+          "${mod}-k" = ["focus --boundaries workspace --boundaries-action wrap-around-the-workspace up" "move-mouse window-lazy-center"];
+          "${mod}-l" = ["focus --boundaries workspace --boundaries-action wrap-around-the-workspace right" "move-mouse window-lazy-center"];
 
-          "${mod}-cmd-h" = "move left";
-          "${mod}-cmd-j" = "move down";
-          "${mod}-cmd-k" = "move up";
-          "${mod}-cmd-l" = "move right";
+          "${mod}-shift-h" = "move left";
+          "${mod}-shift-j" = "move down";
+          "${mod}-shift-k" = "move up";
+          "${mod}-shift-l" = "move right";
 
           cmd-h = []; # Disable "hide application"
           cmd-alt-h = [];
@@ -61,8 +61,8 @@ in
           "${mod}-shift-n" = "move-node-to-workspace --wrap-around next --focus-follows-window";
           "${mod}-shift-p" = "move-node-to-workspace --wrap-around prev --focus-follows-window";
 
-          "${mod}-minus" = "move-node-to-workspace scratchpad";
-          "${mod}-shift-minus" = "workspace scratchpad";
+          "${mod}-shift-minus" = "move-node-to-workspace scratchpad";
+          "${mod}-minus" = "workspace scratchpad";
 
           "${mod}-shift-semicolon" = "mode service";
           "${mod}-r" = "mode resize";

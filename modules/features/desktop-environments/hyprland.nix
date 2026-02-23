@@ -34,7 +34,7 @@ delib.module {
     hyprlock = lib.getExe pkgs.hyprlock;
     hyprshot = lib.getExe pkgs.hyprshot;
   in {
-    audio.enable = true;
+    hardware.audio.enable = true;
     programs = {
       hyprland = {
         enable = true;

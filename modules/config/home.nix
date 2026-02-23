@@ -5,7 +5,6 @@
   pkgs,
   homeManagerUser,
   lib,
-  options,
   ...
 }: let
   inherit (pkgs.stdenv) isDarwin;
@@ -19,15 +18,7 @@ in
         extraOptions = attrsOfOption str {};
       };
 
-    darwin.always = {myconfig, ...}: {
-      myconfig.home.extraOptions = {
-        home.file = lib.mkAliasDefinitions options.home.file;
-        xdg.enable = true;
-        xdg.configFile = lib.mkAliasDefinitions options.home.configFile;
-      };
-
-      users.${myconfig.constants.username} = lib.mkAliasDefinitions options.home.extraOptions;
-
+    darwin.always = {
       home-manager = {
         backupFileExtension = "hm.old";
 
@@ -36,22 +27,13 @@ in
       };
     };
 
-    nixos.always = {...}: {
+    nixos.always = {
       environment.systemPackages = [pkgs.home-manager];
       home-manager = {
         useUserPackages = true;
         useGlobalPkgs = true;
         backupFileExtension = "hm.old";
-
-        # users.${myconfig.constants.username} = lib.mkAliasDefinitions options.home.extraOptions;
       };
-
-      # home.stateVersion = config.system.stateVersion;
-      # home.extraOptions = {
-      # home.file = lib.mkAliasDefinitions options.home.file;
-      # xdg.enable = true;
-      # xdg.configFile = lib.mkAliasDefinitions options.home.configFile;
-      # };
     };
 
     home.always = {myconfig, ...}: let
@@ -64,7 +46,7 @@ in
           if isDarwin
           then "/Users/${username}"
           else "/home/${username}";
-        stateVersion = "25.05";
+        stateVersion = lib.mkDefault "25.11";
       };
     };
 

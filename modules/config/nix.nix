@@ -114,7 +114,7 @@ delib.module {
     ];
 
     nix = {
-      package = pkgs.lixPackageSets.stable.lix;
+      # package = pkgs.lixPackageSets.stable.lix;
       checkConfig = true;
       distributedBuilds = true;
 

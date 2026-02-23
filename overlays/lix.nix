@@ -5,7 +5,7 @@ delib.overlayModule {
     inherit
       (final.lixPackageSets.stable)
       nixpkgs-review
-      nix-direnv
+      # nix-direnv  # causes infinite recursion with lixPackageSets
       nix-eval-jobs
       nix-fast-build
       colmena

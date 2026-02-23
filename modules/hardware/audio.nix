@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "audio";
+  name = "hardware.audio";
   options = delib.singleEnableOption false;
 
   darwin.always = {

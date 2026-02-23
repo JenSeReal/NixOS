@@ -20,6 +20,8 @@ delib.module {
       enable = true;
       package = cfg.package;
       installRemoteServer = true;
+      mutableUserSettings = false;
+      mutableUserKeymaps = false;
     };
   };
 

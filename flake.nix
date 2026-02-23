@@ -27,30 +27,39 @@
       inputs.nix-darwin.follows = "nix-darwin";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    ucodenix.url = "github:e-tho/ucodenix";
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.3";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland-contrib = {
-      url = "github:hyprwm/contrib";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf.url = "github:notashelf/nvf";
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvf.url = "github:notashelf/nvf";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    ucodenix.url = "github:e-tho/ucodenix";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,12 +68,6 @@
     mac-app-util = {
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
@@ -76,11 +79,6 @@
       url = "github:nix-community/nixos-anywhere";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -90,7 +88,6 @@
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
-
     packageNixFiles = lib.pipe ./packages [
       builtins.readDir
       (lib.filterAttrs (
@@ -142,7 +139,6 @@
           inherit inputs moduleSystem;
         };
       };
-
     findModules = dir:
       lib.concatMap (
         name: let
@@ -190,7 +186,6 @@
     nixosConfigurations = mkConfigurations "nixos";
     homeConfigurations = mkConfigurations "home";
     darwinConfigurations = mkConfigurations "darwin";
-
     nixosModules.default = {...}: {
       imports =
         findModules ./modules
