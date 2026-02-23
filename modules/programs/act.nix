@@ -4,11 +4,11 @@
   ...
 }:
 delib.module {
-  name = "programs.inkscape";
+  name = "programs.act";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.inkscape-with-extensions;
+      package = packageOption pkgs.act;
     };
 
   darwin.ifEnabled = {cfg, ...}: {

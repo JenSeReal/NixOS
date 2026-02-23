@@ -4,11 +4,11 @@
   ...
 }:
 delib.module {
-  name = "programs.inkscape";
+  name = "programs.seabird";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.inkscape-with-extensions;
+      package = packageOption pkgs.seabird;
     };
 
   darwin.ifEnabled = {cfg, ...}: {

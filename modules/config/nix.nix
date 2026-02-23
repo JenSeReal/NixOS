@@ -103,6 +103,8 @@ delib.module {
   };
 
   darwin.always = {myconfig, ...}: {
+    nix.channel.enable = false;
+
     documentation = {
       doc.enable = false;
       info.enable = false;

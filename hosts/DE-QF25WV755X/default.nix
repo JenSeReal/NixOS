@@ -11,9 +11,12 @@ delib.host {
     programs = {
       citrix-workspace.enable = true;
       codium.enable = true;
+      docker.enable = true;
       firefox.enable = true;
       fish.enable = true;
       gimp.enable = true;
+      logseq.enable = true;
+      headlamp.enable = true;
       nh.enable = true;
       nu.enable = true;
       wezterm.enable = true;

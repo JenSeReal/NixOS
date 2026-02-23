@@ -4,11 +4,11 @@
   ...
 }:
 delib.module {
-  name = "programs.inkscape";
+  name = "programs.cyberchef";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.inkscape-with-extensions;
+      package = packageOption pkgs.cyberchef;
     };
 
   darwin.ifEnabled = {cfg, ...}: {
