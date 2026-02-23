@@ -11,10 +11,6 @@ delib.module {
       package = packageOption pkgs.jetbrains.idea-community;
     };
 
-  home.ifEnabled = {cfg, ...}: {
-    home.packages = [cfg.package];
-  };
-
   darwin.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };
