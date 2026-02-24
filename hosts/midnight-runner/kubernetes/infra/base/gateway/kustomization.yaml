@@ -6,3 +6,8 @@ resources:
 - cluster-issuer.yaml
 - namespace.yaml
 - gateway.yaml
+spec:
+  dependsOn:
+  - name: cert-manager
+    kind: HelmRelease
+    namespace: cert-manager
