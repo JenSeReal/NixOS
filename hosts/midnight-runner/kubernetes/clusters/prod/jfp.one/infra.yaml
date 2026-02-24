@@ -9,6 +9,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: nixos
-  path: ./hosts/midnight-runner/kubernetes/infra
+  path: ./hosts/midnight-runner/kubernetes/infra/prod
   prune: true
   wait: true
