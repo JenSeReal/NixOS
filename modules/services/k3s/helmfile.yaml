@@ -11,6 +11,16 @@ releases:
     version: 1.19.1
     values:
       - /run/cilium-values.yaml
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - --server-side
+          - -f
+          # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+          - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
 
   - name: flux2
     namespace: flux-system
