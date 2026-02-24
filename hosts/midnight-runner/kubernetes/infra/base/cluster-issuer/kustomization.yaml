@@ -4,3 +4,6 @@ kind: Kustomization
 namespace: cert-manager
 resources:
 - letsencrypt-dev.yaml
+spec:
+  dependsOn:
+  - name: cert-manager
