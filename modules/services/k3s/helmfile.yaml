@@ -21,6 +21,15 @@ releases:
           - -f
           # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
           - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
+      - events: ["presync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - --server-side
+          - -f
+          # renovate: datasource=github-releases depName=cert-manager/cert-manager
+          - https://github.com/cert-manager/cert-manager/releases/download/v1.17.2/cert-manager.crds.yaml
 
   - name: flux2
     namespace: flux-system
