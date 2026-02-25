@@ -33,7 +33,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: flux
+  - name: flux
   interval: 10m
   sourceRef:
     kind: GitRepository
