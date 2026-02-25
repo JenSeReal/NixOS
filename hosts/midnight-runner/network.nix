@@ -29,7 +29,7 @@ delib.deploy {
 
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [50022];
+      allowedTCPPorts = [80 443 50022];
     };
   };
 }
