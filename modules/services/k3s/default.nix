@@ -37,24 +37,27 @@ in
 
       helmfileYaml = ./helmfile.yaml;
 
-      secretManifests = lib.mapAttrs' (name: manifest: {
-        name = "k3s-secret-${name}";
-        value = {
-          inherit (manifest) sopsFile format;
-          path = "/var/lib/rancher/k3s/server/manifests/secret-${name}.yaml";
-          owner = "root";
-          group = "root";
-          mode = "0600";
-          key = "";
-        };
-      }) cfg.flux.secrets;
-
+      secretManifests =
+        lib.mapAttrs' (name: manifest: {
+          name = "k3s-secret-${name}";
+          value = {
+            inherit (manifest) sopsFile format;
+            path = "/var/lib/rancher/k3s/server/manifests/secret-${name}.yaml";
+            owner = "root";
+            group = "root";
+            mode = "0600";
+            key = "";
+          };
+        })
+        cfg.flux.secrets;
     in {
       environment.sessionVariables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
 
-      systemd.tmpfiles.rules = lib.mapAttrsToList (name: manifest:
-        "L+ /var/lib/rancher/k3s/server/manifests/repo-${name}.yaml - - - - ${manifest.file}"
-      ) cfg.flux.repositories;
+      systemd.tmpfiles.rules =
+        lib.mapAttrsToList (
+          name: manifest: "L+ /var/lib/rancher/k3s/server/manifests/repo-${name}.yaml - - - - ${manifest.file}"
+        )
+        cfg.flux.repositories;
 
       sops.secrets = secretManifests;
 
@@ -110,6 +113,8 @@ in
             replicas: 1
           gatewayAPI:
             enabled: true
+            hostNetwork:
+              enabled: true
           EOF
 
           helmfile --file ${helmfileYaml} sync
