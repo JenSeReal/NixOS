@@ -12,3 +12,5 @@ spec:
   path: ./hosts/midnight-runner/kubernetes/infra/prod
   prune: true
   wait: true
+  dependsOn:
+    - name: flux

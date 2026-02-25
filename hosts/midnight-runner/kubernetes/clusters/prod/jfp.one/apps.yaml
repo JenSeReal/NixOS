@@ -12,3 +12,5 @@ spec:
   path: ./hosts/midnight-runner/kubernetes/apps/prod
   prune: true
   wait: true
+  dependsOn:
+    - name: infra
