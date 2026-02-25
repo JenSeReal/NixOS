@@ -16,6 +16,7 @@ in
         flux = {
           enable = boolOption true;
           repositories = k3sTypes.repositoriesOption;
+          manifests = k3sTypes.manifestsOption;
           secrets = k3sTypes.secretsOption;
         };
       };
@@ -57,7 +58,11 @@ in
         lib.mapAttrsToList (
           name: manifest: "L+ /var/lib/rancher/k3s/server/manifests/repo-${name}.yaml - - - - ${manifest.file}"
         )
-        cfg.flux.repositories;
+        cfg.flux.repositories
+        ++ lib.mapAttrsToList (
+          name: manifest: "L+ /var/lib/rancher/k3s/server/manifests/${name}.yaml - - - - ${manifest.file}"
+        )
+        cfg.flux.manifests;
 
       sops.secrets = secretManifests;
 

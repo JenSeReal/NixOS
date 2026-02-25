@@ -49,4 +49,17 @@ in {
       }
     '';
   };
+
+  manifestsOption = lib.mkOption {
+    type = lib.types.attrsOf plainManifestType;
+    default = {};
+    description = "Plain Kubernetes manifests to deploy";
+    example = lib.literalExpression ''
+      {
+        flux-operator = {
+          file = ./manifests/flux-operator.yaml;
+        };
+      }
+    '';
+  };
 }
