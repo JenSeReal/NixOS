@@ -1,8 +1,6 @@
 repositories:
   - name: cilium
     url: https://helm.cilium.io
-  - name: fluxcd-community
-    url: https://fluxcd-community.github.io/helm-charts
 
 releases:
   - name: cilium
@@ -31,8 +29,9 @@ releases:
           # renovate: datasource=github-releases depName=cert-manager/cert-manager
           - https://github.com/cert-manager/cert-manager/releases/download/v1.19.3/cert-manager.crds.yaml
 
-  - name: flux2
+  # renovate: datasource=docker depName=ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+  - name: flux-operator
     namespace: flux-system
-    chart: fluxcd-community/flux2
-    version: 2.17.2
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.42.1
     createNamespace: true
