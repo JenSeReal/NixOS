@@ -115,6 +115,26 @@ in
             enabled: true
             hostNetwork:
               enabled: true
+          envoy:
+            enabled: true
+            prometheus:
+              enabled: true
+            securityContext:
+              capabilities:
+                keepCapNetBindService: true
+                envoy:
+                - NET_BIND_SERVICE
+                - CAP_NET_ADMIN
+                - CAP_BPF
+                - NET_ADMIN
+                - SYS_ADMIN
+                - SYS_RESOURCE
+          hubble:
+            enabled: true
+            relay:
+              enabled: true
+            ui:
+              enabled: true
           EOF
 
           helmfile --file ${helmfileYaml} sync
