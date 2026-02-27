@@ -9,12 +9,12 @@ spec:
     version: "2.8.x"
     registry: ghcr.io/fluxcd
   components:
-    - source-controller
-    - kustomize-controller
-    - helm-controller
-    - notification-controller
-    - image-reflector-controller
-    - image-automation-controller
+  - source-controller
+  - kustomize-controller
+  - helm-controller
+  - notification-controller
+  - image-reflector-controller
+  - image-automation-controller
   cluster:
     type: kubernetes
     networkPolicy: true
