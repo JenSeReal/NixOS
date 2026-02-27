@@ -6,7 +6,7 @@ metadata:
 spec:
   parentRefs:
   - name: main
-    namespace: gateway
+    namespace: networking
   hostnames:
   - jfp.one
   rules:

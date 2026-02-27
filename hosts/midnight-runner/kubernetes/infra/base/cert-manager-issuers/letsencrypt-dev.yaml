@@ -15,4 +15,4 @@ spec:
           parentRefs:
           - name: main
             kind: Gateway
-            namespace: gateway
+            namespace: networking
