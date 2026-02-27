@@ -8,9 +8,7 @@ spec:
   interval: 10m
   sourceRef:
     kind: GitRepository
-    name: nixos
+    name: flux-system
   path: ./hosts/midnight-runner/kubernetes/infra/prod
   prune: true
   wait: true
-  dependsOn:
-    - name: flux
