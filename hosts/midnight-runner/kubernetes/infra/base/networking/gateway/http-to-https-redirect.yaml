@@ -7,7 +7,7 @@ spec:
   parentRefs:
   - name: main
     namespace: networking
-    sectionName: http
+    sectionName: jfp-one-http
   rules:
   - filters:
     - type: RequestRedirect
