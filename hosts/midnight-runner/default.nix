@@ -36,9 +36,6 @@ delib.deploy {
       cilium.enable = true;
       flux = {
         enable = true;
-        repositories.nixos = {
-          file = ./manifests/nixos-repo.yaml;
-        };
         manifests.flux-operator = {
           file = ./manifests/flux-operator.yaml;
         };
