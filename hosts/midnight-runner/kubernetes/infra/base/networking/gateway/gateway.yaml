@@ -4,8 +4,7 @@ kind: Gateway
 metadata:
   name: main
   annotations:
-    # Switch to letsencrypt-prod when ready for production
-    cert-manager.io/cluster-issuer: letsencrypt-dev
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   gatewayClassName: cilium
   listeners:
