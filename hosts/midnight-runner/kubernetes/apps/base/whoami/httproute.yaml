@@ -5,7 +5,7 @@ metadata:
   name: whoami
 spec:
   parentRefs:
-  - name: dev
+  - name: main
     namespace: networking
     sectionName: https
   hostnames:

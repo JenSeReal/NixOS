@@ -13,6 +13,6 @@ spec:
     - http01:
         gatewayHTTPRoute:
           parentRefs:
-          - name: dev
+          - name: main
             kind: Gateway
             namespace: networking

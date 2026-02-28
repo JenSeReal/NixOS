@@ -2,9 +2,10 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: prod
+  name: main
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # Switch to letsencrypt-prod when ready for production
+    cert-manager.io/cluster-issuer: letsencrypt-dev
 spec:
   gatewayClassName: cilium
   listeners:
@@ -24,4 +25,4 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: jfp-one-tls-prod
+      - name: jfp-one-tls
