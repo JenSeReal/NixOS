@@ -6,10 +6,17 @@
 delib.host rec {
   name = "el-macchina";
   system = "x86_64-linux";
+  type = "workstation";
 
   home.home.stateVersion = "25.11";
   nixos = {
-    imports = [inputs.disko.nixosModules.disko];
+    imports = [
+      inputs.disko.nixosModules.disko
+      inputs.nixos-hardware.nixosModules.common-cpu-amd
+      inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+      inputs.nixos-hardware.nixosModules.common-gpu-amd
+      inputs.nixos-hardware.nixosModules.common-pc-ssd
+    ];
 
     nixpkgs.hostPlatform = system;
     system.stateVersion = "25.11";

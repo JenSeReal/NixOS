@@ -1,7 +1,6 @@
 {
   delib,
   pkgs,
-  inputs,
   ...
 }:
 delib.host {
@@ -11,18 +10,6 @@ delib.host {
   type = "workstation";
 
   nixos = {
-    imports = [
-      # AMD Ryzen 9850X3D (Zen 5) CPU support
-      inputs.nixos-hardware.nixosModules.common-cpu-amd
-      inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-
-      # AMD Radeon 9070XT (RDNA 4) GPU support
-      inputs.nixos-hardware.nixosModules.common-gpu-amd
-
-      # NVMe SSD optimizations
-      inputs.nixos-hardware.nixosModules.common-pc-ssd
-    ];
-
     users.defaultUserShell = pkgs.nushell;
   };
 
