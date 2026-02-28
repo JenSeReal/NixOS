@@ -16,4 +16,3 @@ spec:
           - name: main
             kind: Gateway
             namespace: networking
-            sectionName: http
