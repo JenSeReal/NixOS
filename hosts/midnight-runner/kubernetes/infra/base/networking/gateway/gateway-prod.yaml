@@ -2,19 +2,19 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: main
+  name: prod
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-dev
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   gatewayClassName: cilium
   listeners:
-  - name: jfp-one-http
+  - name: http
     protocol: HTTP
     port: 80
     allowedRoutes:
       namespaces:
-        from: All
-  - name: jfp-one-https
+        from: Same
+  - name: https
     protocol: HTTPS
     port: 443
     allowedRoutes:
@@ -24,4 +24,4 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: jfp-one-tls
+      - name: jfp-one-tls-prod

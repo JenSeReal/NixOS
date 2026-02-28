@@ -5,9 +5,9 @@ metadata:
   name: whoami
 spec:
   parentRefs:
-  - name: main
+  - name: dev
     namespace: networking
-    sectionName: jfp-one-https
+    sectionName: https
   hostnames:
   - jfp.one
   rules:
