@@ -1,4 +1,8 @@
-{delib, inputs, ...}:
+{
+  delib,
+  inputs,
+  ...
+}:
 delib.host rec {
   name = "el-macchina";
   system = "x86_64-linux";
@@ -10,7 +14,6 @@ delib.host rec {
     nixpkgs.hostPlatform = system;
     system.stateVersion = "25.11";
 
-    # TODO: Replace /dev/nvme0n1 with actual NVMe device path
     disko.devices = {
       disk = {
         main = {
@@ -74,10 +77,6 @@ delib.host rec {
     };
   };
 
-  darwin = {
-    system.stateVersion = 6;
-  };
-
   myconfig = {
     boot = {
       enable = true;
@@ -89,6 +88,7 @@ delib.host rec {
     };
     services = {
       btrfs.enable = true;
+      fwupd.enable = true;
     };
   };
 }

@@ -48,12 +48,10 @@ delib.module {
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
-      WLR_DRM_NO_ATOMIC = "1";
-      WLR_RENDERER = "vulkan";
       XDG_SESSION_TYPE = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      __GL_GSYNC_ALLOWED = "0";
-      __GL_VRR_ALLOWED = "0";
+      __GL_GSYNC_ALLOWED = "1";
+      __GL_VRR_ALLOWED = "1";
     };
 
     programs.hyprland = {
