@@ -8,6 +8,9 @@ spec:
   - name: main
     namespace: networking
     sectionName: https
+  - name: main
+    namespace: networking
+    sectionName: http
   hostnames:
   - jfp.one
   rules:
