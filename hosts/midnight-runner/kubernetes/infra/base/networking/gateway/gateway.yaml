@@ -4,7 +4,7 @@ kind: Gateway
 metadata:
   name: main
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-dev
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   gatewayClassName: cilium
   listeners:
@@ -13,7 +13,7 @@ spec:
     port: 80
     allowedRoutes:
       namespaces:
-        from: Same
+        from: All
   - name: https
     protocol: HTTPS
     port: 443
