@@ -25,3 +25,14 @@ spec:
       mode: Terminate
       certificateRefs:
       - name: jfp-one-tls
+  - name: authentik-https
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    hostname: "sso.jfp.one"
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: authentik-jfp-one-tls
