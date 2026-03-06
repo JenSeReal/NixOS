@@ -22,7 +22,7 @@ postgresql:
       replicationPasswordKey: replication-password
 prometheus:
   rules:
-    enabled: true
+    enabled: false
 redis:
   enabled: true
 server: &common-server-settings
