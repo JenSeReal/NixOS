@@ -7,7 +7,6 @@ spec:
   parentRefs:
   - name: main
     namespace: networking
-    sectionName: authentik-https
   hostnames:
   - sso.jfp.one
   rules:
