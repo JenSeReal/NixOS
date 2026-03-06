@@ -41,7 +41,7 @@ server: &common-server-settings
     mountPath: /mnt/secrets/authentik
     readOnly: true
   metrics:
-    enabled: true
+    enabled: false
     serviceMonitor:
-      enabled: true
+      enabled: false
 worker: *common-server-settings
