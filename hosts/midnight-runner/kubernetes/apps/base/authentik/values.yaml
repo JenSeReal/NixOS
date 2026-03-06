@@ -17,9 +17,9 @@ postgresql:
   auth:
     existingSecret: postgres-credentials
     secretKeys:
-      adminPasswordKey: "aa8e959560bbb14ca15eae7416f96dfcd03b28194c050b58"
-      userPasswordKey: "7a69c70115766b95e7c1b513bce3c5a1d8f1a4a6399542e4"
-      replicationPasswordKey: "18ddb87be5d68bb9ee1b62a2e6f9cb4df8742601a613d35d"
+      adminPasswordKey: "admin-password"
+      userPasswordKey: user-password
+      replicationPasswordKey: replication-password
 prometheus:
   rules:
     enabled: true
