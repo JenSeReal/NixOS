@@ -12,3 +12,7 @@ spec:
   path: ./hosts/midnight-runner/kubernetes/infra/prod
   prune: true
   wait: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age

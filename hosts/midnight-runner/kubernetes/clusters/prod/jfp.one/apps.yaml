@@ -14,3 +14,7 @@ spec:
   wait: true
   dependsOn:
     - name: infra
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age

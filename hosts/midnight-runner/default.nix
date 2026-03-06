@@ -42,6 +42,9 @@ delib.deploy {
         secrets.flux-git-auth = {
           sopsFile = ./secrets/flux-git-auth.yaml;
         };
+        secrets.sops-age = {
+          sopsFile = ./secrets/sops-age.yaml;
+        };
       };
     };
   };

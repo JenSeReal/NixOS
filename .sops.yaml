@@ -10,6 +10,7 @@ creation_rules:
     - *host_jens-pc
     - *user_jfp
 - path_regex: hosts/midnight-runner/secrets/[^/]+\.(y[a]*ml|json|env|ini)$
+  encrypted_regex: ^(data|stringData)$
   key_groups:
   - age:
     - *host_midnight-runner
@@ -19,3 +20,9 @@ creation_rules:
   - age:
     - *host_jens-pc
     - *host_midnight-runner
+- path_regex: hosts/midnight-runner/kubernetes/.*\.sops\.(y[a]*ml|json)$
+  encrypted_regex: ^(data|stringData)$
+  key_groups:
+  - age:
+    - *host_midnight-runner
+    - *user_jfp
