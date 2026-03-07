@@ -15,6 +15,7 @@ delib.deploy {
       extraGroups = ["wheel" "networkmanager"];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJnn80mYyCNvHpb+WooP00/YqLf+Jpe1a+Bu5ck0Aaz6 jens@plueddemann.de"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2AbYVxBbxGxO/NgRI3iN54yi+nrsdg5uPkloG/1f6V"
       ];
     };
   };
