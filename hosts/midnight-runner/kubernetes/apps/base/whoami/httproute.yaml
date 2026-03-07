@@ -2,12 +2,30 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
+  name: whoami-http-filter-redirect
+spec:
+  parentRefs:
+  - name: jfp-one
+    namespace: networking
+    sectionName: whoami-http
+  hostnames:
+  - jfp.one
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
   name: whoami
 spec:
   parentRefs:
-  - name: main
+  - name: jfp-one
     namespace: networking
-    sectionName: https
+    sectionName: whoami-https
   hostnames:
   - jfp.one
   rules:

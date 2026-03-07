@@ -8,14 +8,14 @@ metadata:
 spec:
   gatewayClassName: cilium
   listeners:
-  - name: http
+  - name: whoami-http
     hostname: jfp.one
     protocol: HTTP
     port: 80
     allowedRoutes:
       namespaces:
         from: All
-  - name: https
+  - name: whoami-https
     hostname: jfp.one
     protocol: HTTPS
     port: 443
@@ -25,7 +25,7 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: jfp-one-tls
+      - name: whoami-jfp-one-tls
   - name: authentik-http
     hostname: sso.jfp.one
     protocol: HTTP
