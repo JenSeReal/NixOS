@@ -7,7 +7,7 @@ spec:
   parentRefs:
   - name: jfp-one
     namespace: networking
-    sectionName: whoami-http
+    sectionName: http
   hostnames:
   - jfp.one
   rules:
@@ -25,7 +25,7 @@ spec:
   parentRefs:
   - name: jfp-one
     namespace: networking
-    sectionName: whoami-https
+    sectionName: https
   hostnames:
   - jfp.one
   rules:
