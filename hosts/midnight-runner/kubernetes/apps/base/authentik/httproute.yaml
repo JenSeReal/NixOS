@@ -2,10 +2,28 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
+  name: http-filter-redirect
+spec:
+  parentRefs:
+  - name: jfp-one
+    namespace: networking
+    sectionName: authentik-http
+  hostnames:
+  - sso.jfp.one
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
   name: authentik
 spec:
   parentRefs:
-  - name: main
+  - name: jfp-one
     namespace: networking
     sectionName: authentik-https
   hostnames:
