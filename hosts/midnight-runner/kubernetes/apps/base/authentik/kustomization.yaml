@@ -12,6 +12,7 @@ resources:
 - namespace.yaml
 - postgres-credentials.sops.yaml
 - reference-grant.yaml
+- ../whoami/authentik-blueprint.yaml
 configMapGenerator:
 - name: values
   files:
