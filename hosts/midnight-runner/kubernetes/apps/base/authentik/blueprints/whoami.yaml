@@ -17,8 +17,8 @@ entries:
     attrs:
       name: whoami-forward-auth
       mode: forward_domain
-      external_host: "!Context external_host"
-      cookie_domain: "!Context cookie_domain"
+      external_host: !Context external_host
+      cookie_domain: !Context cookie_domain
       access_token_validity: hours=24
       authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
       authentication_flow: !Find [authentik_flows.flow, [slug, default-authentication-flow]]
