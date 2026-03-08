@@ -11,6 +11,7 @@ resources:
 - httproute.yaml
 - namespace.yaml
 - postgres-credentials.sops.yaml
+- reference-grant.yaml
 configMapGenerator:
 - name: values
   files:

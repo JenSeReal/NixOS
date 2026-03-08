@@ -29,6 +29,15 @@ spec:
   hostnames:
   - sso.jfp.one
   rules:
+  # Route outpost traffic to embedded outpost on port 9000
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /outpost.goauthentik.io
+    backendRefs:
+    - name: ak-outpost-authentik-embedded-outpost
+      port: 9000
+  # Default route to authentik server
   - matches:
     - path:
         type: PathPrefix
