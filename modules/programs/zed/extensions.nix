@@ -8,8 +8,8 @@ delib.module {
       "env"
       "git-firefly"
       "nix"
-      "toml"
       "terraform"
+      "toml"
     ];
   };
 }

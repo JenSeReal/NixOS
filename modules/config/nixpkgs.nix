@@ -6,4 +6,9 @@ delib.module {
     nixpkgs.config.allowUnfree = true;
     environment.variables."NIXPKGS_ALLOW_UNFREE" = 1;
   };
+
+  darwin.always = {
+    nixpkgs.config.allowUnfree = true;
+    environment.variables."NIXPKGS_ALLOW_UNFREE" = "1";
+  };
 }

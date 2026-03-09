@@ -4,18 +4,15 @@
   ...
 }:
 delib.module {
-  name = "programs.btop";
+  name = "programs.act";
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.unstable.btop;
+      package = packageOption pkgs.act;
     };
 
-  home.ifEnabled = {cfg, ...}: {
-    programs.btop = {
-      enable = true;
-      package = cfg.package;
-    };
+  darwin.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
   };
 
   nixos.ifEnabled = {cfg, ...}: {

@@ -4,7 +4,7 @@
   command_left = 30064771299;
 in
   delib.module {
-    name = "keyboard";
+    name = "hardware.keyboard";
     options = with delib;
       moduleOptions {
         layout = strOption "de";
@@ -24,11 +24,11 @@ in
             }
             {
               HIDKeyboardModifierMappingSrc = command_left;
-              HIDKeyboardModifierMappingDst = option_left;
+              HIDKeyboardModifierMappingDst = ctrl_left;
             }
             {
               HIDKeyboardModifierMappingSrc = option_left;
-              HIDKeyboardModifierMappingDst = ctrl_left;
+              HIDKeyboardModifierMappingDst = option_left;
             }
           ];
         };
@@ -39,7 +39,6 @@ in
         };
       };
     };
-
     nixos.always = {cfg, ...}: {
       console.useXkbConfig = true;
       services.xserver.xkb = {

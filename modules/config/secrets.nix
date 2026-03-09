@@ -13,10 +13,6 @@ delib.module {
       sshKeyPaths = listOfOption path ["/etc/ssh/ssh_host_ed25519_key"];
     };
 
-  darwin.always = {...}: {
-    imports = [inputs.sops-nix.darwinModules.sops];
-  };
-
   nixos.always = {cfg, ...}: {
     imports = [inputs.sops-nix.nixosModules.sops];
 
@@ -50,9 +46,5 @@ delib.module {
         sshKeyPaths = ["${homeconfig.home.homeDirectory}/.ssh/id_ed25519"] ++ cfg.sshKeyPaths;
       };
     };
-
-    # home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] ''
-    #   /run/current-system/sw/bin/systemctl start --user sops-nix
-    # '';
   };
 }

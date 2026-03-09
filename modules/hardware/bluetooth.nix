@@ -8,8 +8,6 @@ delib.module {
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
-    myconfig.audio.enable = true;
-
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
     services.blueman.enable = true;

@@ -26,10 +26,10 @@ delib.module {
         redhat.vscode-xml
         oderwat.indent-rainbow
         rust-lang.rust-analyzer
-        # fill-labs.dependi
+        fill-labs.dependi
         tauri-apps.tauri-vscode
         editorconfig.editorconfig
-        # vadimcn.vscode-lldb
+        vadimcn.vscode-lldb
         pflannery.vscode-versionlens
         lorenzopirro.rust-flash-snippets
         zhangyue.rust-mod-generator
@@ -44,10 +44,10 @@ delib.module {
         aaron-bond.better-comments
         ms-vsliveshare.vsliveshare
         robbowen.synthwave-vscode
-        # ms-vscode-remote.remote-ssh
-        # ms-vscode.remote-server
-        # ms-vscode-remote.remote-containers
-        # ms-vscode-remote.remote-wsl
+        ms-vscode-remote.remote-ssh
+        ms-vscode.remote-server
+        ms-vscode-remote.remote-containers
+        ms-vscode-remote.remote-wsl
         formulahendry.docker-explorer
         redhat.java
         vscjava.vscode-java-test
@@ -56,11 +56,9 @@ delib.module {
         vscjava.vscode-java-dependency
         vscjava.vscode-spring-initializr
         vscjava.vscode-gradle
-        codeium.codeium
         richardwillis.vscode-spotless-gradle
         mathiasfrohlich.kotlin
         myriad-dreamin.tinymist
-        # hashicorp.terraform
         mgtrrz.terraform-completer
         grafana.grafana-alloy
         notblank00.hexeditor
@@ -68,6 +66,8 @@ delib.module {
         mkhl.direnv
         arrterian.nix-env-selector
         opentofu.vscode-opentofu
+        golang.go
+        ethan-reesor.exp-vscode-go
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
   };

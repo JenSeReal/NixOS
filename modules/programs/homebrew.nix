@@ -1,6 +1,7 @@
 {
   delib,
   lib,
+  inputs,
   ...
 }:
 delib.module {
@@ -28,6 +29,11 @@ delib.module {
       additionalMasApps = attrsOfOption lib.types.ints.positive {};
     };
 
+  darwin.always = {
+    imports = [
+      inputs.nix-homebrew.darwinModules.nix-homebrew
+    ];
+  };
   darwin.ifEnabled = {
     myconfig,
     cfg,

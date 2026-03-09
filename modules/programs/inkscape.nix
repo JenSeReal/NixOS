@@ -11,6 +11,10 @@ delib.module {
       package = packageOption pkgs.inkscape-with-extensions;
     };
 
+  darwin.ifEnabled = {cfg, ...}: {
+    environment.systemPackages = [cfg.package];
+  };
+
   nixos.ifEnabled = {cfg, ...}: {
     environment.systemPackages = [cfg.package];
   };

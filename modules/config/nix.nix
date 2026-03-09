@@ -103,6 +103,8 @@ delib.module {
   };
 
   darwin.always = {myconfig, ...}: {
+    nix.channel.enable = false;
+
     documentation = {
       doc.enable = false;
       info.enable = false;
@@ -114,7 +116,7 @@ delib.module {
     ];
 
     nix = {
-      package = pkgs.lixPackageSets.stable.lix;
+      # package = pkgs.lixPackageSets.stable.lix;
       checkConfig = true;
       distributedBuilds = true;
 

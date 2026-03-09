@@ -10,7 +10,7 @@ delib.module {
       ];
     };
 
-    system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
+    system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 2.0;
 
     launchd.user.agents.unnaturalscrollwheels = {
       command = "/Applications/UnnaturalScrollWheels.app/Contents/MacOS/UnnaturalScrollWheels";

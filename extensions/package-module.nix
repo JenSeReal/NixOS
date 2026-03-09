@@ -32,10 +32,6 @@ in
           nixos.always = {
             nixpkgs.overlays = [pkgsOverlay];
           };
-
-          darwin.always = {
-            nixpkgs.overlays = [pkgsOverlay];
-          };
         };
     };
   }
