@@ -25,7 +25,7 @@ delib.module {
     lg = {
       status = "enable";
       criteria = "LG Electronics LG ULTRAWIDE 0x00017279";
-      mode = "2560x1080@144.00Hz";
+      mode = "2560x1080@144Hz";
       scale = 1.0;
     };
 
@@ -39,6 +39,32 @@ delib.module {
       enable = true;
 
       settings = [
+        # Desktop (el-macchina) profiles
+        {
+          profile = {
+            name = "desktop-single";
+            outputs = [
+              (
+                lg
+                // {
+                  position = "0,0";
+                }
+              )
+            ];
+          };
+        }
+
+        {
+          profile = {
+            name = "desktop-double";
+            outputs = [
+              (msi // {position = "${toString ((2560 - 1920) / 2)},0";})
+              (lg // {position = "0,1080";})
+            ];
+          };
+        }
+
+        # Laptop profiles
         {
           profile = {
             name = "undocked";

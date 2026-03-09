@@ -1,105 +1,22 @@
 {
   delib,
   pkgs,
-  inputs,
-  modulesPath,
-  lib,
   ...
 }:
 delib.deploy {
   name = "midnight-runner";
-  hostname = "152.53.135.216";
-  sshPort = 50022;
-  system = "x86_64-linux";
-
   rice = "synthwave84";
-  type = "server";
 
-  home.home.stateVersion = "25.05";
   nixos = {
-    imports = [
-      inputs.disko.nixosModules.disko
-      inputs.sops-nix.nixosModules.sops
-      (modulesPath + "/profiles/qemu-guest.nix")
-    ];
-
-    sops = {
-      defaultSopsFile = ./secrets/secrets.yml;
-      age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-    };
-
-    nixpkgs.hostPlatform = "x86_64-linux";
-    system.stateVersion = "25.05";
-
-    boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
-    boot.initrd.kernelModules = [];
-    boot.kernelModules = [];
-    boot.extraModulePackages = [];
-
-    networking.useDHCP = lib.mkDefault true;
-
-    disko.devices.disk.midnight-runner-main = {
-      type = "disk";
-      device = "/dev/vda";
-      content = {
-        type = "gpt";
-        partitions = {
-          boot = {
-            size = "1M";
-            type = "EF02";
-          };
-          ESP = {
-            size = "512M";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-            };
-          };
-          root = {
-            size = "100%";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-            };
-          };
-        };
-      };
-    };
-
     users.defaultUserShell = pkgs.nushell;
-
-    networking.hostName = "midnight-runner";
 
     users.users.jfp = {
       isNormalUser = true;
       extraGroups = ["wheel" "networkmanager"];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJnn80mYyCNvHpb+WooP00/YqLf+Jpe1a+Bu5ck0Aaz6 jens@plueddemann.de"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2AbYVxBbxGxO/NgRI3iN54yi+nrsdg5uPkloG/1f6V"
       ];
-    };
-
-    # Server-specific configuration
-    services.openssh = {
-      enable = true;
-      ports = [50022];
-      settings = {
-        PasswordAuthentication = false;
-        PermitRootLogin = "no";
-      };
-      hostKeys = [
-        {
-          path = "/etc/ssh/ssh_host_ed25519_key";
-          type = "ed25519";
-        }
-      ];
-    };
-
-    networking.firewall = {
-      enable = true;
-      allowedTCPPorts = [50022];
     };
   };
 
@@ -117,12 +34,18 @@ delib.deploy {
     };
     services.k3s = {
       enable = true;
-      cilium.replaceKubeProxy = true;
-      helmfile = {
+      cilium.enable = true;
+      flux = {
         enable = true;
-        # Uses default helmfile from modules/services/k3s/helmfile.yaml
-        # You can override by setting manifestPath to a custom location
-        completedIf = "kubectl get pod -n flux-system -l app.kubernetes.io/name=source-controller";
+        manifests.flux-operator = {
+          file = ./manifests/flux-operator.yaml;
+        };
+        secrets.flux-git-auth = {
+          sopsFile = ./secrets/flux-git-auth.yaml;
+        };
+        secrets.sops-age = {
+          sopsFile = ./secrets/sops-age.yaml;
+        };
       };
     };
   };

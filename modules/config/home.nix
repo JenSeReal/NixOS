@@ -46,7 +46,7 @@ in
           if isDarwin
           then "/Users/${username}"
           else "/home/${username}";
-        stateVersion = lib.mkDefault "25.11";
+        stateVersion = lib.mkDefault "25.05";
       };
     };
 

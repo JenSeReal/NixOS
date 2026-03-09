@@ -1,0 +1,50 @@
+---
+global:
+  envFrom:
+  - secretRef:
+      name: authentik-secrets
+authentik:
+  postgresql:
+    password: file:///mnt/secrets/postgresql/user-password
+geoip:
+  enabled: true
+  existingSecret:
+    secretName: geoip-credentials
+    accountId: accountId
+    licenseKey: licenseKey
+postgresql:
+  enabled: true
+  auth:
+    existingSecret: postgres-credentials
+    secretKeys:
+      adminPasswordKey: "admin-password"
+      userPasswordKey: user-password
+      replicationPasswordKey: replication-password
+prometheus:
+  rules:
+    enabled: false
+redis:
+  enabled: true
+blueprints:
+  configMaps:
+    - whoami-authentik-blueprint
+server: &common-server-settings
+  volumes:
+  - name: postgres-creds
+    secret:
+      secretName: postgres-credentials
+  - name: authentik-secrets
+    secret:
+      secretName: authentik-secrets
+  volumeMounts:
+  - name: postgres-creds
+    mountPath: /mnt/secrets/postgresql
+    readOnly: true
+  - name: authentik-secrets
+    mountPath: /mnt/secrets/authentik
+    readOnly: true
+  metrics:
+    enabled: false
+    serviceMonitor:
+      enabled: false
+worker: *common-server-settings

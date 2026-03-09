@@ -1,0 +1,54 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumEnvoyConfig
+metadata:
+  name: forward-auth
+spec:
+  services:
+  - name: cilium-gateway-jfp-one
+    namespace: networking
+  backendServices:
+  - name: authentik-server
+    namespace: authentik
+    number:
+    - "9000"
+  resources:
+  - "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+    name: authentik-auth
+    connect_timeout: 5s
+    type: STRICT_DNS
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: authentik-auth
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: authentik-server.authentik.svc.cluster.local
+                port_value: 9000
+  - "@type": type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthz
+    name: envoy.filters.http.ext_authz
+    transport_api_version: V3
+    http_service:
+      server_uri:
+        uri: authentik-server.authentik.svc.cluster.local
+        cluster: authentik-auth
+        timeout: 5s
+      path_prefix: /outpost.goauthentik.io/auth/envoy
+      authorization_request:
+        allowed_headers:
+          patterns:
+          - exact: cookie
+        headers_to_add:
+        - key: X-Forwarded-Proto
+          value: https
+      authorization_response:
+        allowed_upstream_headers:
+          patterns:
+          - exact: set-cookie
+          - prefix: x-authentik-
+        allowed_client_headers:
+          patterns:
+          - exact: cookie
+    failure_mode_allow: false

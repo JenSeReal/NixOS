@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: whoami
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: whoami
+      sourceRef:
+        kind: HelmRepository
+        name: cowboysysop
+        namespace: flux-system

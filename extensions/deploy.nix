@@ -3,8 +3,7 @@
   lib,
   ...
 }: let
-  inherit (delib) extension maintainers moduleOptions;
-  inherit (lib) types mkOption;
+  inherit (delib) extension maintainers;
 in
   extension {
     name = "deploy";
@@ -20,19 +19,16 @@ in
     libExtension = config: final: prev: {
       # Clean API: delib.deploy combines host and deploy configuration
       # Usage: delib.deploy { name = "..."; hostname = "..."; rice = "..."; ... }
+      # All args except name are optional, allowing configs to be split across files
       deploy = args @ {
         name,
-        hostname,
-        sshPort ? 22,
-        sshUser ? config.defaultSshUser,
-        deployUser ? config.defaultDeployUser,
-        system ? "x86_64-linux",
+        hostname ? null,
+        sshPort ? null,
+        sshUser ? null,
+        deployUser ? null,
+        system ? null,
         ...
       }: let
-        # Extract deploy-specific args
-        deployArgs = {
-          inherit hostname sshPort sshUser deployUser system;
-        };
         # Remove deploy-specific args, pass the rest to delib.host
         hostArgs = builtins.removeAttrs args [
           "hostname"
@@ -41,20 +37,21 @@ in
           "deployUser"
           "system"
         ];
+
+        # Only include deploy config if at least hostname is provided
+        deployConfig = lib.optionalAttrs (hostname != null) {
+          deploy = {
+            enable = true;
+            inherit hostname;
+          } // lib.optionalAttrs (sshPort != null) { inherit sshPort; }
+            // lib.optionalAttrs (sshUser != null) { inherit sshUser; }
+            // lib.optionalAttrs (deployUser != null) { inherit deployUser; }
+            // lib.optionalAttrs (system != null) { inherit system; };
+        };
       in
         prev.host (hostArgs
-          // {
-            # Automatically configure myconfig.deploy
-            myconfig =
-              (hostArgs.myconfig or {})
-              // {
-                deploy =
-                  (hostArgs.myconfig.deploy or {})
-                  // {
-                    enable = true;
-                    inherit hostname sshPort sshUser deployUser system;
-                  };
-              };
+          // lib.optionalAttrs (deployConfig != {}) {
+            myconfig = (hostArgs.myconfig or {}) // deployConfig;
           });
 
       # Helper to create a deploy-rs node configuration from host metadata
