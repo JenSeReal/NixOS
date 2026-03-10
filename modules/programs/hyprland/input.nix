@@ -31,9 +31,9 @@ delib.module {
       input = {
         follow_mouse = 1;
 
-        kb_layout = myconfig.keyboard.layout;
-        kb_variant = myconfig.keyboard.variant;
-        kb_options = myconfig.keyboard.options;
+        kb_layout = myconfig.hardware.keyboard.layout;
+        kb_variant = myconfig.hardware.keyboard.variant;
+        kb_options = myconfig.hardware.keyboard.options;
         numlock_by_default = true;
 
         touchpad = {

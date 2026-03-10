@@ -8,7 +8,9 @@ delib.module {
   name = "programs.codium";
 
   home.ifEnabled = {...}: let
-    marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace;
+    extensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
+    marketplace = extensions.vscode-marketplace;
+    marketplace-universal = extensions.vscode-marketplace-universal;
   in {
     programs.vscode.profiles.default.extensions = with marketplace;
       [
@@ -26,10 +28,10 @@ delib.module {
         redhat.vscode-xml
         oderwat.indent-rainbow
         rust-lang.rust-analyzer
-        fill-labs.dependi
+        barbosshack.crates-io
         tauri-apps.tauri-vscode
         editorconfig.editorconfig
-        vadimcn.vscode-lldb
+        marketplace-universal.vadimcn.vscode-lldb
         pflannery.vscode-versionlens
         lorenzopirro.rust-flash-snippets
         zhangyue.rust-mod-generator
@@ -44,10 +46,10 @@ delib.module {
         aaron-bond.better-comments
         ms-vsliveshare.vsliveshare
         robbowen.synthwave-vscode
-        ms-vscode-remote.remote-ssh
-        ms-vscode.remote-server
-        ms-vscode-remote.remote-containers
-        ms-vscode-remote.remote-wsl
+        # ms-vscode-remote.remote-ssh
+        # ms-vscode.remote-server
+        # ms-vscode-remote.remote-containers
+        # ms-vscode-remote.remote-wsl
         formulahendry.docker-explorer
         redhat.java
         vscjava.vscode-java-test
