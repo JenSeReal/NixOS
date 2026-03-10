@@ -6,3 +6,4 @@ resources:
 - authentik-charts.yaml
 - cowboysysop.yaml
 - jetstack.yaml
+- oauth2-proxy.yaml

@@ -20,27 +20,6 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: whoami-outpost
-spec:
-  parentRefs:
-  - name: jfp-one
-    namespace: networking
-    sectionName: https
-  hostnames:
-  - jfp.one
-  rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /outpost.goauthentik.io
-    backendRefs:
-    - name: ak-outpost-authentik-embedded-outpost
-      namespace: authentik
-      port: 9000
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
   name: whoami
 spec:
   parentRefs:
@@ -55,5 +34,5 @@ spec:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: whoami
+    - name: oauth2-proxy
       port: 80

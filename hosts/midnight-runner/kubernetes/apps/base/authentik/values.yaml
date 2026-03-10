@@ -26,8 +26,8 @@ prometheus:
 redis:
   enabled: true
 blueprints:
-  configMaps:
-    - whoami-authentik-blueprint
+  secrets:
+  - whoami-authentik-blueprint
 server: &common-server-settings
   volumes:
   - name: postgres-creds

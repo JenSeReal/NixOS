@@ -6,3 +6,8 @@ resources:
 - helm-release.yaml
 - httproute.yaml
 - namespace.yaml
+- oauth2-proxy-secret.sops.yaml
+components:
+- ../../../components/oauth2-proxy
+patches:
+- path: oauth2-proxy-patch.yaml
