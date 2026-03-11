@@ -27,7 +27,7 @@ redis:
   enabled: true
 blueprints:
   configMaps:
-  - whoami-authentik-blueprint
+    - blueprints
 server: &common-server-settings
   podAnnotations:
     reloader.stakater.com/auto: "true"
