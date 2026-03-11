@@ -38,5 +38,5 @@ entries:
     attrs:
       name: Whoami
       slug: whoami
-      provider: provider-whoami
+      provider: !KeyOf provider-whoami
       policy_engine_mode: any
