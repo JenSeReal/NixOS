@@ -30,3 +30,13 @@ spec:
             kind: Gateway
             namespace: networking
             sectionName: http
+    - selector:
+        dnsNames:
+        - "talk.jfp.one"
+      http01:
+        gatewayHTTPRoute:
+          parentRefs:
+          - name: jfp-one
+            kind: Gateway
+            namespace: networking
+            sectionName: jitsi-http
