@@ -27,8 +27,10 @@ redis:
   enabled: true
 blueprints:
   configMaps:
-    - whoami-authentik-blueprint
+  - whoami-authentik-blueprint
 server: &common-server-settings
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
   volumes:
   - name: postgres-creds
     secret:
