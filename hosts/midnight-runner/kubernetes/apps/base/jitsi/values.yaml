@@ -11,11 +11,13 @@ enableGuests: false
 
 extraCommonEnvs:
   JWT_APP_ID: jitsi
-  JWT_ACCEPTED_ISSUERS: authentik
+  JWT_ACCEPTED_ISSUERS: authentik,https://sso.jfp.one/application/o/jitsi/
   JWT_ACCEPTED_AUDIENCES: jitsi
-  # Use Authentik's JWKS for RS256 token validation
   JWT_ASAP_KEYSERVER: https://sso.jfp.one/application/o/jitsi/jwks/
-  TOKEN_AUTH_URL: https://sso.jfp.one/application/o/authorize/?client_id={JITSI_CLIENT_ID}&response_type=id_token&redirect_uri={publicURL}&scope=openid%20email%20profile%20jitsi
+
+prosody:
+  jwt:
+    existingSecretName: jitsi-secrets
 
 web:
   ingress:
