@@ -32,6 +32,7 @@ delib.module {
   home.ifEnabled = {...}: {
     services.colima = {
       enable = true;
+      package = pkgs.unstable.colima;
       profiles.default = {
         isActive = true;
         isService = true;

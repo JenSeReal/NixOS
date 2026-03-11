@@ -9,7 +9,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.aerospace;
+      package = packageOption pkgs.unstable.aerospace;
     };
 
   darwin.ifEnabled = {cfg, ...}: {
