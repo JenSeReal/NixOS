@@ -7,3 +7,4 @@ resources:
 - cowboysysop.yaml
 - jetstack.yaml
 - oauth2-proxy.yaml
+- weaveworks.yaml

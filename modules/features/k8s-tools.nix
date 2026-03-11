@@ -43,6 +43,7 @@ delib.module {
         kubectl.enable = true;
         awscli.enable = true;
         fluxcd.enable = true;
+        flux9s.enable = true;
         k9s.enable = true;
         cloudlens.enable = true;
         crossplane.enable = true;
