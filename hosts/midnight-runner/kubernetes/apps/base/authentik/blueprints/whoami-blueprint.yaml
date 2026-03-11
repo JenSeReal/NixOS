@@ -1,0 +1,42 @@
+---
+version: 1
+metadata:
+  name: Whoami OAuth2
+  labels:
+    blueprints.goauthentik.io/description: OAuth2/OIDC configuration for whoami application
+entries:
+  # OAuth2/OIDC Provider for oauth2-proxy
+  - model: authentik_providers_oauth2.oauth2provider
+    id: provider-whoami
+    state: present
+    identifiers:
+      name: whoami
+    attrs:
+      name: whoami
+      client_type: confidential
+      client_id: !Env WHOAMI_CLIENT_ID
+      client_secret: !Env WHOAMI_CLIENT_SECRET
+      redirect_uris:
+        - matching_mode: strict
+          url: https://jfp.one/oauth2/callback
+      access_code_validity: minutes=10
+      access_token_validity: hours=1
+      refresh_token_validity: days=30
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
+      signing_key: !Find [authentik_crypto.certificatekeypair, [name, authentik Self-signed Certificate]]
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+  # Application for whoami
+  - model: authentik_core.application
+    id: app-whoami
+    state: present
+    identifiers:
+      slug: whoami
+    attrs:
+      name: Whoami
+      slug: whoami
+      provider: provider-whoami
+      policy_engine_mode: any
