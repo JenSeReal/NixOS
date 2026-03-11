@@ -1,34 +1,27 @@
 ---
 publicURL: https://talk.jfp.one
 tz: Europe/Berlin
-
 websockets:
   xmpp:
     enabled: true
-
 enableAuth: true
 enableGuests: false
-
 extraCommonEnvs:
   JWT_APP_ID: jitsi
   JWT_ACCEPTED_ISSUERS: authentik,https://sso.jfp.one/application/o/jitsi/
   JWT_ACCEPTED_AUDIENCES: jitsi
   JWT_ASAP_KEYSERVER: https://sso.jfp.one/application/o/jitsi/jwks/
-
 prosody:
   jwt:
     existingSecretName: jitsi-secrets
-
 web:
   ingress:
     enabled: false
   extraEnvFrom:
-    - secretRef:
-        name: jitsi-secrets
-
+  - secretRef:
+      name: jitsi-secrets
 jvb:
   service:
     type: ClusterIP
-
 excalidraw:
   enabled: true
