@@ -44,3 +44,21 @@ spec:
       mode: Terminate
       certificateRefs:
       - name: authentik-jfp-one-tls
+  - name: jitsi-http
+    hostname: talk.jfp.one
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: jitsi-https
+    hostname: talk.jfp.one
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: jitsi-jfp-one-tls

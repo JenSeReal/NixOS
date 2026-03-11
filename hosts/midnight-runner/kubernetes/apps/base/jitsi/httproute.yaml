@@ -5,17 +5,17 @@ metadata:
   name: jitsi-http-redirect
 spec:
   parentRefs:
-    - name: jfp-one
-      namespace: networking
-      sectionName: http
+  - name: jfp-one
+    namespace: networking
+    sectionName: jitsi-http
   hostnames:
-    - talk.jfp.one
+  - talk.jfp.one
   rules:
-    - filters:
-        - type: RequestRedirect
-          requestRedirect:
-            scheme: https
-            statusCode: 301
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -23,16 +23,16 @@ metadata:
   name: jitsi
 spec:
   parentRefs:
-    - name: jfp-one
-      namespace: networking
-      sectionName: https
+  - name: jfp-one
+    namespace: networking
+    sectionName: jitsi-https
   hostnames:
-    - talk.jfp.one
+  - talk.jfp.one
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: jitsi-meet-web
-          port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: jitsi-meet-web
+      port: 80
