@@ -9,6 +9,7 @@ spec:
       configFile: |-
         provider = "oidc"
         oidc_issuer_url = "https://sso.jfp.one/application/o/whoami/"
+        insecure_oidc_allow_unverified_email = true
         email_domains = ["*"]
         cookie_secure = true
         cookie_samesite = "lax"
