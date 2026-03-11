@@ -13,7 +13,7 @@ spec:
         email_domains = ["*"]
         cookie_secure = true
         cookie_samesite = "lax"
-        cookie_domains = [".jfp.one"]
+        cookie_domains = ["jfp.one", ".jfp.one"]
         whitelist_domains = [".jfp.one"]
         skip_provider_button = true
         code_challenge_method = "S256"
