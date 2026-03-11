@@ -14,9 +14,11 @@ entries:
   attrs:
     name: whoami
     client_type: confidential
-    client_id: ENC[AES256_GCM,data:TlQ6sZ6H9s59wKTthh73dWAtoeTg8lH72U8dbx653b5CWSZCYmywng==,iv:3Ixge2UyllBhRysrXuqOJ867DCCob6yQDuoSpq32qRE=,tag:+vgPZJxjpOnJd/hd167M5A==,type:str]
-    client_secret: ENC[AES256_GCM,data:UfGQjkJyNvZ8HwPzZV6WDYtyMWnwdZVj5BWP5VrAk9a5g40yJx5rWD/ePOxBIpbOa3SItIeYcAoZ1bXnWB9iY2f9al0cuAXFQWkvfPGfo+w6WEH1pC1fPW4hnlzf+qKhYgdxI6aB/WYu2nCiKZ4eZumkQmWSuzTMCA9MAB1iFIk=,iv:TI8YJ8N/gyUyHY6w2dXuSCppWkLi9hUdsGKSA8pePqw=,tag:GLWuYVp04ScUc5iFpzi0Ng==,type:str]
-    redirect_uris: https://jfp.one/oauth2/callback
+    client_id: ENC[AES256_GCM,data:4++rk65R3e+zRJ4SE+StZEdPl5WyFiAgeiPWLn0hAFrIazjoUxUQ/A==,iv:P/xNbpWVJRKnVr40ueM3i6a8Tghiqaa73cMNup+KHA0=,tag:w9crkK1bsUGBbx52tqL+lw==,type:str]
+    client_secret: ENC[AES256_GCM,data:tth/P8tDyT8yxWtMR7oLR2ldDjfXYjqAbYAnBPVggrHvofTV+hFl3YJSsRNbnbB4XQ0G3caQnGWZCf8NxhCYePlsLsgsKK/fDX2MVzLqzpMTqAqj1Qc2UxrnLS3ixazJW1mHi3It2ROzAC+UUeXQ1fcjBX1OYtTGo6BToRGBfB4=,iv:K3S0yG+cPn09RMHLuXDB/Va7zKkjf3p0N8mLSlNvmbE=,tag:AjaYrHxOKPBseRMi6/s9UQ==,type:str]
+    redirect_uris:
+    - matching_mode: strict
+      url: https://jfp.one/oauth2/callback
     access_code_validity: minutes=10
     access_token_validity: hours=1
     refresh_token_validity: days=30
@@ -58,22 +60,22 @@ sops:
   - recipient: age1k7qp72hl0zfc4z7cg4xue7evstnq33c9855s6p4u3rfsyk353q8qvcze5y
     enc: |
       -----BEGIN AGE ENCRYPTED FILE-----
-      YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKeU9FSVJXR2QyWkFVdWF2
-      NUw2Q0VHblNpL0F1b0E3Vk12bmIxNVlYN0U0CkVMRWVIR0NiYmRpRkt2UG0rRXlI
-      TGpoRjgrNXo4REhVdGU2dmdZbjNEYncKLS0tIGtTY2FFUjVTQ0RvT0s2czMvakhp
-      RVd2Rk5JM1p1QTNidk56c091UDJNV0UKZqVWX6HztNUzi32KD3M7m6u9MVz1ngDZ
-      fi+yGCKsxxjzz6kDgD1FxB7vG4E82Y3/+m76QMfuV/pN5CxSAIlzhg==
+      YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxNzhvQ3NZMG5rZWhrR3lG
+      bkM1NGlvR0wxeU5jejhWWTAwM1UzbG1YdlhvCmpoQkxQZmJGa1gzR3lLYXB1cEx1
+      QXVLYU1QcTZabkM1YnZ3a3VVZ3RSc2MKLS0tIDVLejBWZDBDbmNIbzAzZXJqTm1Y
+      NmlRUHVFWmJqc1lxY3ZSVUdmZ0tjL28KCZ5BrOe7tvW7R+fT7cryeVNNUiHZD01i
+      Y9AGA/COZ+dMvMUiqgssf1Rh873Xz5YOjxIDcVy+K+QyGp1/inQGhA==
       -----END AGE ENCRYPTED FILE-----
   - recipient: age1y55epapn8p7yark3wjjfqyqnl842lyn5xxlr7m7cdfchua5ctfgs8rnv0d
     enc: |
       -----BEGIN AGE ENCRYPTED FILE-----
-      YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6UnIwNDl3RE1aeXgzMTFL
-      bktxWTBKMVdLbkNuTGZlWkM5dmNXRUdPdWhVCkFBRk1aRTJtY2NmY2NDalFrWjdw
-      bi9KVUNXRHdvV0VHT3lGQ2tFNHVWNTQKLS0tIHBsdHhEK3hCTVdtRHdaUVZCOHRr
-      NGx5eXliL09TS3hpK3ZxaHRXVVpvNlEKx68YcuybYfDU/8poRzmfz4Vg1YBIa1Rz
-      gMDZ8sA+R38vlPyAFsabQFulh+JTqbopvyTIQz/8TbO55yqskHG4+Q==
+      YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBza1F0QTlleUFKK0p2RVNr
+      SHBMVFJGUWtPN01jeDdiWEcwR0RXSDVMVUFjCmVSa0JHSUFCMmZ4SGZ1QVlZclRu
+      cTBYOTFTSFQ3eUtnV0sxM3JyNzdXR2MKLS0tIHA1Q0s2eDQvSko0dGFxRTlkRzFE
+      VkRqOGtsU1NXRDZidmhFQmY3bytmTmMKI5r4A3XgFthSa5ZDoqIWgzsrI/Nq39b5
+      K/OMXihGskj3iliEFNJVfKMetjRImtXD0VmTrBcqzK5yEohd0Nje6A==
       -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-10T23:19:58Z"
-  mac: ENC[AES256_GCM,data:R3BQZHMQlzl8GVhCXjznC+Pcqocl3AkK6TXz95GyaFuYg8jRDbTB+7HimB0GP0JnWuQvsKt7LA4EUTZb1NQGfEYKHmx6x8VqWGJ18eB0Nq+WUWJQ4Yen5tfHBHccd25FMiHoEM2pvYmN2x2dkC11Q9l5fuMkS+MzcWMy8mbkQ8A=,iv:P+ki3HMTLdKTh9qjWINK549sRNHjQM8SDRjc0U0bZwo=,tag:EPg3GOC1Y29FG52D2kpAtQ==,type:str]
+  lastmodified: "2026-03-11T20:25:08Z"
+  mac: ENC[AES256_GCM,data:V4MCHlSO9EQTSBPW6cku277pD1k8Gu54KO7GzpvuQ0jpccZhZuHf6QKEcnL8JJQQXE8ZgjDNvkaeOX02WMe3k6u7afKkcmIEi70zxkXPiuj26pE1UlMDaA6nOyFaAZh54PaV9sE0eWTbS7hUDYmKo3Oq1hUBeL0zE8ITHcdTiZo=,iv:5RrNhCqDaCUE39NO8qvMs858xrAR6yjMC1cG3Q3zJ/Y=,tag:/Z8evOAiCuzqGIpH9la/1w==,type:str]
   encrypted_regex: ^(client_id|client_secret)$
   version: 3.12.1
