@@ -44,8 +44,9 @@ delib.module {
     };
 
     environment.systemPackages = with pkgs; [
-      wineWowPackages.waylandFull
-      winetricks
+      unstable.wineWow64Packages.waylandFull
+      unstable.winetricks
+      protontricks
       lutris
       heroic
       mangohud
