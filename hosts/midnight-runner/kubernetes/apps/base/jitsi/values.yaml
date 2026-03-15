@@ -7,6 +7,7 @@ websockets:
 enableAuth: true
 enableGuests: false
 extraCommonEnvs:
+  AUTH_TYPE: jwt
   JWT_APP_ID: jitsi
   JWT_ACCEPTED_ISSUERS: authentik,https://sso.jfp.one/application/o/jitsi/
   JWT_ACCEPTED_AUDIENCES: jitsi
