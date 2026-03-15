@@ -3,13 +3,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: jitsi
 resources:
-  - helm-release.yaml
-  - httproute.yaml
-  - jitsi-secrets.sops.yaml
-  - namespace.yaml
+- helm-release.yaml
+- httproute.yaml
+- namespace.yaml
 components:
-  - ../../../components/helm-configmap-reference
+- ../../../components/helm-configmap-reference
 configMapGenerator:
-  - name: values
-    files:
-      - values.yaml=values.yaml
+- name: values
+  files:
+  - values.yaml=values.yaml
