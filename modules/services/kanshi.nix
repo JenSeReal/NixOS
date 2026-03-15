@@ -11,7 +11,7 @@ delib.module {
     tv = {
       status = "enable";
       criteria = "Samsung Electric Company SAMSUNG 0x01000E00";
-      mode = "2560x1440@59.951000Hz";
+      mode = "1920x1080@60Hz";
       scale = 1.6;
     };
 
