@@ -11,15 +11,10 @@ extraCommonEnvs:
   JWT_ACCEPTED_ISSUERS: authentik,https://sso.jfp.one/application/o/jitsi/
   JWT_ACCEPTED_AUDIENCES: jitsi
   JWT_ASAP_KEYSERVER: https://sso.jfp.one/application/o/jitsi/jwks/
-prosody:
-  jwt:
-    existingSecretName: jitsi-secrets
+prosody: {}
 web:
   ingress:
     enabled: false
-  extraEnvFrom:
-  - secretRef:
-      name: jitsi-secrets
 jvb:
   service:
     type: ClusterIP
