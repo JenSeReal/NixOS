@@ -13,22 +13,10 @@ extraCommonEnvs:
   JWT_ACCEPTED_AUDIENCES: jitsi
   JWT_ASAP_KEYSERVER: https://sso.jfp.one/application/o/jitsi/jwks/
   TOKEN_AUTH_URL: https://talk.jfp.one/oidc/auth?state={state}
-prosody:
-  extraEnvs:
-  - name: JWT_APP_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: jitsi-keycloak-adapter
-        key: jwt-app-secret
+prosody: {}
 web:
   ingress:
     enabled: false
-  extraEnvs:
-  - name: JWT_APP_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: jitsi-keycloak-adapter
-        key: jwt-app-secret
 jvb:
   service:
     type: ClusterIP
