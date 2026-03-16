@@ -20,11 +20,11 @@ delib.module {
     imports = [inputs.vscode-server.homeModules.default];
   };
   home.ifEnabled = {cfg, ...}: {
-    services.vscode-server.enable = true;
     programs.vscode = {
       enable = true;
       package = cfg.package;
     };
+    services.vscode-server.enable = true;
   };
 
   nixos.ifEnabled = {cfg, ...}: {

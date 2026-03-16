@@ -3,13 +3,13 @@ delib.host rec {
   name = "jens-pc";
   system = "x86_64-linux";
 
-  home.home.stateVersion = "25.05";
+  home.home.stateVersion = "25.11";
   nixos = {
     # COMMENTED OUT: Disko migration requires reinstall which would erase the system
     # imports = [inputs.disko.nixosModules.disko];
 
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.05";
+    system.stateVersion = "25.11";
 
     # COMMENTED OUT: Disko disk configuration (requires reinstall)
     # disko.devices = {

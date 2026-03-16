@@ -9,7 +9,7 @@ delib.deploy {
   system = "x86_64-linux";
   type = "server";
 
-  home.home.stateVersion = "25.05";
+  home.home.stateVersion = "25.11";
   nixos = {
     imports = [
       inputs.disko.nixosModules.disko
@@ -17,7 +17,7 @@ delib.deploy {
     ];
 
     nixpkgs.hostPlatform = "x86_64-linux";
-    system.stateVersion = "25.05";
+    system.stateVersion = "25.11";
 
     boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
     boot.initrd.kernelModules = [];

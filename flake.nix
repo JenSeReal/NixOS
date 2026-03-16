@@ -186,10 +186,31 @@
           }
         else acc) {}
       (builtins.attrNames configurations);
+
+    # Workaround: denix creates configurations for all hosts regardless of system type
+    # Filter out Darwin hosts from nixosConfigurations and vice versa
+    # Use tryEval to handle configs that fail to evaluate
+    getSystem = cfg: cfg.pkgs.stdenv.hostPlatform.system;
+
+    isDarwin = cfg: let
+      eval = builtins.tryEval (lib.hasSuffix "darwin" (getSystem cfg));
+    in
+      eval.success && eval.value;
+
+    isNotDarwin = cfg: let
+      eval = builtins.tryEval (lib.hasSuffix "darwin" (getSystem cfg));
+    in
+      eval.success && !eval.value;
+
+    filterNonDarwin = configs:
+      lib.filterAttrs (name: cfg: isNotDarwin cfg) configs;
+
+    filterDarwin = configs:
+      lib.filterAttrs (name: cfg: isDarwin cfg) configs;
   in {
-    nixosConfigurations = mkConfigurations "nixos";
+    nixosConfigurations = filterNonDarwin (mkConfigurations "nixos");
     homeConfigurations = mkConfigurations "home";
-    darwinConfigurations = mkConfigurations "darwin";
+    darwinConfigurations = filterDarwin (mkConfigurations "darwin");
     nixosModules.default = {...}: {
       imports =
         findModules ./modules
