@@ -33,6 +33,12 @@ spec:
     - path:
         type: PathPrefix
         value: /oidc/
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        set:
+        - name: Host
+          value: talk.jfp.one
     backendRefs:
     - name: jitsi-oidc-adapter
       port: 9000
