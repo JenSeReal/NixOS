@@ -32,6 +32,13 @@ spec:
   - matches:
     - path:
         type: PathPrefix
+        value: /oidc/
+    backendRefs:
+    - name: jitsi-keycloak-adapter
+      port: 9000
+  - matches:
+    - path:
+        type: PathPrefix
         value: /
     backendRefs:
     - name: jitsi-jitsi-meet-web

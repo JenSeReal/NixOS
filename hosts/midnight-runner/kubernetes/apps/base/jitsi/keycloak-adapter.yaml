@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jitsi-keycloak-adapter
+  labels:
+    app: jitsi-keycloak-adapter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jitsi-keycloak-adapter
+  template:
+    metadata:
+      labels:
+        app: jitsi-keycloak-adapter
+    spec:
+      containers:
+      - name: adapter
+        image: ghcr.io/nordeck/jitsi-keycloak-adapter-v2:latest
+        ports:
+        - containerPort: 9000
+          name: http
+        env:
+        # NOTE: This adapter is designed for Keycloak. For Authentik, you may need to:
+        # 1. Check if adapter supports OIDC_DISCOVERY_URL env var, or
+        # 2. Configure Authentik with Keycloak-compatible paths
+        # Authentik OIDC discovery: https://sso.jfp.one/application/o/jitsi/.well-known/openid-configuration
+        - name: KEYCLOAK_ORIGIN
+          value: "https://sso.jfp.one"
+        - name: KEYCLOAK_REALM
+          value: "application/o/jitsi"
+        - name: KEYCLOAK_CLIENT_ID
+          value: "jitsi"
+        - name: JWT_APP_ID
+          value: "jitsi"
+        - name: JWT_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jitsi-keycloak-adapter
+              key: jwt-app-secret
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jitsi-keycloak-adapter
+spec:
+  selector:
+    app: jitsi-keycloak-adapter
+  ports:
+  - port: 9000
+    targetPort: 9000
+    name: http

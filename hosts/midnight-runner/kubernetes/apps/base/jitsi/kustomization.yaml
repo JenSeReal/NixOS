@@ -6,6 +6,8 @@ resources:
 - helm-release.yaml
 - httproute.yaml
 - namespace.yaml
+- keycloak-adapter.yaml
+- keycloak-adapter-secret.yaml
 components:
 - ../../../components/helm-configmap-reference
 configMapGenerator:
