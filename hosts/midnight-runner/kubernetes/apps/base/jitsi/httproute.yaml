@@ -34,7 +34,7 @@ spec:
         type: PathPrefix
         value: /oidc/
     backendRefs:
-    - name: jitsi-keycloak-adapter
+    - name: jitsi-oidc-adapter
       port: 9000
   - matches:
     - path:
