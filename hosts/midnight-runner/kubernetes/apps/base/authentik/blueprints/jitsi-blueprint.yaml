@@ -39,8 +39,9 @@ entries:
       name: jitsi
     attrs:
       name: jitsi
-      client_type: public
+      client_type: confidential
       client_id: !Env JITSI_CLIENT_ID
+      client_secret: !Env JITSI_CLIENT_SECRET
       redirect_uris:
         - matching_mode: strict
           url: https://talk.jfp.one/oidc/tokenize

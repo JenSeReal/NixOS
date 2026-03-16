@@ -25,9 +25,15 @@ spec:
         - name: OIDC_ISSUER_URL
           value: "https://sso.jfp.one/application/o/jitsi/"
         - name: OIDC_CLIENT_ID
-          value: "jitsi"
+          valueFrom:
+            secretKeyRef:
+              name: jitsi-keycloak-adapter
+              key: oidc-client-id
         - name: OIDC_CLIENT_SECRET
-          value: ""
+          valueFrom:
+            secretKeyRef:
+              name: jitsi-keycloak-adapter
+              key: oidc-client-secret
         - name: JWT_APP_ID
           value: "jitsi"
         - name: JWT_APP_SECRET
