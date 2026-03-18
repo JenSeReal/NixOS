@@ -18,6 +18,8 @@ delib.host rec {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
+    networking.networkmanager.wifi.powersave = false;
+
     nixpkgs.hostPlatform = system;
     system.stateVersion = "25.11";
 
