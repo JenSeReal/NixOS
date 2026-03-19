@@ -6,14 +6,15 @@ websockets:
     enabled: true
 enableAuth: true
 enableGuests: false
-# extraCommonEnvs:
-#   AUTH_TYPE: jwt
-#   JWT_APP_ID: jitsi
-#   JWT_ACCEPTED_ISSUERS: jitsi
-#   JWT_ACCEPTED_AUDIENCES: jitsi
-#   TOKEN_AUTH_URL: "https://talk.jfp.one/oidc/auth?state={state}"
+extraCommonEnvs:
+  AUTH_TYPE: jwt
+  JWT_APP_ID: jitsi
+  JWT_ACCEPTED_ISSUERS: authentik
+  JWT_ACCEPTED_AUDIENCES: jitsi
+  TOKEN_AUTH_URL: "https://talk.jfp.one/oidc/auth?state={state}"
 prosody:
   jwt:
+    enabled: true
     existingSecretName: jitsi-keycloak-adapter
 web:
   ingress:
