@@ -17,32 +17,36 @@ spec:
     spec:
       containers:
       - name: adapter
-        image: ghcr.io/jitsi-contrib/jitsi-oidc-adapter:latest
+        image: mod242/jitsi-go-openid:latest
         ports:
-        - containerPort: 9000
+        - containerPort: 3001
           name: http
         env:
-        - name: OIDC_ISSUER_URL
+        - name: JITSI_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jitsi-keycloak-adapter
+              key: JWT_APP_SECRET
+        - name: JITSI_URL
+          value: "https://talk.jfp.one"
+        - name: JITSI_SUB
+          value: "jitsi"
+        - name: ISSUER_BASE_URL
           value: "https://sso.jfp.one/application/o/jitsi/"
-        - name: OIDC_CLIENT_ID
+        - name: BASE_URL
+          value: "https://talk.jfp.one/jitsi-openid"
+        - name: CLIENT_ID
           valueFrom:
             secretKeyRef:
               name: jitsi-keycloak-adapter
               key: oidc-client-id
-        - name: OIDC_CLIENT_SECRET
+        - name: SECRET
           valueFrom:
             secretKeyRef:
               name: jitsi-keycloak-adapter
               key: oidc-client-secret
-        - name: JWT_APP_ID
-          value: "jitsi"
-        - name: JWT_APP_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: jitsi-keycloak-adapter
-              key: jwt-app-secret
-        - name: ALLOW_UNSECURE_CERT
-          value: "false"
+        - name: PREJOIN
+          value: "true"
         resources:
           requests:
             memory: "64Mi"
@@ -53,13 +57,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: 9000
+            port: 3001
           initialDelaySeconds: 5
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /health
-            port: 9000
+            port: 3001
           initialDelaySeconds: 5
           periodSeconds: 10
 ---
@@ -71,6 +75,6 @@ spec:
   selector:
     app: jitsi-oidc-adapter
   ports:
-  - port: 9000
-    targetPort: 9000
+  - port: 3001
+    targetPort: 3001
     name: http

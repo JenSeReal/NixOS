@@ -44,7 +44,7 @@ entries:
       client_secret: !Env JITSI_CLIENT_SECRET
       redirect_uris:
         - matching_mode: strict
-          url: https://talk.jfp.one/oidc/tokenize
+          url: https://talk.jfp.one/jitsi-openid/callback
       access_code_validity: minutes=10
       access_token_validity: hours=4
       refresh_token_validity: days=30
