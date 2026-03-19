@@ -14,10 +14,11 @@ extraCommonEnvs:
   TOKEN_AUTH_URL: "https://talk.jfp.one/oidc/auth?state={state}"
 prosody:
   extraEnvs:
-    JWT_APP_SECRET:
-      secretKeyRef:
-        name: jitsi-keycloak-adapter
-        key: JWT_APP_SECRET
+    - name: JWT_APP_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: jitsi-keycloak-adapter
+          key: JWT_APP_SECRET
 web:
   ingress:
     enabled: false
