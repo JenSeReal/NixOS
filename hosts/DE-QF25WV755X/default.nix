@@ -19,6 +19,7 @@ delib.host {
       headlamp.enable = true;
       nh.enable = true;
       nu.enable = true;
+      spotify.enable = true;
       wezterm.enable = true;
       zed.enable = true;
       zsh.enable = true;
