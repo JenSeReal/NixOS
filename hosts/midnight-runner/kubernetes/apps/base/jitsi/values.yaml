@@ -5,7 +5,7 @@ websockets:
   xmpp:
     enabled: true
 enableAuth: true
-enableGuests: false
+enableGuests: true
 extraCommonEnvs:
   AUTH_TYPE: jwt
   JWT_APP_ID: jitsi
