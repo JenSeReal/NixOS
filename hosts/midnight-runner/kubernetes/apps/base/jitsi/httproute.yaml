@@ -33,6 +33,12 @@ spec:
     - path:
         type: PathPrefix
         value: /jitsi-openid/
+    filters:
+    - type: URLRewrite
+      urlRewrite:
+        path:
+          type: ReplacePrefixMatch
+          replacePrefixMatch: /
     backendRefs:
     - name: jitsi-oidc-adapter
       port: 3001

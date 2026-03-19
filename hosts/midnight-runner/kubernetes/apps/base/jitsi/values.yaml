@@ -11,7 +11,7 @@ extraCommonEnvs:
   JWT_APP_ID: jitsi
   JWT_ACCEPTED_ISSUERS: jitsi
   JWT_ACCEPTED_AUDIENCES: jitsi
-  TOKEN_AUTH_URL: "https://talk.jfp.one/jitsi-openid/authenticate?state={state}&room={room}"
+  TOKEN_AUTH_URL: "https://talk.jfp.one/jitsi-openid/authenticate?room={room}"
 prosody:
   extraEnvs:
   - name: JWT_APP_SECRET
