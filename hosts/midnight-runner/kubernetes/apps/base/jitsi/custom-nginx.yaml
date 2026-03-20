@@ -5,9 +5,16 @@ metadata:
   name: jitsi-custom-nginx
 data:
   custom-meet.conf: |-
-    location ^~ /jitsi-openid/ {
-        # Inject valid JSON state: {} (URL-encoded: %7B%7D)
+    location ^~ /jitsi-openid/authenticate {
+        # Inject valid JSON state only for authenticate endpoint
         set $args "state=%7B%7D&room=$arg_room";
+        proxy_pass http://jitsi-oidc-adapter.jitsi.svc.cluster.local:3001/authenticate;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_buffering off;
+    }
+    location ^~ /jitsi-openid/ {
+        # Pass through callback and other requests unchanged
         proxy_pass http://jitsi-oidc-adapter.jitsi.svc.cluster.local:3001/;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header Host $host;
