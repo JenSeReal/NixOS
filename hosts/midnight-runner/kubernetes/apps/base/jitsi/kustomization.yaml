@@ -8,6 +8,7 @@ resources:
 - namespace.yaml
 - keycloak-adapter.yaml
 - keycloak-adapter-secret.sops.yaml
+- custom-nginx.yaml
 components:
 - ../../../components/helm-configmap-reference
 configMapGenerator:
