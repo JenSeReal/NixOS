@@ -31,6 +31,7 @@ delib.deploy {
       fish.enable = true;
       nh.enable = true;
       nu.enable = true;
+      osc.enable = true;
     };
     services.k3s = {
       enable = true;

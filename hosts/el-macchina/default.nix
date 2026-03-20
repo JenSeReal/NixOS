@@ -23,6 +23,7 @@ delib.host {
       keychron.enable = true;
       moza-r12.enable = true;
       openrgb.enable = true;
+      rtl8822ce.enable = true;
     };
 
     programs = {
