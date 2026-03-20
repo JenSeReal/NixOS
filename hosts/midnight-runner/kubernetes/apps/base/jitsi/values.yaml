@@ -19,8 +19,8 @@ prosody:
       secretKeyRef:
         name: jitsi-keycloak-adapter
         key: JWT_APP_SECRET
-  - name: ENABLE_DOMAIN_VERIFICATION
-    value: "0"
+  - name: JWT_ENABLE_DOMAIN_VERIFICATION
+    value: "false"
 web:
   ingress:
     enabled: false
