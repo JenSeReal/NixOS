@@ -11,7 +11,7 @@ extraCommonEnvs:
   JWT_APP_ID: jitsi
   JWT_ACCEPTED_ISSUERS: jitsi
   JWT_ACCEPTED_AUDIENCES: jitsi
-  TOKEN_AUTH_URL: "https://talk.jfp.one/jitsi-openid/authenticate?room={room}"
+  TOKEN_AUTH_URL: "https://talk.jfp.one/jitsi-openid/authenticate?state={state}&room={room}"
 prosody:
   extraEnvs:
   - name: JWT_APP_SECRET
@@ -22,14 +22,6 @@ prosody:
 web:
   ingress:
     enabled: false
-  extraVolumes:
-  - name: custom-nginx
-    configMap:
-      name: jitsi-custom-nginx
-  extraVolumeMounts:
-  - name: custom-nginx
-    mountPath: /config/custom-meet.conf
-    subPath: custom-meet.conf
 jvb:
   service:
     type: ClusterIP
