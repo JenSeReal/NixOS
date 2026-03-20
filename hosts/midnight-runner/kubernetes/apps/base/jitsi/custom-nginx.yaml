@@ -4,10 +4,8 @@ kind: ConfigMap
 metadata:
   name: jitsi-custom-nginx
 data:
-  custom-meet.conf: |
+  custom-meet.conf: |-
     location /jitsi-openid/ {
-        # Strip state parameter, only pass room
-        set $args "room=$arg_room";
         proxy_pass http://jitsi-oidc-adapter.jitsi.svc.cluster.local:3001/;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header Host $host;
