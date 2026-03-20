@@ -22,6 +22,14 @@ prosody:
 web:
   ingress:
     enabled: false
+  extraVolumes:
+  - name: custom-nginx
+    configMap:
+      name: jitsi-custom-nginx
+  extraVolumeMounts:
+  - name: custom-nginx
+    mountPath: /config/nginx/custom-meet.conf
+    subPath: custom-meet.conf
 jvb:
   service:
     type: ClusterIP
