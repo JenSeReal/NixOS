@@ -12,7 +12,7 @@ delib.module {
       status = "enable";
       criteria = "Samsung Electric Company SAMSUNG 0x01000E00";
       mode = "1920x1080@60Hz";
-      scale = 1.6;
+      scale = 1.0;
     };
 
     msi = {
@@ -62,6 +62,13 @@ delib.module {
               (lg // {position = "0,1080";})
             ];
           };
+        }
+
+        {
+          profile.name = "desktop-tv";
+          profile.outputs = [
+            (tv // {position = "0,0";})
+          ];
         }
 
         # Laptop profiles
