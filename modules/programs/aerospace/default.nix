@@ -23,6 +23,7 @@ delib.module {
       enable = true;
       package = cfg.package;
       launchd.enable = true;
+      launchd.keepAlive = false;
     };
   };
 }

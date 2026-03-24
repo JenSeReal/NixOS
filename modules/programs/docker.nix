@@ -35,10 +35,10 @@ delib.module {
       package = pkgs.unstable.colima;
       profiles.default = {
         isActive = true;
-        isService = true;
+        isService = false;
         settings = {
-          cpu = 8;
-          memory = 16;
+          cpu = 4;
+          memory = 8;
           kubernetes.enabled = true;
         };
       };
