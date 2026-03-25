@@ -60,9 +60,16 @@ stdenv.mkDerivation {
       check_running_recording() {
         if pgrep -x wl-screenrec >/dev/null; then
           echo "Recording already in progress. Stopping it..."
-          pkill -x wl-screenrec
-          notify-send -u normal -t 1000 "Screen Recording" "Recording stopped"
-          echo "Recording stopped. Exiting."
+          # Send SIGINT for graceful shutdown, then let it finalize in background
+          pkill -INT -x wl-screenrec
+          # Notify and cleanup in background so game doesn't freeze during video finalization
+          (
+            # Wait for wl-screenrec to finish saving
+            while pgrep -x wl-screenrec >/dev/null; do sleep 0.1; done
+            notify-send -u normal -t 2000 "Screen Recording" "Recording saved"
+          ) &
+          disown
+          echo "Recording stopped. Saving in background."
           exit 0
         fi
       }

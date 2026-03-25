@@ -17,6 +17,7 @@ delib.module {
       extest.enable = true;
       localNetworkGameTransfers.openFirewall = true;
       protontricks.enable = true;
+      protontricks.package = pkgs.unstable.protontricks;
       remotePlay.openFirewall = true;
       gamescopeSession.enable = true;
       extraCompatPackages = with pkgs; [
@@ -46,7 +47,7 @@ delib.module {
     environment.systemPackages = with pkgs; [
       unstable.wineWow64Packages.waylandFull
       unstable.winetricks
-      protontricks
+      unstable.protontricks
       lutris
       heroic
       mangohud
