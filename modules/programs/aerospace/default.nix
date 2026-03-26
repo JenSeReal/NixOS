@@ -22,7 +22,7 @@ delib.module {
     programs.aerospace = {
       enable = true;
       package = cfg.package;
-      launchd.enable = true;
+      launchd.enable = false;
       launchd.keepAlive = false;
     };
   };

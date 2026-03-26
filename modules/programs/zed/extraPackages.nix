@@ -12,7 +12,7 @@ delib.module {
       nil
       nixd
       alejandra
-      direnv
+      master.direnv
       unstable.devenv
       hexyl
       rust-analyzer

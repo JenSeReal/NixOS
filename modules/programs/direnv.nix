@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.unstable.direnv;
+      package = packageOption pkgs.master.direnv;
     };
 
   home.ifEnabled = {cfg, ...}: {

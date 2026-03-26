@@ -19,7 +19,7 @@ delib.module {
       };
 
       services = {
-        jankyborders.enable = true;
+        jankyborders.enable = false;
       };
     };
 
