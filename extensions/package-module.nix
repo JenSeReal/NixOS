@@ -3,35 +3,29 @@
 in
   extension {
     name = "packages";
-    description = "Registers custom packages with platform compatibility handled via meta.platforms";
+    description = "Provides delib.package for defining custom packages (similar to delib.host)";
     maintainers = with maintainers; [JenSeReal];
 
-    config = final: prev: {
-      moduleNamePrefix = "packages";
-    };
-
     libExtension = config: final: _: {
-      packageModule = {
+      # Define a package with delib.package - similar to delib.host
+      # Usage:
+      #   delib.package {
+      #     name = "my-package";
+      #     package = {lib, pkgs, fetchFromGitHub, ...}: pkgs.stdenv.mkDerivation { ... };
+      #   }
+      package = {
         name,
         package,
-        withPrefix ? true,
       }: let
-        # Create the overlay that will call the package function with nixpkgs dependencies
-        pkgsOverlay = final: prev: {
-          ${name} = final.callPackage package {};
+        pkgsOverlay = pkgsFinal: pkgsPrev: {
+          ${name} = pkgsFinal.callPackage package {};
         };
       in
         final.module {
-          name =
-            if withPrefix
-            then "${config.moduleNamePrefix}.${name}"
-            else name;
+          name = "packages.${name}";
 
-          # Register overlay on both platforms
-          # Platform compatibility is handled by the package's meta.platforms attribute
-          nixos.always = {
-            nixpkgs.overlays = [pkgsOverlay];
-          };
+          nixos.always.nixpkgs.overlays = [pkgsOverlay];
+          darwin.always.nixpkgs.overlays = [pkgsOverlay];
         };
     };
   }

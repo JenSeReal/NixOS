@@ -92,16 +92,6 @@
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
-    packageNixFiles = lib.pipe ./packages [
-      builtins.readDir
-      (lib.filterAttrs (
-        name: type:
-          type
-          == "directory"
-          && builtins.pathExists (./packages + "/${name}/package.nix")
-      ))
-      (lib.mapAttrsToList (name: _: ./packages + "/${name}/package.nix"))
-    ];
     moduleSubdirs = let
       findModuleDirs = dir:
         lib.concatMap (
@@ -135,7 +125,7 @@
           ./packages
         ];
 
-        exclude = packageNixFiles ++ moduleSubdirs;
+        exclude = moduleSubdirs;
 
         extensions = import ./extensions {delib = denix.lib;};
 
