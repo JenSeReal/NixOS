@@ -131,7 +131,7 @@ delib.module {
           "**/*.tfstate*" = true;
           "**/node_modules/" = true;
         };
-
+        "git.autofetch" = true;
         "html.autoClosingTags" = true;
         "indentRainbow.colors" = [
           "rgba(255,255,64,0.3)"
