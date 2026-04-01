@@ -13,6 +13,9 @@ delib.module {
         format = ''🕙[$time]($style)'';
       };
       right_format = "$time";
+      kubernetes = {
+        disabled = false;
+      };
     };
   };
 }
