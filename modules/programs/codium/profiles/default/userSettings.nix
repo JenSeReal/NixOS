@@ -43,7 +43,7 @@ delib.module {
           "editor.insertSpaces" = true;
           "editor.formatOnSave" = true;
           "editor.formatOnPaste" = true;
-          "editor.defaultFormatter" = "kennylong.kubernetes-yaml-formatter";
+          "editor.defaultFormatter" = "redhat.vscode-yaml";
         };
 
         "[json]" = {
@@ -182,7 +182,11 @@ delib.module {
         "workbench.startupEditor" = "none";
         "workbench.tree.indent" = 16;
 
-        "yaml.format.enable" = false;
+        "yaml.format.enable" = true;
+        "yaml.format.bracketSpacing" = false;
+        "yaml.format.printWidth" = 80;
+        "yaml.format.proseWrap" = "preserve";
+        "yaml.format.singleQuote" = false;
 
         "update.mode" = "none";
       };
