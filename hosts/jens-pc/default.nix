@@ -37,6 +37,7 @@ delib.host {
       nh.enable = true;
       nix-ld.enable = true;
       nu.enable = true;
+      podman.enable = true;
       quickemu.enable = true;
       steam.enable = true;
       vesktop.enable = true;

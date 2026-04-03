@@ -21,6 +21,7 @@ in
 
     home.ifEnabled = {...}: {
       programs.zed-editor.userSettings = {
+        project_panel.dock = "right";
         auto_update = false;
         telemetry = {
           diagnostics = false;

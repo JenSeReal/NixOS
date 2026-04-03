@@ -2,6 +2,7 @@
   delib,
   pkgs,
   inputs,
+  lib,
   ...
 }:
 delib.module {
@@ -24,12 +25,13 @@ delib.module {
     };
   };
 
-  home.always = {
+  home.always = lib.mkIf pkgs.stdenv.isDarwin {
     imports = [
       "${inputs.home-manager-unstable}/modules/services/colima.nix"
     ];
   };
-  home.ifEnabled = {...}: {
+
+  home.ifEnabled = lib.mkIf pkgs.stdenv.isDarwin {
     services.colima = {
       enable = true;
       package = pkgs.unstable.colima;

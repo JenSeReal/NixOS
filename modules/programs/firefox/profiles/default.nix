@@ -34,6 +34,10 @@ delib.module {
         .titlebar-buttonbox-container {
           display:none;
         }
+        /* Disable hover expansion but allow button toggle */
+        #sidebar-main:not([expanded]):hover {
+          --sidebar-hover-width: var(--sidebar-width) !important;
+        }
       '';
       search = {
         force = true;
@@ -190,6 +194,7 @@ delib.module {
           # Sidebar
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
+          "sidebar.position" = "right";
           "sidebar.visibility" = "expand-on-hover";
         }
         (lib.optionalAttrs cfg.gpuAcceleration {

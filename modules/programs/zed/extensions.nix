@@ -10,6 +10,8 @@ delib.module {
       "nix"
       "terraform"
       "toml"
+      "dockerfile"
+      "docker-compose"
     ];
   };
 }
