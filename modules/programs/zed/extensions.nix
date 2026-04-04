@@ -12,6 +12,8 @@ delib.module {
       "toml"
       "dockerfile"
       "docker-compose"
+      "dependi"
+      "scss"
     ];
   };
 }

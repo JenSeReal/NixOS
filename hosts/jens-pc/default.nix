@@ -32,6 +32,8 @@ delib.host {
       sudo.enable = true;
       fish.enable = true;
       ffmpeg.enable = true;
+      gimp.enable = true;
+      inkscape.enable = true;
       mpv.enable = true;
       neovide.enable = true;
       nh.enable = true;
@@ -42,6 +44,7 @@ delib.host {
       steam.enable = true;
       vesktop.enable = true;
       virt-manager.enable = true;
+      vtracer.enable = true;
       wezterm.enable = true;
       zed.enable = true;
     };
