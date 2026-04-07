@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.davinci-resolve;
+      package = packageOption pkgs.unstable.davinci-resolve;
       amdgpu = {
         enable = boolOption true;
         opencl = boolOption true;
@@ -20,20 +20,22 @@ delib.module {
       [cfg.package]
       ++ (
         if cfg.amdgpu.enable
-        then with pkgs; [
-          rocmPackages.clr
-          rocmPackages.rocminfo
-          rocmPackages.rocm-runtime
-        ]
+        then
+          with pkgs; [
+            rocmPackages.clr
+            rocmPackages.rocminfo
+            rocmPackages.rocm-runtime
+          ]
         else []
       );
 
     hardware.graphics.extraPackages =
       if cfg.amdgpu.opencl
-      then with pkgs; [
-        rocmPackages.clr
-        rocmPackages.clr.icd
-      ]
+      then
+        with pkgs; [
+          rocmPackages.clr
+          rocmPackages.clr.icd
+        ]
       else [];
   };
 }

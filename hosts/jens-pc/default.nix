@@ -27,6 +27,7 @@ delib.host {
       bitwarden.enable = true;
       codium.enable = true;
       DataLink.enable = true;
+      davinci-resolve.enable = true;
       gamemode.enable = true;
       helix.enable = true;
       sudo.enable = true;
