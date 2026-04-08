@@ -11,9 +11,9 @@ delib.module {
 
   darwin.ifEnabled = {myconfig, ...}: {
     environment.systemPackages = with pkgs; [
-      qemu
-      libvirt
-      virt-manager
+      # qemu
+      # libvirt
+      # virt-manager
 
       docker
       docker-credential-helpers

@@ -99,10 +99,10 @@ delib.module {
         cd = "z";
       }
       // mkAlias cfg.aliases.ls {
-        ls = "lsd";
-        ll = "lsd -l";
-        la = "lsd -la";
-        lt = "lsd --tree";
+        ls = lib.mkDefault "lsd";
+        ll = lib.mkDefault "lsd -l";
+        la = lib.mkDefault "lsd -la";
+        lt = lib.mkDefault "lsd --tree";
       }
       // mkAlias cfg.aliases.cat {
         cat = "bat";

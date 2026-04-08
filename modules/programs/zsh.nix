@@ -18,4 +18,12 @@ delib.module {
     };
     environment.shells = [pkgs.zsh];
   };
+
+  home.ifEnabled = {...}: {
+    programs.zsh = {
+      enable = true;
+      autocd = true;
+      autosuggestion.enable = true;
+    };
+  };
 }
