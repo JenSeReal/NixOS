@@ -13,3 +13,6 @@ spec:
         kind: HelmRepository
         name: jensereal-charts
         namespace: flux-system
+  values:
+    imagePullSecrets:
+    - name: ghcr-jensereal-pull
