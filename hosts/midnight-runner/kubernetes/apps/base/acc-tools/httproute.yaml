@@ -1,0 +1,38 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: acc-tools-http-redirect
+spec:
+  parentRefs:
+  - name: jfp-one
+    namespace: networking
+    sectionName: acc-tools-http
+  hostnames:
+  - apex-predators.racing
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: acc-tools
+spec:
+  parentRefs:
+  - name: jfp-one
+    namespace: networking
+    sectionName: acc-tools-https
+  hostnames:
+  - apex-predators.racing
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: acc-tools
+      port: 80

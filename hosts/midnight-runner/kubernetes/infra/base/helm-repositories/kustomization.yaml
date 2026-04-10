@@ -5,8 +5,10 @@ namespace: flux-system
 resources:
 - authentik-charts.yaml
 - cowboysysop.yaml
+- ghcr-jensereal-secret.sops.yaml
 - jetstack.yaml
 - jitsi.yaml
+- jensereal-charts.yaml
 - oauth2-proxy.yaml
 - stakater.yaml
 - weaveworks.yaml

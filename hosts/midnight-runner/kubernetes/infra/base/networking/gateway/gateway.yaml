@@ -62,3 +62,21 @@ spec:
       mode: Terminate
       certificateRefs:
       - name: jitsi-jfp-one-tls
+  - name: acc-tools-http
+    hostname: apex-predators.racing
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: acc-tools-https
+    hostname: apex-predators.racing
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: acc-tools-tls

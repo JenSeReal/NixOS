@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: jensereal-charts
+spec:
+  type: oci
+  interval: 30m
+  url: oci://ghcr.io/jensereal/charts
+  secretRef:
+    name: ghcr-jensereal
