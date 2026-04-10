@@ -40,13 +40,15 @@ in
 
         # Only include deploy config if at least hostname is provided
         deployConfig = lib.optionalAttrs (hostname != null) {
-          deploy = {
-            enable = true;
-            inherit hostname;
-          } // lib.optionalAttrs (sshPort != null) { inherit sshPort; }
-            // lib.optionalAttrs (sshUser != null) { inherit sshUser; }
-            // lib.optionalAttrs (deployUser != null) { inherit deployUser; }
-            // lib.optionalAttrs (system != null) { inherit system; };
+          deploy =
+            {
+              enable = true;
+              inherit hostname;
+            }
+            // lib.optionalAttrs (sshPort != null) {inherit sshPort;}
+            // lib.optionalAttrs (sshUser != null) {inherit sshUser;}
+            // lib.optionalAttrs (deployUser != null) {inherit deployUser;}
+            // lib.optionalAttrs (system != null) {inherit system;};
         };
       in
         prev.host (hostArgs

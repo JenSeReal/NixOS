@@ -12,67 +12,60 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      devenv,
-      systems,
-      ...
-    }@inputs:
-    let
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    in
-    {
-      packages = forEachSystem (system: {
-        devenv-up = self.devShells.${system}.default.config.procfileScript;
-      });
-      devShells = forEachSystem (
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            config.allowBroken = true;
-          };
+  outputs = {
+    self,
+    nixpkgs,
+    devenv,
+    systems,
+    ...
+  } @ inputs: let
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
+  in {
+    packages = forEachSystem (system: {
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
+    });
+    devShells = forEachSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          config.allowBroken = true;
+        };
 
-          setupScript = pkgs.writeShellScriptBin "setup-env" ''
-            [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
-          '';
-        in
-        {
-          default = devenv.lib.mkShell {
-            inherit inputs pkgs;
-            modules = [
-              {
-                name = "Basic development shell";
-                dotenv.disableHint = true;
+        setupScript = pkgs.writeShellScriptBin "setup-env" ''
+          [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
+        '';
+      in {
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              name = "Basic development shell";
+              dotenv.disableHint = true;
 
-                languages = {
-                  nix.enable = true;
-                  nix.lsp.package = pkgs.nixd;
-                };
+              languages = {
+                nix.enable = true;
+                nix.lsp.package = pkgs.nixd;
+              };
 
-                packages =
-                  with pkgs;
-                  [ biome ]
-                  ++ lib.optionals stdenv.isDarwin (
-                    with darwin.apple_sdk.frameworks;
-                    [
-                      Cocoa
-                      CoreFoundation
-                      CoreServices
-                      Security
-                    ]
-                  );
+              packages = with pkgs;
+                [biome]
+                ++ lib.optionals stdenv.isDarwin (
+                  with darwin.apple_sdk.frameworks; [
+                    Cocoa
+                    CoreFoundation
+                    CoreServices
+                    Security
+                  ]
+                );
 
-                enterShell = ''
-                  ${setupScript}/bin/setup-env
-                '';
-              }
-            ];
-          };
-        }
-      );
-    };
+              enterShell = ''
+                ${setupScript}/bin/setup-env
+              '';
+            }
+          ];
+        };
+      }
+    );
+  };
 }
