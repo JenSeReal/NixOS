@@ -16,3 +16,5 @@ spec:
   values:
     imagePullSecrets:
     - name: ghcr-jensereal-pull
+    image:
+      tag: latest
