@@ -40,3 +40,13 @@ spec:
             kind: Gateway
             namespace: networking
             sectionName: jitsi-http
+    - selector:
+        dnsNames:
+        - "apex-predators.racing"
+      http01:
+        gatewayHTTPRoute:
+          parentRefs:
+          - name: jfp-one
+            kind: Gateway
+            namespace: networking
+            sectionName: acc-tools-http
