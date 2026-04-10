@@ -7,4 +7,5 @@ resources:
 - helm-release.yaml
 - httproute.yaml
 - namespace.yaml
-- serviceaccount-patch.yaml
+patches:
+- path: serviceaccount-patch.yaml
