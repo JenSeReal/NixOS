@@ -7,7 +7,7 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: acc-session-viewer
+      chart: acc-tools-ui
       version: "0.1.0"
       sourceRef:
         kind: HelmRepository
@@ -16,6 +16,3 @@ spec:
   values:
     imagePullSecrets:
     - name: ghcr-jensereal-pull
-    image:
-      repository: ghcr.io/jensereal/acc-session-reader
-      tag: latest

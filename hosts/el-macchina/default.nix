@@ -30,6 +30,7 @@ delib.host {
       boxflat.enable = true;
       codium.enable = true;
       DataLink.enable = true;
+      davinci-resolve.enable = true;
       gamemode.enable = true;
       fish.enable = true;
       nh.enable = true;
