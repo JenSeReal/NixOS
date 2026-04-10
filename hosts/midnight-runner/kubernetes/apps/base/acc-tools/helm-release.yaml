@@ -16,3 +16,6 @@ spec:
   values:
     imagePullSecrets:
     - name: ghcr-jensereal-pull
+    image:
+      repository: ghcr.io/jensereal/acc-session-reader
+      tag: latest
