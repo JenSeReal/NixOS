@@ -1,37 +1,36 @@
+---
 repositories:
-  - name: cilium
-    url: https://helm.cilium.io
-
+- name: cilium
+  url: https://helm.cilium.io
 releases:
-  - name: cilium
-    namespace: kube-system
-    chart: cilium/cilium
-    version: 1.19.1
-    values:
-      - /run/cilium-values.yaml
-    hooks:
-      - events: ["presync"]
-        showlogs: true
-        command: kubectl
-        args:
-          - apply
-          - --server-side
-          - -f
-          # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-          - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
-      - events: ["presync"]
-        showlogs: true
-        command: kubectl
-        args:
-          - apply
-          - --server-side
-          - -f
-          # renovate: datasource=github-releases depName=cert-manager/cert-manager
-          - https://github.com/cert-manager/cert-manager/releases/download/v1.19.3/cert-manager.crds.yaml
-
-  # renovate: datasource=docker depName=ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-  - name: flux-operator
-    namespace: flux-system
-    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.42.1
-    createNamespace: true
+- name: cilium
+  namespace: kube-system
+  chart: cilium/cilium
+  version: 1.19.2
+  values:
+  - /run/cilium-values.yaml
+  hooks:
+  - events: ["presync"]
+    showlogs: true
+    command: kubectl
+    args:
+    - apply
+    - --server-side
+    - -f
+    # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+    - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
+  - events: ["presync"]
+    showlogs: true
+    command: kubectl
+    args:
+    - apply
+    - --server-side
+    - -f
+    # renovate: datasource=github-releases depName=cert-manager/cert-manager
+    - https://github.com/cert-manager/cert-manager/releases/download/v1.19.3/cert-manager.crds.yaml
+# renovate: datasource=docker depName=ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+- name: flux-operator
+  namespace: flux-system
+  chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+  version: 0.46.0
+  createNamespace: true
