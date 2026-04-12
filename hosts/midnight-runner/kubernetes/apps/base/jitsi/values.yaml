@@ -15,14 +15,14 @@ extraCommonEnvs:
   JWT_ACCEPTED_AUDIENCES: jitsi
   TOKEN_AUTH_URL: "https://talk.jfp.one/jitsi-openid/authenticate?state={state}&room={room}"
 prosody:
-  extraEnvs:
+  extraSecrets:
   - name: JWT_APP_SECRET
     valueFrom:
       secretKeyRef:
         name: jitsi-keycloak-adapter
         key: JWT_APP_SECRET
-  - name: JWT_ENABLE_DOMAIN_VERIFICATION
-    value: "false"
+  extraEnvs:
+    JWT_ENABLE_DOMAIN_VERIFICATION: "false"
 web:
   ingress:
     enabled: false
