@@ -2,6 +2,8 @@
 publicURL: https://talk.jfp.one
 tz: Europe/Berlin
 websockets:
+  colibri:
+    enabled: true
   xmpp:
     enabled: true
 enableAuth: true
