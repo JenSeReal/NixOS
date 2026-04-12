@@ -68,7 +68,7 @@ web:
       name: jitsi-custom-nginx
   extraVolumeMounts:
   - name: custom-nginx
-    mountPath: /config/nginx/custom-meet.conf
+    mountPath: /config/nginx-custom/oidc.conf
     subPath: custom-meet.conf
 jvb:
   service:
