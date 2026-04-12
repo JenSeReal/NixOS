@@ -13,7 +13,7 @@ extraCommonEnvs:
   JWT_APP_ID: jitsi
   JWT_ACCEPTED_ISSUERS: jitsi
   JWT_ACCEPTED_AUDIENCES: jitsi
-  TOKEN_AUTH_URL: "https://talk.jfp.one/jitsi-openid/authenticate?state={state}&room={room}"
+  TOKEN_AUTH_URL: "https://talk.jfp.one/oidc/auth?state={state}"
 prosody:
   extraSecrets:
   - name: JWT_APP_SECRET
@@ -26,6 +26,42 @@ prosody:
 web:
   ingress:
     enabled: false
+  extraContainers:
+  - name: oidc-adapter
+    image: ghcr.io/jitsi-contrib/jitsi-oidc-adapter
+    imagePullPolicy: IfNotPresent
+    ports:
+    - name: http
+      containerPort: 9000
+    env:
+    - name: OIDC_ISSUER_URL
+      value: "https://sso.jfp.one/application/o/jitsi/"
+    - name: OIDC_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: jitsi-keycloak-adapter
+          key: oidc-client-id
+    - name: OIDC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: jitsi-keycloak-adapter
+          key: oidc-client-secret
+    - name: JWT_APP_ID
+      value: "jitsi"
+    - name: JWT_APP_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: jitsi-keycloak-adapter
+          key: JWT_APP_SECRET
+    - name: AUTO_RETURN_TO_APP
+      value: "true"
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "50m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
   extraVolumes:
   - name: custom-nginx
     configMap:

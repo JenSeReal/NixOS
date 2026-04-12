@@ -19,16 +19,26 @@ delib.module {
     };
 
   darwin.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = with pkgs; [
-      bfg-repo-cleaner
-      git
-      git-crypt
-      git-filter-repo
-      git-lfs
-      gitleaks
-      gitlint
-    ] ++ (if cfg.enablePreCommit then [pre-commit] else [])
-      ++ (if cfg.enableGitui then [gitui] else []);
+    environment.systemPackages = with pkgs;
+      [
+        bfg-repo-cleaner
+        git
+        git-crypt
+        git-filter-repo
+        git-lfs
+        gitleaks
+        gitlint
+      ]
+      ++ (
+        if cfg.enablePreCommit
+        then [pre-commit]
+        else []
+      )
+      ++ (
+        if cfg.enableGitui
+        then [gitui]
+        else []
+      );
   };
 
   home.ifEnabled = {cfg, ...}: {
@@ -106,6 +116,9 @@ delib.module {
         ".direnv"
         ".devenv"
         ".envrc"
+
+        ".claude/"
+        ".vscode/"
       ];
     };
 
@@ -114,15 +127,25 @@ delib.module {
   };
 
   nixos.ifEnabled = {cfg, ...}: {
-    environment.systemPackages = with pkgs; [
-      bfg-repo-cleaner
-      git
-      git-crypt
-      git-filter-repo
-      git-lfs
-      gitleaks
-      gitlint
-    ] ++ (if cfg.enablePreCommit then [pre-commit] else [])
-      ++ (if cfg.enableGitui then [gitui] else []);
+    environment.systemPackages = with pkgs;
+      [
+        bfg-repo-cleaner
+        git
+        git-crypt
+        git-filter-repo
+        git-lfs
+        gitleaks
+        gitlint
+      ]
+      ++ (
+        if cfg.enablePreCommit
+        then [pre-commit]
+        else []
+      )
+      ++ (
+        if cfg.enableGitui
+        then [gitui]
+        else []
+      );
   };
 }

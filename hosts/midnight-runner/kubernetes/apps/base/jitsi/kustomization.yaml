@@ -6,7 +6,6 @@ resources:
 - helm-release.yaml
 - httproute.yaml
 - namespace.yaml
-- keycloak-adapter.yaml
 - keycloak-adapter-secret.sops.yaml
 - custom-nginx.yaml
 components:
