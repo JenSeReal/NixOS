@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(find /home/jfp/NixOS/hosts/midnight-runner/kubernetes -type f -name \"*.yaml\" -exec grep -l \"spec.*port\" {})",
-      "Bash(xargs cat:*)"
-    ]
-  }
-}
