@@ -2,8 +2,6 @@
   delib,
   pkgs,
   inputs,
-  lib,
-  config,
   ...
 }:
 delib.host {
@@ -18,10 +16,24 @@ delib.host {
     users.defaultUserShell = pkgs.nushell;
 
     # TODO: Remove in a few days
-    boot.initrd.luks.cryptoModules = lib.filter (m:
-      m
-      != "aes_generic")
-    config.boot.initrd.luks.cryptoModules;
+
+    boot.initrd.luks.cryptoModules = [
+      "aes"
+      # "aes_generic"
+      "blowfish"
+      "twofish"
+      "serpent"
+      "cbc"
+      "xts"
+      "lrw"
+      "sha1"
+      "sha256"
+      "sha512"
+      "af_alg"
+      "algif_skcipher"
+      "cryptd"
+      "input_leds" # for capslock LED on most keyboards in case decryption requires password
+    ];
   };
 
   myconfig = {
