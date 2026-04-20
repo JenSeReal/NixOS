@@ -2,6 +2,8 @@
   delib,
   pkgs,
   inputs,
+  lib,
+  config,
   ...
 }:
 delib.host {
@@ -14,6 +16,12 @@ delib.host {
     imports = [inputs.nixos-hardware.nixosModules.framework-13-7040-amd];
 
     users.defaultUserShell = pkgs.nushell;
+
+    # TODO: Remove in a few days
+    boot.initrd.luks.cryptoModules = lib.filter (m:
+      m
+      != "aes_generic")
+    config.boot.initrd.luks.cryptoModules;
   };
 
   myconfig = {
