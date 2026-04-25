@@ -8,7 +8,7 @@ delib.module {
   options = with delib;
     moduleOptions {
       enable = boolOption false;
-      package = packageOption pkgs.zellij;
+      package = packageOption pkgs.unstable.zellij;
     };
 
   home.ifEnabled = {cfg, ...}: {

@@ -31,7 +31,7 @@ delib.module {
         barbosshack.crates-io
         tauri-apps.tauri-vscode
         editorconfig.editorconfig
-        marketplace-universal.vadimcn.vscode-lldb
+        # marketplace-universal.vadimcn.vscode-lldb
         pflannery.vscode-versionlens
         lorenzopirro.rust-flash-snippets
         zhangyue.rust-mod-generator
