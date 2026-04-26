@@ -21,7 +21,7 @@ spec:
     # Examples:
     #   repo:  https://github.com/YOUR_ORG/YOUR_REPO
     #   org:   https://github.com/YOUR_ORG
-    githubConfigUrl: "https://github.com/JenSeReal"
+    githubConfigUrl: "https://github.com/JenSeReal/acc-tools"
     # Secret must contain either:
     #   github_token: <PAT with repo/org scope>
     # or GitHub App credentials:
