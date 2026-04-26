@@ -6,8 +6,8 @@ metadata:
 spec:
   interval: 30m
   dependsOn:
-    - name: actions-runner-controller
-      namespace: arc-systems
+  - name: actions-runner-controller
+    namespace: arc-systems
   chart:
     spec:
       chart: gha-runner-scale-set
@@ -21,16 +21,13 @@ spec:
     # Examples:
     #   repo:  https://github.com/YOUR_ORG/YOUR_REPO
     #   org:   https://github.com/YOUR_ORG
-    githubConfigUrl: "https://github.com/YOUR_ORG_OR_REPO"
-
+    githubConfigUrl: "https://github.com/JenSeReal"
     # Secret must contain either:
     #   github_token: <PAT with repo/org scope>
     # or GitHub App credentials:
     #   github_app_id, github_app_installation_id, github_app_private_key
     githubConfigSecret: github-runner-secret
-
     minRunners: 0
     maxRunners: 3
-
     containerMode:
       type: dind
