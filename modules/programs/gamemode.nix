@@ -184,6 +184,10 @@ delib.module {
       # default on some gaming (SteamOS) and desktop (Fedora) distributions
       # might help with gaming performance
       "vm.max_map_count" = 2147483642;
+      # Reduce background memory compaction which causes stutter spikes
+      "vm.compaction_proactiveness" = 0;
+      # Disable scheduler autogroup to prevent priority inversion with game threads
+      "kernel.sched_autogroup_enabled" = 0;
     };
   };
 }

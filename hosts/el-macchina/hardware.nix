@@ -20,6 +20,10 @@ delib.host rec {
 
     networking.networkmanager.wifi.powersave = false;
 
+    # ASUS ROG STRIX B850-G: PCIe ASPM causes network controllers to become
+    # unresponsive under load, requiring a reboot to recover.
+    boot.kernelParams = ["pcie_aspm=off" "usbcore.autosuspend=-1" "btusb.enable_autosuspend=n"];
+
     nixpkgs.hostPlatform = system;
     system.stateVersion = "25.11";
 

@@ -23,7 +23,7 @@ delib.host {
       keychron.enable = true;
       moza-r12.enable = true;
       openrgb.enable = true;
-      rtl8822ce.enable = true;
+      rtl8922ae.enable = true;
     };
 
     programs = {
@@ -33,6 +33,7 @@ delib.host {
       davinci-resolve.enable = true;
       gamemode.enable = true;
       fish.enable = true;
+      kfrgb.enable = true;
       mpv.enable = true;
       nh.enable = true;
       nix-ld.enable = true;

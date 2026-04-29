@@ -36,13 +36,17 @@ delib.module {
         "fat32"
       ];
       kernelPackages = pkgs.linuxPackages_latest;
-      kernelParams = lib.optionals cfg.plymouth [
-        "quiet"
-        "rd.systemd.show_status=false"
-        "rd.udev.log_level=3"
-        "udev.log_priority=3"
-        "boot.shell_on_fail"
-      ];
+      kernelParams =
+        [
+          "preempt=full" # Full kernel preemption for lower input/render latency
+        ]
+        ++ lib.optionals cfg.plymouth [
+          "quiet"
+          "rd.systemd.show_status=false"
+          "rd.udev.log_level=3"
+          "udev.log_priority=3"
+          "boot.shell_on_fail"
+        ];
 
       lanzaboote = lib.mkIf cfg.secureBoot {
         enable = true;
