@@ -6,7 +6,6 @@ delib.package {
     lib,
     stdenv,
     fetchurl,
-    undmg,
     ...
   }:
     stdenv.mkDerivation rec {
@@ -18,9 +17,17 @@ delib.package {
         sha256 = "sha256-yI2jeB0gsuxA5WPaVzm9bES5GaGGXsWmZzDfKakEAsU=";
       };
 
-      nativeBuildInputs = [undmg];
+      nativeBuildInputs = [];
 
-      sourceRoot = ".";
+      __noChroot = true;
+
+      unpackPhase = ''
+        mnt=$(mktemp -d)
+        /usr/bin/hdiutil attach -readonly -nobrowse -mountpoint "$mnt" "$src"
+        cp -r "$mnt/LinearMouse.app" .
+        /usr/bin/hdiutil detach "$mnt"
+        rmdir "$mnt"
+      '';
 
       installPhase = ''
         mkdir -p "$out/Applications"
