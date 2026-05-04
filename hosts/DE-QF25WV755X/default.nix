@@ -16,7 +16,7 @@ delib.host {
       fish.enable = true;
       gimp.enable = true;
       logseq.enable = true;
-      headlamp.enable = true;
+      # headlamp.enable = true;
       nh.enable = true;
       nu.enable = true;
       spotify.enable = true;
